@@ -33,6 +33,7 @@
 @.claude/memory/errors/ERRORS-SOLVED.md
 @.claude/memory/patterns/PATTERNS.md
 @.claude/memory/commands/COMMAND-HISTORY.md
+@.claude/memory/learnings/git-workflow.md
 @.claude/memory/AUTO-LEARNING-PROTOCOL.md
 @.claude/memory/THINKING-MODE-PROTOCOL.md
 
@@ -57,6 +58,8 @@
 5. **Se incerto:** Pesquisar docs oficiais, NUNCA assumir
 6. **QUANDO APRENDER ALGO:** Ativar thinking mode, raciocinar profundamente, salvar "na rocha"
 7. **ANTES de criar script:** Verificar `.claude/scripts/` via skill `tool-inventory`, reutilizar se existir
+8. **QUANDO criar algo reutilizável:** Sincronizar com Claude-especial (ver ADR-006)
+9. **ANTES de commitar:** Verificar se deve ir para template
 
 ### Checklist Pré-Execução
 
@@ -139,6 +142,54 @@
 - **Kolmeya API:** SMS gateway principal
 - **PostgreSQL:** Queries otimizadas, índices críticos
 - **Mail:** Chatter customizado para SMS
+
+---
+
+## 🔄 PROTOCOLO DE SINCRONIZAÇÃO DUAL (CRÍTICO!)
+
+### Regra de Ouro
+
+**TUDO que for desenvolvido, criado, aprimorado ou descoberto tem DUPLO DESTINO:**
+
+1. **Aplicado AQUI** (testing-odoo-15-sr)
+2. **Sincronizado com Template** (Claude-especial)
+
+### Checklist de Sincronização
+
+Ao criar/modificar algo, perguntar:
+
+```
+[ ] É genérico ou específico de Odoo?
+[ ] Útil para qualquer projeto ou só este?
+[ ] Se GENÉRICO:
+    [ ] Copiar para /Users/andersongoliveira/Claude-especial/
+    [ ] Remover partes específicas de Odoo
+    [ ] Commitar em Claude-especial
+    [ ] Push para GitHub
+    [ ] Documentar em sync-log.md
+[ ] Se ESPECÍFICO:
+    [ ] Apenas commitar aqui
+```
+
+### O Que Sincronizar
+
+**✅ SINCRONIZAR:**
+- Skills genéricos
+- Scripts bash/python reutilizáveis
+- Melhorias em protocolos
+- ADRs de arquitetura geral
+- Patterns universais
+- Melhorias em LLM_FIRST_TOOLS.md
+- Novos MCPs úteis
+
+**❌ NÃO SINCRONIZAR:**
+- Código Odoo específico
+- Scripts de servidores (odoo-restart, etc)
+- ADRs de negócio (Kolmeya, CRM)
+- Contexto de servidores
+- Erros específicos de Odoo
+
+**Referência Completa:** Ver ADR-006
 
 ---
 

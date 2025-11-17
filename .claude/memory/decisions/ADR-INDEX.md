@@ -29,6 +29,7 @@
 | 003 | 2025-11-16 | [Integração Kolmeya API](#adr-003) | ✅ Aceito | #integration #sms |
 | 004 | 2025-11-15 | [Estratégia de Cache](#adr-004) | 🔄 Proposto | #performance |
 | 005 | 2025-11-17 | [Arquitetura LLM-First Tools](#adr-005) | ✅ Aceito | #infra #claude #automation |
+| 006 | 2025-11-17 | [Sincronização Dual com Template](#adr-006) | ✅ Aceito | #infra #template #workflow |
 
 ---
 
@@ -478,10 +479,274 @@ Em que condições revisitar esta decisão?
 
 ---
 
+## ADR-006: Sincronização Dual com Template Claude-especial
+
+**Data:** 2025-11-17
+**Status:** ✅ Aceito e CRÍTICO
+**Decisores:** Anderson + Claude
+
+### Contexto
+
+Criamos template universal (`Claude-especial`) para reutilizar em futuros projetos.
+
+**Problema:** Como garantir que o template evolua com as descobertas do projeto atual?
+
+**Risco:** Template ficar desatualizado rapidamente, perdendo valor.
+
+### Decisão
+
+**TUDO que for desenvolvido, criado, aprimorado ou descoberto terá DUPLO DESTINO:**
+
+1. **Aplicado no projeto atual** (`testing-odoo-15-sr`)
+2. **Sincronizado com template** (`Claude-especial`)
+
+**Workflow Automático para Claude:**
+
+```
+Quando criar/modificar:
+├─ Novo skill genérico → Adicionar em AMBOS repos
+├─ Script reutilizável → Adicionar em AMBOS repos
+├─ Melhoria em protocolo → Atualizar em AMBOS repos
+├─ Nova descoberta → Documentar em AMBOS repos
+├─ Pattern útil → Adicionar em AMBOS repos
+└─ ADR genérico → Adicionar em template
+```
+
+**Critérios de Sincronização:**
+
+**✅ SINCRONIZAR (vai para template):**
+- Skills genéricos (não específicos de Odoo)
+- Scripts bash/python reutilizáveis (generalizados)
+- Melhorias em protocolos (AUTO-LEARNING, THINKING-MODE)
+- ADRs de arquitetura geral (não específicos de negócio)
+- Patterns de código universal
+- Melhorias em LLM_FIRST_TOOLS.md
+- Novos MCPs úteis
+- Descobertas sobre Git workflow
+- Melhorias no setup.sh
+
+**❌ NÃO SINCRONIZAR (fica só no projeto):**
+- Código Odoo específico
+- Scripts específicos de servidores (odoo-restart, etc)
+- ADRs de negócio (Kolmeya API, CRM, etc)
+- Contexto de servidores (odoo-sr-tensting, odoo-rc)
+- Erros específicos de Odoo
+- Módulos customizados
+
+### Alternativas Consideradas
+
+1. **Atualização manual periódica**
+   - ✅ Controle total
+   - ❌ Fácil esquecer
+   - ❌ Template fica desatualizado
+   - ❌ Trabalho duplicado
+
+2. **Submodule Git**
+   - ✅ Sincronização automática
+   - ❌ Complexidade muito alta
+   - ❌ Difícil gerenciar mudanças
+   - ❌ Overhead desnecessário
+
+3. **Sincronização Dual Manual** ← **ESCOLHIDO**
+   - ✅ Claude executa automaticamente
+   - ✅ Controle de o que sincronizar
+   - ✅ Simples de entender
+   - ✅ Template sempre atualizado
+   - ⚠️ Depende de Claude lembrar
+
+4. **Script de sincronização**
+   - ✅ Automatizado
+   - ❌ Difícil determinar o que é genérico
+   - ❌ Pode sincronizar código específico
+   - ❌ Manutenção complexa
+
+### Consequências
+
+**Positivas:**
+- ✅ **Template sempre atualizado** com melhores práticas
+- ✅ **Conhecimento acumulativo** propaga para futuros projetos
+- ✅ **Zero esforço extra** - Claude faz automaticamente
+- ✅ **Cada projeto melhora o template** - efeito composto
+- ✅ **Novos projetos começam mais avançados** - herdam melhorias
+- ✅ **Economia de tempo exponencial** - quanto mais projetos, maior o ganho
+
+**Negativas:**
+- ⚠️ Claude precisa **sempre lembrar** de sincronizar
+- ⚠️ Risco de sincronizar código específico por engano
+- ⚠️ Commits duplicados em dois repos
+
+**Neutras:**
+- 📝 Requer disciplina de Claude
+- 📝 ADR-INDEX.md terá versões diferentes (projeto vs template)
+
+### Implementação
+
+**Protocolo de Sincronização para Claude:**
+
+#### Passo 1: Identificar Tipo de Mudança
+
+Ao criar/modificar algo, perguntar:
+- É genérico ou específico?
+- Útil para qualquer projeto ou só este?
+
+#### Passo 2: Aplicar no Projeto Atual
+
+```bash
+# Criar/modificar no projeto atual
+# Testar
+# Commitar em testing-odoo-15-sr
+```
+
+#### Passo 3: Sincronizar com Template (se genérico)
+
+```bash
+# Copiar para Claude-especial
+cd /Users/andersongoliveira/Claude-especial
+# Adaptar (remover partes específicas)
+# Commitar
+git add .
+git commit -m "feat: [descrição da melhoria]"
+git push origin main
+```
+
+#### Passo 4: Documentar Sincronização
+
+Em `.claude/memory/learnings/sync-log.md`:
+```markdown
+### YYYY-MM-DD: [Mudança]
+- **Adicionado:** [O que]
+- **Repos:** testing-odoo-15-sr + Claude-especial
+- **Commit projeto:** [hash]
+- **Commit template:** [hash]
+```
+
+**Checklist para Claude (a cada mudança):**
+
+```
+[ ] Mudança criada/testada no projeto atual?
+[ ] É genérica o suficiente para template?
+[ ] Se SIM:
+    [ ] Copiar para Claude-especial
+    [ ] Remover partes específicas
+    [ ] Testar se faz sentido genérico
+    [ ] Commitar em Claude-especial
+    [ ] Push para GitHub
+    [ ] Documentar em sync-log.md
+[ ] Se NÃO:
+    [ ] Apenas commitar no projeto atual
+```
+
+### Exemplos de Sincronização
+
+**Exemplo 1: Novo Skill Genérico**
+
+```bash
+# Criado: .claude/skills/backup-manager/
+# Propósito: Gerenciar backups (útil em qualquer projeto)
+
+# 1. Aplicar no projeto atual
+cp -r .claude/skills/backup-manager /path/to/testing-odoo-15-sr/.claude/skills/
+
+# 2. Sincronizar com template
+cp -r .claude/skills/backup-manager /Users/andersongoliveira/Claude-especial/.claude/skills/
+
+# 3. Commitar ambos
+cd /Users/andersongoliveira/testing-odoo-15-sr
+git add .claude/skills/backup-manager
+git commit -m "feat(skill): add backup-manager skill"
+git push
+
+cd /Users/andersongoliveira/Claude-especial
+git add .claude/skills/backup-manager
+git commit -m "feat(skill): add backup-manager skill"
+git push
+```
+
+**Exemplo 2: Melhoria em Protocolo**
+
+```bash
+# Modificado: .claude/memory/AUTO-LEARNING-PROTOCOL.md
+# Mudança: Adicionada seção sobre validação de inputs
+
+# 1. Modificar no projeto atual
+# (já feito)
+
+# 2. Copiar para template
+cp .claude/memory/AUTO-LEARNING-PROTOCOL.md /Users/andersongoliveira/Claude-especial/.claude/memory/
+
+# 3. Commitar ambos
+# (similar ao exemplo 1)
+```
+
+**Exemplo 3: Script Específico (NÃO sincronizar)**
+
+```bash
+# Criado: .claude/scripts/bash/odoo-deploy-production.sh
+# Propósito: Deploy específico de Odoo (não genérico)
+
+# 1. Aplicar APENAS no projeto atual
+git add .claude/scripts/bash/odoo-deploy-production.sh
+git commit -m "feat(script): add Odoo production deploy script"
+git push
+
+# 2. NÃO copiar para template (é específico)
+```
+
+### Integração com Protocolos Existentes
+
+**AUTO-LEARNING-PROTOCOL.md** atualizado com:
+
+```markdown
+**✅ SEMPRE:**
+...
+8. **QUANDO criar algo reutilizável:** Sincronizar com Claude-especial
+9. **ANTES de commitar:** Verificar se deve ir para template
+```
+
+**THINKING-MODE-PROTOCOL.md** atualizado com:
+
+```markdown
+**Ativar thinking mode quando:**
+...
+- Criando skill/script genérico (pensar se vai para template)
+- Modificando protocolos (sempre sincronizar)
+```
+
+### Quando Reavaliar
+
+**Considerar automação via script se:**
+- Volume de sincronizações > 10/semana
+- Padrão claro de o que sincronizar
+- Custo de manutenção manual muito alto
+
+**Considerar Git submodule se:**
+- Múltiplos projetos usando template
+- Mudanças frequentes no core
+- Necessidade de versionamento sincronizado
+
+### Métricas de Sucesso
+
+**Mensal:**
+- 📊 Quantas melhorias foram sincronizadas?
+- 📊 Template está atualizado?
+- 📊 Esquecemos de sincronizar algo importante?
+
+**Por Projeto:**
+- 📊 Novo projeto herda quantas melhorias?
+- 📊 Tempo economizado vs fazer do zero?
+
+### Referências
+
+- **Template:** https://github.com/neoand/Claude-especial
+- **Projeto:** https://github.com/neoand/testing-odoo-15-sr
+- **Sync Log:** `.claude/memory/learnings/sync-log.md`
+
+---
+
 ## 📊 Estatísticas
 
-**Total de ADRs:** 5
-**Aceitos:** 4
+**Total de ADRs:** 6
+**Aceitos:** 5
 **Propostos:** 1
 **Rejeitados:** 0
 **Obsoletos:** 0
