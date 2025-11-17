@@ -22,14 +22,15 @@ Sempre que sincronizar algo com o template, documentar aqui:
 
 ## 📊 Log de Sincronizações
 
-### 2025-11-17: ADR-006 Sincronização Dual
+### 2025-11-17: ADR-006 Sincronização Dual → ADR-003 Template
 
 - **Tipo:** ADR
-- **Adicionado:** ADR-006 sobre protocolo de sincronização dual
-- **Repos:** testing-odoo-15-sr (adicionado)
-- **Commit projeto:** [pendente]
-- **Commit template:** [pendente - será adicionado]
+- **Adicionado:** Protocolo de sincronização dual
+- **Repos:** testing-odoo-15-sr + Claude-especial
+- **Commit projeto:** 0be1d4d (ADR-006)
+- **Commit template:** f06dd6c (ADR-003)
 - **Razão:** Protocolo fundamental para manter template atualizado
+- **Adaptação:** ADR-006 (específico) → ADR-003 (genérico para template)
 
 ### 2025-11-17: Criação Inicial do Template
 
@@ -51,11 +52,12 @@ Sempre que sincronizar algo com o template, documentar aqui:
 
 ## 📈 Estatísticas
 
-**Total de sincronizações:** 2
+**Total de sincronizações:** 3
 **Skills sincronizados:** 1 (tool-inventory)
 **Scripts sincronizados:** 0
 **Protocolos sincronizados:** 2 (AUTO-LEARNING, THINKING-MODE)
-**ADRs sincronizados:** 2 (ADR-001, ADR-002)
+**ADRs sincronizados:** 3 (ADR-001→001, ADR-002→002, ADR-006→003)
+**Learnings sincronizados:** 2 (git-workflow, sync-log)
 
 **Última sincronização:** 2025-11-17
 
@@ -63,9 +65,10 @@ Sempre que sincronizar algo com o template, documentar aqui:
 
 ## 🎯 Próximas Sincronizações Planejadas
 
-- [ ] ADR-006 para template
-- [ ] sync-log.md atualizado em ambos
-- [ ] Protocolos atualizados com checklist de sincronização
+- [x] ADR-006 para template (feito como ADR-003)
+- [x] sync-log.md atualizado em ambos
+- [x] Protocolos atualizados com checklist de sincronização
+- [ ] Aguardando novas melhorias genéricas...
 
 ---
 
