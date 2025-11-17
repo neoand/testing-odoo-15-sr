@@ -32,6 +32,16 @@ Sempre que sincronizar algo com o template, documentar aqui:
 - **Razão:** Protocolo fundamental para manter template atualizado
 - **Adaptação:** ADR-006 (específico) → ADR-003 (genérico para template)
 
+### 2025-11-17: ADR-007 Performance → ADR-004 Template
+
+- **Tipo:** ADR
+- **Adicionado:** Estratégia de paralelização máxima
+- **Repos:** testing-odoo-15-sr + Claude-especial
+- **Commit projeto:** 656d19e (ADR-007)
+- **Commit template:** e45b0ae (ADR-004)
+- **Razão:** Otimizações críticas para Claude Max 20x - 5-10x mais rápido
+- **Impacto:** Tool calls paralelos, bash paralelo, headless, worktrees
+
 ### 2025-11-17: Criação Inicial do Template
 
 - **Tipo:** Template Completo
@@ -52,11 +62,11 @@ Sempre que sincronizar algo com o template, documentar aqui:
 
 ## 📈 Estatísticas
 
-**Total de sincronizações:** 3
+**Total de sincronizações:** 4
 **Skills sincronizados:** 1 (tool-inventory)
 **Scripts sincronizados:** 0
 **Protocolos sincronizados:** 2 (AUTO-LEARNING, THINKING-MODE)
-**ADRs sincronizados:** 3 (ADR-001→001, ADR-002→002, ADR-006→003)
+**ADRs sincronizados:** 4 (ADR-001→001, ADR-002→002, ADR-006→003, ADR-007→004)
 **Learnings sincronizados:** 2 (git-workflow, sync-log)
 
 **Última sincronização:** 2025-11-17
