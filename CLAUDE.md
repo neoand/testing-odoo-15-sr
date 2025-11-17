@@ -60,6 +60,7 @@
 7. **ANTES de criar script:** Verificar `.claude/scripts/` via skill `tool-inventory`, reutilizar se existir
 8. **QUANDO criar algo reutilizável:** Sincronizar com Claude-especial (ver ADR-006)
 9. **ANTES de commitar:** Verificar se deve ir para template
+10. **⚡ SEMPRE PARALELIZAR:** Tool calls independentes em UMA mensagem (ADR-007)
 
 ### Checklist Pré-Execução
 
@@ -142,6 +143,43 @@
 - **Kolmeya API:** SMS gateway principal
 - **PostgreSQL:** Queries otimizadas, índices críticos
 - **Mail:** Chatter customizado para SMS
+
+---
+
+## ⚡ OTIMIZAÇÕES DE PERFORMANCE (CRÍTICO!)
+
+### Princípio Fundamental: PARALELIZAR SEMPRE!
+
+**Usuário tem Claude Max 20x - MAXIMIZAR VELOCIDADE!**
+
+**Checklist Rápido (A CADA Operação):**
+
+```
+[ ] Vou ler múltiplos arquivos? → UMA mensagem com todos Reads
+[ ] Vou executar múltiplos bash? → Verificar independência → & e wait
+[ ] Vou criar/editar múltiplos arquivos? → UMA mensagem com todos
+[ ] Commits em múltiplos repos? → Bash paralelo com &
+```
+
+**Regras de Ouro:**
+
+1. **Tool Calls Paralelos:**
+   - ✅ Read 5 arquivos → UMA mensagem (5x mais rápido)
+   - ✅ Write 3 arquivos → UMA mensagem (3x mais rápido)
+   - ❌ NUNCA fazer calls sequenciais se independentes!
+
+2. **Bash Paralelo:**
+   - ✅ `git status & git diff & git log & wait`
+   - ✅ `(cd repo1 && git push) & (cd repo2 && git push) & wait`
+   - ❌ NUNCA sequencial se independente!
+
+3. **Identificar Dependências:**
+   - Independentes → PARALELIZAR
+   - Dependentes → Sequencial (óbvio)
+
+**Objetivo:** Operações 5-10x mais rápidas!
+
+**Referência:** Ver ADR-007-PERFORMANCE.md para detalhes completos
 
 ---
 
