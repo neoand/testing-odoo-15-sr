@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="category_chat_access_helpdesk" model="ir.module.category">
+            <field name="name">HelpDesk Access</field>
+            <field name="sequence">11</field>
+            <field name="parent_id" ref="whatsapp_connector.category_chatroom"/>
+        </record>
+
+        <record id="chat_access_helpdesk_empty" model="res.groups">
+            <field name="name">Chat without assigned team</field>
+            <field name="category_id" ref="category_chat_access_helpdesk"/>
+        </record>
+
+        <record id="chat_access_helpdesk_team" model="res.groups">
+            <field name="name">Only Chat with my team</field>
+            <field name="category_id" ref="category_chat_access_helpdesk"/>
+            <field name="implied_ids" eval="[(4, ref('whatsapp_connector_access_helpdesk.chat_access_helpdesk_empty'))]"/>
+        </record>
+
+    </data>
+</odoo>

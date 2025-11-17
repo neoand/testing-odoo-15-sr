@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acrux_chat_conversation_user,acrux.chat.conversation.user,whatsapp_connector.model_acrux_chat_conversation,base.group_user,1,1,1,0
+access_acrux_chat_message_user,acrux.chat.message.user,whatsapp_connector.model_acrux_chat_message,base.group_user,1,1,1,0
+access_acrux_chat_connector_user,acrux.chat.connector.user,whatsapp_connector.model_acrux_chat_connector,base.group_user,1,0,0,0
+access_acrux_chat_connector_manager,acrux.chat.connector.manager,whatsapp_connector.model_acrux_chat_connector,base.group_system,1,1,1,1

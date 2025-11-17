@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="view_chatroom_sms_log_tree" model="ir.ui.view">
+            <field name="name">chatroom.sms.log.tree</field>
+            <field name="model">chatroom.sms.log</field>
+            <field name="arch" type="xml">
+                <tree string="Logs de SMS" decoration-success="status == 'delivered'"
+                      decoration-danger="status == 'failed'" decoration-muted="status == 'pending'">
+                    <field name="create_date" string="Data/Hora"/>
+                    <field name="phone" string="Telefone"/>
+                    <field name="message" string="Mensagem" widget="char" limit="50"/>
+                    <field name="status" string="Status" widget="badge"
+                           decoration-success="status == 'delivered'"
+                           decoration-warning="status == 'pending'"
+                           decoration-danger="status == 'failed'"/>
+                    <field name="delivered_at" string="Entregue em"/>
+                    <field name="cost" string="Custo" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_chatroom_sms_log_form" model="ir.ui.view">
+            <field name="name">chatroom.sms.log.form</field>
+            <field name="model">chatroom.sms.log</field>
+            <field name="arch" type="xml">
+                <form string="Log de SMS">
+                    <header>
+                        <field name="status" widget="statusbar" statusbar_visible="pending,sent,delivered"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group name="main_info">
+                                <field name="phone" required="1"/>
+                                <field name="room_id"/>
+                                <field name="conversation_id"/>
+                                <field name="reference"/>
+                            </group>
+                            <group name="tracking_info">
+                                <field name="request_id" readonly="1"/>
+                                <field name="message_id" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="message" widget="text" required="1"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Detalhes" name="details">
+                                <group>
+                                    <group name="timing">
+                                        <field name="sent_at"/>
+                                        <field name="delivered_at" attrs="{'invisible': [('status', '!=', 'delivered')]}"/>
+                                        <field name="delivery_time" attrs="{'invisible': [('status', '!=', 'delivered')]}"/>
+                                    </group>
+                                    <group name="status_info">
+                                        <field name="status_code"/>
+                                        <field name="status_message"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group name="cost_info">
+                                        <field name="cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="segment_id"/>
+                                    </group>
+                                    <group name="message_info">
+                                        <field name="message_length"/>
+                                        <field name="sms_parts"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Técnico" name="technical">
+                                <group>
+                                    <group name="request_info">
+                                        <field name="request_id"/>
+                                        <field name="message_id"/>
+                                        <field name="webhook_received_at"/>
+                                    </group>
+                                    <group name="error_info">
+                                        <field name="error_message" widget="text" attrs="{'invisible': [('status', '!=', 'failed')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Estatísticas" name="statistics">
+                                <group>
+                                    <group name="stats">
+                                        <field name="delivery_time" string="Tempo de Entrega (min)"
+                                               attrs="{'invisible': [('delivery_time', '=', 0)]}"/>
+                                        <field name="message_length" string="Tamanho da Mensagem"/>
+                                        <field name="sms_parts" string="Partes do SMS"/>
+                                    </group>
+                                    <group name="additional_stats">
+                                        <field name="create_date" string="Data de Criação" readonly="1"/>
+                                        <field name="write_date" string="Última Atualização" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_chatroom_sms_log_search" model="ir.ui.view">
+            <field name="name">chatroom.sms.log.search</field>
+            <field name="model">chatroom.sms.log</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Logs de SMS">
+                    <field name="phone" string="Telefone" filter_domain="[('phone', 'ilike', self)]"/>
+                    <field name="message" string="Mensagem" filter_domain="[('message', 'ilike', self)]"/>
+                    <field name="room_id" string="Sala"/>
+                    <field name="conversation_id" string="Conversa"/>
+                    <field name="status" string="Status"/>
+
+                    <separator/>
+
+                    <filter string="Hoje" name="today"
+                            domain="[('create_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),
+                                     ('create_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <filter string="Esta Semana" name="this_week"
+                            domain="[('create_date', '&gt;=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d')),
+                                     ('create_date', '&lt;=', (context_today() + datetime.timedelta(days=6-context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+
+                    <separator/>
+
+                    <filter string="Pendente" name="pending" domain="[('status', '=', 'pending')]"/>
+                    <filter string="Entregue" name="delivered" domain="[('status', '=', 'delivered')]"/>
+                    <filter string="Falhou" name="failed" domain="[('status', '=', 'failed')]"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Agrupar Por">
+                        <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
+                        <filter string="Data" name="group_by_date" context="{'group_by': 'create_date:day'}"/>
+                        <filter string="Sala" name="group_by_room" context="{'group_by': 'room_id'}"/>
+                        <filter string="Conversa" name="group_by_conversation" context="{'group_by': 'conversation_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_chatroom_sms_log" model="ir.actions.act_window">
+            <field name="name">Logs de SMS</field>
+            <field name="res_model">chatroom.sms.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_chatroom_sms_log_search"/>
+            <field name="context">{
+                'search_default_this_week': 1,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Nenhum log de SMS encontrado
+                </p>
+                <p>
+                    Os logs de SMS enviados aparecerão aqui automaticamente.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_chatroom_sms_log"
+                  name="Logs de SMS"
+                  parent="chatroom.menu_chatroom_root"
+                  action="action_chatroom_sms_log"
+                  sequence="20"/>
+
+    </data>
+</odoo>

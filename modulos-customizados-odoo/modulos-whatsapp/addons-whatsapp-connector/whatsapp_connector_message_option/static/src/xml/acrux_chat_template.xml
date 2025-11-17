@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="acrux_chat_message">
+        <t t-jquery="div#o_chat_msg_content" t-operation="before">
+            <div class="acrux_chat_message_quote" />
+        </t>
+        <t t-jquery="div#o_chat_msg_content" t-operation="after">
+            <span class="o_chat_message_options" t-att-data-id="widget.id">
+                <svg viewBox="0 0 18 18" width="18" height="18" class="">
+                    <path fill="currentColor" d="M3.3 4.6L9 10.3l5.7-5.7 1.6 1.6L9 13.4 1.7 6.2l1.6-1.6z"></path>
+                </svg>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="acrux_chat_toolbox">
+        <t t-jquery="div.o_chat_toolbox_main" t-operation="before">
+            <div class="o_chat_toolbox_message_quote">
+                <div class="o_chat_toolbox_message_quote_content"></div>
+                <span class="o_chat_toolbox_close_message o_hidden">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                        <path fill="currentColor" d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z" />
+                    </svg>
+                </span>
+            </div>
+        </t>
+    </t>
+
+</templates>

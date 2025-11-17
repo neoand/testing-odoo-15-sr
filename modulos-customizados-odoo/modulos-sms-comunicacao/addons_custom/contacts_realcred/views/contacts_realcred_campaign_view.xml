@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+
+    <!-- Tree view for "model" -->
+    <record id="view_contacts_realcred_campaign_tree" model="ir.ui.view">
+        <field name="name">view.contacts.realcred.campaign.tree</field>
+        <field name="model">contacts.realcred.campaign</field>
+        <field name="type">tree</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <tree string="contacts_realcred_campaign_tree" create="true" delete="true" edit="true">
+                <field name="name_campaign" />
+                <field name="state_update_info"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for "model" -->
+    <record id="view_contacts_realcred_campaign_form" model="ir.ui.view">
+        <field name="name">view.contacts.realcred.campaign.form</field>
+        <field name="model">contacts.realcred.campaign</field>
+        <field name="type">form</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <form string="contacts_realcred_campaign_form" create="true" delete="true" edit="true">
+                <header>
+                    <button name="button_show_lines" type="object" string="Consultar a in100" class="btn-primary"  attrs="{'invisible': [('state_update_info', 'in', ['process','updated'])]}"/>
+                    <button name="button_view_detail" type="object" string="Filtrar" class="btn-success"  attrs="{'invisible': [('state_update_info', '!=', 'updated')]}"/>
+                    <field name="state_update_info" widget="statusbar"/>
+                    <button name="action_send_campaign" type="object" string="Enviar campanha KOLMEYA" class="btn-info"/>
+
+                </header>
+                <sheet>
+                    <field name="state_sms" invisible="1"/>
+                    <widget name="web_ribbon" title="Borrador" bg_color="bg-danger" attrs="{'invisible': [('state_sms',  '!=',  'draft'   )]}"/>
+                    <widget name="web_ribbon" title="Enviando" bg_color="bg-warning" attrs="{'invisible': [('state_sms', '!=', 'process')]}"/>
+                    <widget name="web_ribbon" title="Enviado a KOLMEYA"  attrs="{'invisible': [('state_sms', '!=' , 'finished')]}"/>
+                    <div class="oe_title">
+                        <label for="name_campaign" class="oe_edit_only" />
+                        <h1>
+                            <field name="name_campaign" class="oe_inline"
+                                placeholder="name_campaign" />
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page name="partners" string="Contactos">
+                            <field name="contacts_realcred_campaign_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="updated_limit"/>
+                                    <field name="vi_rmi"/>
+                                    <field name="margemDisponivel"/>
+                                    <field name="margemDisponivelCartao"/>
+                                    <field name="valorLimiteCartao"/>
+                                    <field name="elegivelEmprestimo"/>
+                                    <field name="margemDisponivelRcc"/>
+                                    <field name="valorLimiteRcc"/>
+                                    <field name="cpf"/>
+                                    <field name="telefone1"/>
+                                    <field name="whatsapp1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="content_msg" string="Contenido del Mensaje">
+                            <div>
+                                <h6>Nota</h6>
+                                <p>Para fazer referência à alteração de valores em sua mensagem, use a seguinte nomenclatura.</p>
+                                <p>Para referirse al NOME = <strong style="color:blue !important">|NOME|</strong> </p>
+                                <p>Para referirse al CPF = <strong style="color:blue !important"> |CPF| </strong> </p>
+                                <p>Para referirse al VI_RM = <strong style="color:blue !important">|VI_RM|</strong> </p>
+                                <br/>
+                                <p>Por favor, use essas nomenclaturas exatas, caso contrário, será considerado como texto.</p>
+                            </div>
+                            <field name="message"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view for "model" -->
+    <record id="view_contacts_realcred_campaign_search" model="ir.ui.view">
+        <field name="name">view.contacts.realcred.campaign.search</field>
+        <field name="model">contacts.realcred.campaign</field>
+        <field name="type">search</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <search string="contacts_realcred_campaign_search">
+                <field name="name_campaign" />
+
+            </search>
+        </field>
+    </record>
+
+    <!-- Main window action for "model" -->
+    <record id="action_contacts_realcred_campaign_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Campañas</field>
+        <field name="res_model">contacts.realcred.campaign</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+
+</odoo>

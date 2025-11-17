@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="form_sale_order_notes_wizard" model="ir.ui.view">
+            <field name="name">sale.order.notes.wizard.form</field>
+            <field name="model">sale.order.notes.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Reporte" >
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                      
+                            <field name="ade_ids" >
+                                <tree>
+                                    <field name="ade"/>
+                                    <field name="amount_total"/>
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+
+                            <field name="note"  widget="text"/>
+                           
+                        </group>
+                        <footer >
+                            <button string="Agregar Notas"
+                                class="btn-success"
+                                name="add_notes"
+                                type="object"/>
+
+                            <button string="Cancel"
+                                class="btn-default"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+        
+        <record id="action_sale_order_notes_wizard" model="ir.actions.act_window">
+            <field name="name">Adicionar nota em massa</field>
+            <field name="res_model">sale.order.notes.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="form_sale_order_notes_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Adicionar nota em massa"
+                  id="menu_sales_order_notes_wizzard"
+                  parent="crm.crm_menu_root"
+                  sequence="10"
+                  groups="sales_team.group_sale_manager"
+                  action="action_sale_order_notes_wizard"
+                  />
+
+</odoo>

@@ -1,0 +1,183 @@
+# ========================================
+# .gitignore para Odoo 15 Testing
+# Criado: 2025-11-17
+# ========================================
+
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==================== Odoo Específico ====================
+# Filestore (pode ser muito grande!)
+filestore/
+sessions/
+session_dir/
+
+# Logs (podem ficar enormes)
+*.log
+logs/
+*.log.*
+
+# Backups
+*.dump
+*.sql
+*.backup
+backups/
+
+# Addons temporários
+addons/*/
+
+# ==================== Configuração Sensível ====================
+# NUNCA commitar credenciais!
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.json
+config.json
+
+# Odoo config com senhas
+odoo.conf
+odoo-server.conf
+# Mas permite versionar um template
+!odoo.conf.template
+!odoo-server.conf.template
+
+# ==================== IDE ====================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+
+# Sublime
+*.sublime-*
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ==================== OS ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==================== Database ====================
+# PostgreSQL
+*.sql
+*.dump
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# ==================== Temporários ====================
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# ==================== Node / NPM (se usar) ====================
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# ==================== Documentação Gerada ====================
+# Sphinx
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# ==================== Testing ====================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ==================== Claude Code (Manter!) ====================
+# IMPORTANTE: NÃO ignorar .claude/ - queremos versionar!
+# .claude/
+
+# Mas ignorar alguns arquivos temporários se houver
+.claude/.cache/
+.claude/tmp/
+
+# ==================== Git ====================
+*.orig
+*.rej
+
+# ==================== Odoo Compilados ====================
+# Python bytecode
+*.pyc
+*.pyo
+
+# Translations compiladas
+*.mo
+
+# ==================== Diversos ====================
+# Certificados SSL/TLS
+*.crt
+*.cer
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Large files
+*.mp4
+*.avi
+*.mov
+*.pdf
+*.xlsx
+*.docx
+
+# ==================== EXCEÇÕES (Arquivos para INCLUIR) ====================
+# Forçar inclusão de arquivos importantes mesmo que matched acima
+!.gitignore
+!.gitattributes
+!.clauderc
+!.mcp.json
+!README.md
+!CLAUDE.md
+
+# ==================== FIM ====================

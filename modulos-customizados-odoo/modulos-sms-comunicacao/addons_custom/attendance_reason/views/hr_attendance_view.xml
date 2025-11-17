@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="view_attendance_tree_reasons_view" model="ir.ui.view">
+            <field name="name">hr.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='check_in']" position="after">
+                    <field name="reason_for_check_in" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='check_out']" position="after">
+                    <field name="reason_for_check_out" readonly="1"/>                    
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_attendance_view_form_reasons_view" model="ir.ui.view">
+             <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='check_out']" position="after">
+                    <field name="reason_for_check_in" readonly="1"/>
+                    <field name="reason_for_check_out" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

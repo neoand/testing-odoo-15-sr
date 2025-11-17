@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Using standard Odoo sms.template model -->
+    <record id="view_sms_template_tree" model="ir.ui.view">
+        <field name="name">sms.template.tree</field>
+        <field name="model">sms.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="model"/>
+                <field name="lang"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sms_template_form" model="ir.ui.view">
+        <field name="name">sms.template.form</field>
+        <field name="model">sms.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="model_id"/>
+                            <field name="model" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="lang"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="body" widget="text" placeholder="Use {{ object.name }}, {{ user.name }}, etc. (Jinja2 syntax)"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sms_template" model="ir.actions.act_window">
+        <field name="name">SMS Templates</field>
+        <field name="res_model">sms.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sms_templates" name="Templates"
+              parent="menu_sms_root" action="action_sms_template" sequence="15"/>
+</odoo>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View Wizard -->
+        <record id="view_chatroom_send_bulk_sms_form" model="ir.ui.view">
+            <field name="name">chatroom.send.bulk.sms.form</field>
+            <field name="model">chatroom.send.bulk.sms</field>
+            <field name="arch" type="xml">
+                <form string="Envio de SMS em Massa">
+                    <header>
+                        <h3 class="oe_title">
+                            <label string="Envio de SMS em Massa"/>
+                        </h3>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group name="recipients">
+                                <field name="room_ids" widget="many2many_tags"
+                                       placeholder="Selecione as salas que receberão o SMS"
+                                       options="{'color_field': 'color', 'no_create': True}"/>
+                                <field name="segment_id" placeholder="Selecione um segmento (opcional)"
+                                       options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="template_id" placeholder="Selecione um template (opcional)"
+                                       options="{'no_create': True}"/>
+                            </group>
+                        </group>
+
+                        <group string="Mensagem">
+                            <field name="message" widget="text" nolabel="1"
+                                   placeholder="Digite a mensagem que será enviada. Use {nome}, {telefone}, etc. para personalização."
+                                   options="{'height': 100}"/>
+                        </group>
+
+                        <group>
+                            <group name="options" string="Opções de Envio">
+                                <field name="test_mode" widget="boolean_toggle"/>
+                                <field name="skip_blacklist" widget="boolean_toggle"/>
+                                <field name="skip_not_disturb" widget="boolean_toggle"/>
+                            </group>
+
+                            <group name="schedule" string="Agendamento">
+                                <field name="schedule_send" widget="boolean_toggle"/>
+                                <field name="scheduled_date"
+                                       attrs="{'invisible': [('schedule_send', '=', False)], 'required': [('schedule_send', '=', True)]}"/>
+                            </group>
+                        </group>
+
+                        <separator string="Estatísticas de Envio"/>
+
+                        <group>
+                            <group name="stats">
+                                <field name="total_rooms" readonly="1" string="Total de Salas Selecionadas"/>
+                                <field name="valid_rooms" readonly="1" string="Salas Válidas para Envio"
+                                       help="Salas que passaram pelos filtros (blacklist, não perturbe, etc)"/>
+                            </group>
+                            <group name="cost">
+                                <field name="estimated_cost" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <div class="alert alert-info" role="alert" attrs="{'invisible': [('test_mode', '=', False)]}">
+                            <i class="fa fa-info-circle"/> <strong>Modo Teste Ativo:</strong>
+                            Apenas os primeiros 5 contatos receberão o SMS.
+                        </div>
+
+                        <div class="alert alert-warning" role="alert" attrs="{'invisible': ['|', ('total_rooms', '=', 0), ('valid_rooms', '&gt;', 0)]}">
+                            <i class="fa fa-warning"/> <strong>Atenção:</strong>
+                            Nenhuma sala válida para envio. Verifique os filtros de blacklist e não perturbe.
+                        </div>
+
+                    </sheet>
+
+                    <footer>
+                        <button name="action_preview" type="object"
+                                string="Pré-visualizar" class="btn-secondary"
+                                icon="fa-eye"
+                                help="Visualiza como ficará a mensagem"/>
+
+                        <button name="action_send_sms" type="object"
+                                string="Enviar" class="oe_highlight"
+                                icon="fa-paper-plane"
+                                attrs="{'invisible': [('schedule_send', '=', True)]}"
+                                help="Envia o SMS imediatamente"/>
+
+                        <button name="action_schedule_sms" type="object"
+                                string="Agendar" class="oe_highlight"
+                                icon="fa-clock-o"
+                                attrs="{'invisible': [('schedule_send', '=', False)]}"
+                                help="Agenda o envio para data/hora especificada"/>
+
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_chatroom_send_bulk_sms" model="ir.actions.act_window">
+            <field name="name">Enviar SMS em Massa</field>
+            <field name="res_model">chatroom.send.bulk.sms</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="chatroom.model_chatroom_room"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+        <!-- Menu Action -->
+        <menuitem id="menu_chatroom_send_bulk_sms"
+                  name="Envio em Massa"
+                  parent="chatroom.menu_chatroom_root"
+                  action="action_chatroom_send_bulk_sms"
+                  sequence="30"/>
+
+    </data>
+</odoo>

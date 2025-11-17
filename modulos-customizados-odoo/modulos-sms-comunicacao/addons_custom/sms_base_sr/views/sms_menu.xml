@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu raiz SMS com ícone -->
+    <menuitem id="menu_sms_root"
+              name="SMS"
+              sequence="100"
+              web_icon="sms_base_sr,static/description/icon.png"/>
+
+    <record id="action_sms_message" model="ir.actions.act_window">
+        <field name="name">SMS Messages</field>
+        <field name="res_model">sms.message</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sms_messages"
+              name="Messages"
+              parent="menu_sms_root"
+              action="action_sms_message"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="inherit_view_attendance_tree_gs_hr_attendance" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit.gs.attendance</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="in_hour" widget="float_time"/>
+                <field name="state"/>
+                <field name="missing" invisible="1"/>
+                <field name="allow_edit" invisible="1"/>
+            </xpath>
+
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">state == 'missing' </attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='check_in']" position="attributes">
+                <attribute name="attrs">{'readonly': [('allow_edit', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('allow_edit', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='check_out']" position="attributes">
+                <attribute name="attrs">{'readonly': [('allow_edit', '=', False)]}</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+    <record id="inherit_hr_attendance_view_filter_gs_attendance" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit.gs.attendance</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='department_id']" position="after">
+                <filter string="Today" name="today" domain="[('check_in', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('check_in','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

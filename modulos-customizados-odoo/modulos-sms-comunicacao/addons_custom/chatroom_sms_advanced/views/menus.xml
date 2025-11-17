@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Main Menu: SMS Advanced -->
+    <menuitem id="menu_sms_advanced_root"
+              name="SMS Advanced"
+              sequence="50"
+              web_icon="chatroom_sms_advanced,static/description/icon.png"
+              groups="group_sms_advanced_user"/>
+
+    <!-- Submenu: Dashboard -->
+    <menuitem id="menu_sms_advanced_dashboard"
+              name="Dashboard"
+              parent="menu_sms_advanced_root"
+              action="action_sms_dashboard"
+              sequence="10"/>
+
+    <!-- Submenu: Campaigns -->
+    <menuitem id="menu_sms_advanced_campaigns"
+              name="Campaigns"
+              parent="menu_sms_advanced_root"
+              action="action_sms_campaign"
+              sequence="20"/>
+
+    <!-- Submenu: Scheduled SMS -->
+    <menuitem id="menu_sms_advanced_scheduled"
+              name="Scheduled SMS"
+              parent="menu_sms_advanced_root"
+              action="action_sms_scheduled"
+              sequence="30"/>
+
+    <!-- Submenu: Send Bulk SMS -->
+    <menuitem id="menu_sms_advanced_bulk_send"
+              name="Send Bulk SMS"
+              parent="menu_sms_advanced_root"
+              action="action_sms_bulk_send"
+              sequence="40"/>
+
+    <!-- Separator -->
+    <menuitem id="menu_sms_advanced_separator"
+              name="Configuration"
+              parent="menu_sms_advanced_root"
+              sequence="100"
+              groups="group_sms_advanced_manager"/>
+
+    <!-- Submenu: Blacklist -->
+    <menuitem id="menu_sms_advanced_blacklist"
+              name="Blacklist"
+              parent="menu_sms_advanced_separator"
+              action="action_sms_blacklist"
+              sequence="110"
+              groups="group_sms_advanced_manager"/>
+
+</odoo>

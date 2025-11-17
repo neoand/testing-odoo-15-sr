@@ -1,0 +1,515 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* crm_products
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-25 07:17+0000\n"
+"PO-Revision-Date: 2023-07-25 07:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__ade
+msgid "ADE"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_agency_regis
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__agency_regis
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__agency_regis
+#: model:ir.model.fields,field_description:crm_products.field_res_users__agency_regis
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_agency_regis
+msgid "Agência e dígito"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__name
+#: model:ir.model.fields,field_description:crm_products.field_sale_order_line__product_bank
+#: model_terms:ir.ui.view,arch_db:crm_products.product_template_only_form_view_inherint
+msgid "Banco"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_product__bank
+#: model:ir.model.fields,field_description:crm_products.field_product_template__bank
+msgid "Bank"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__reception_type__c/c
+msgid "C/C"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__reception_type__c/p
+msgid "C/P"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__cpf
+#: model_terms:ir.ui.view,arch_db:crm_products.mt_wizzard_api_form
+msgid "CPF"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.mt_wizzard_api_form
+msgid "Cancelar ação"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__name
+#: model:ir.model.fields,field_description:crm_products.field_product_product__categoria
+#: model:ir.model.fields,field_description:crm_products.field_product_template__categoria
+msgid "Categoria"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.mt_wizzard_api_form
+msgid "Consulta Margem"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_mt_wizzard_apimargem
+msgid "Consulta de Margem"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.mt_wizzard_api_form
+msgid "Consultar"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+msgid "Consultar Margem"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_product__convenio
+#: model:ir.model.fields,field_description:crm_products.field_product_template__convenio
+msgid "Convenio"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__name
+msgid "Convenios"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__create_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__create_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__create_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__create_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__create_date
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__create_date
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__create_date
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__create_date
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+#: model_terms:ir.ui.view,arch_db:crm_products.res_partner_view_form_inherint
+#: model_terms:ir.ui.view,arch_db:crm_products.sale_view_order_form_inherint
+msgid "Dados Contato"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_data_despacho_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__data_despacho_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__data_despacho_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_users__data_despacho_beneficio
+msgid "Data Despacho Beneficio"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_data_emissao
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__data_emissao
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__data_emissao
+#: model:ir.model.fields,field_description:crm_products.field_res_users__data_emissao
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_data_emissao
+msgid "Data Emissão RG"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_data_despacho_beneficio_desbloqueo
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__data_despacho_beneficio_desbloqueo
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__data_despacho_beneficio_desbloqueo
+#: model:ir.model.fields,field_description:crm_products.field_res_users__data_despacho_beneficio_desbloqueo
+msgid "Data de Desbloqueio"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.res_partner_view_form_inherint
+msgid "Detalle de Margem"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__display_name
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__display_name
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__display_name
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__display_name
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__marital__divorced
+msgid "Divorced"
+msgstr "Divorciado(a)"
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+msgid "E.g. Monthly"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_especie_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__especie_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__especie_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_users__especie_beneficio
+msgid "Especie Beneficio"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_marital
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__marital
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__marital
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_marital
+msgid "Estado Civil"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_state_solicitud
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__state_solicitud
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__state_solicitud
+#: model:ir.model.fields,field_description:crm_products.field_res_users__state_solicitud
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_state_solicitud
+msgid "Estado de Solicitação do Benefício"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__id
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__id
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__id
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__id
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__id
+msgid "ID"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem____last_update
+#: model:ir.model.fields,field_description:crm_products.field_product_bank____last_update
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria____last_update
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio____last_update
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__write_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__write_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__write_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__write_uid
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__write_date
+#: model:ir.model.fields,field_description:crm_products.field_product_bank__write_date
+#: model:ir.model.fields,field_description:crm_products.field_product_categoria__write_date
+#: model:ir.model.fields,field_description:crm_products.field_product_convenio__write_date
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead/Oportunidade"
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__marital__cohabitant
+msgid "Legal Cohabitant"
+msgstr "Coabitante Legal"
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+#: model_terms:ir.ui.view,arch_db:crm_products.res_partner_view_form_inherint
+msgid "Margem"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_margem_disponivel
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__margem_disponivel
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__margem_disponivel
+#: model:ir.model.fields,field_description:crm_products.field_res_users__margem_disponivel
+msgid "Margem Disponivel"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_margem_disponivel_cartao
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__margem_disponivel_cartao
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__margem_disponivel_cartao
+#: model:ir.model.fields,field_description:crm_products.field_res_users__margem_disponivel_cartao
+msgid "Margem Disponivel Cartao"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_margem_disponivel_rcc
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__margem_disponivel_rcc
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__margem_disponivel_rcc
+#: model:ir.model.fields,field_description:crm_products.field_res_users__margem_disponivel_rcc
+msgid "Margem Disponivel Rcc"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__marital__married
+msgid "Married"
+msgstr "Casado(a)"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_matricula_1
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__matricula_1
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__matricula_1
+#: model:ir.model.fields,field_description:crm_products.field_res_users__matricula_1
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_matricula_1
+msgid "Matrícula 1"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_matricula_2
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__matricula_2
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__matricula_2
+#: model:ir.model.fields,field_description:crm_products.field_res_users__matricula_2
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_matricula_2
+msgid "Matrícula 2"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_account_regis
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__account_regis
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__account_regis
+#: model:ir.model.fields,field_description:crm_products.field_res_users__account_regis
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_account_regis
+msgid "N. da conta e digito"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__nb
+#: model_terms:ir.ui.view,arch_db:crm_products.mt_wizzard_api_form
+msgid "NB"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_nacionalidade
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__nacionalidade
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__nacionalidade
+#: model:ir.model.fields,field_description:crm_products.field_res_users__nacionalidade
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_nacionalidade
+msgid "Nacionalidade"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_naturalidade
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__naturalidade
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__naturalidade
+#: model:ir.model.fields,field_description:crm_products.field_res_users__naturalidade
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_naturalidade
+msgid "Naturalidade"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_mother_name
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__mother_name
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__mother_name
+#: model:ir.model.fields,field_description:crm_products.field_res_users__mother_name
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_mother_name
+msgid "Nome da Mãe"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_father_name
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__father_name
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__father_name
+#: model:ir.model.fields,field_description:crm_products.field_res_users__father_name
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_father_name
+msgid "Nome do Pai"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_numero_matricula
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__numero_matricula
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__numero_matricula
+#: model:ir.model.fields,field_description:crm_products.field_res_users__numero_matricula
+msgid "Numero Matricula"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__reception_type__o/p
+msgid "O/P"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_sale_order_line__rc_recurring_plan
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+msgid "Prazo"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_product__prazos
+#: model:ir.model.fields,field_description:crm_products.field_product_template__prazos
+msgid "Prazos"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_procurador
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__procurador
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__procurador
+#: model:ir.model.fields,field_description:crm_products.field_res_users__procurador
+msgid "Procurador"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_product_template
+msgid "Product Template"
+msgstr "Modelo de Produto"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_product_product__promotora
+#: model:ir.model.fields,field_description:crm_products.field_product_promotora__name
+#: model:ir.model.fields,field_description:crm_products.field_product_template__promotora
+#: model:ir.model.fields,field_description:crm_products.field_sale_order_line__product_promotora
+msgid "Promotora"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__res_id
+msgid "Related Document ID"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_mt_wizzard_apimargem__res_model
+msgid "Related Document Model"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linha do pedido de vendas"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_senha_1
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__senha_1
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__senha_1
+#: model:ir.model.fields,field_description:crm_products.field_res_users__senha_1
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_senha_1
+msgid "Senha 1"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_senha_2
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__senha_2
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__senha_2
+#: model:ir.model.fields,field_description:crm_products.field_res_users__senha_2
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_senha_2
+msgid "Senha 2"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__marital__single
+msgid "Single"
+msgstr "Solteiro(a)"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_situacao_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__situacao_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__situacao_beneficio
+#: model:ir.model.fields,field_description:crm_products.field_res_users__situacao_beneficio
+msgid "Situacao Beneficio"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_reception_type
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__reception_type
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__reception_type
+#: model:ir.model.fields,field_description:crm_products.field_res_users__reception_type
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_reception_type
+msgid "Tipo de Recebimento"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__monthly_amount
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+msgid "Valor da Parcela"
+msgstr ""
+
+#. module: crm_products
+#: model_terms:ir.ui.view,arch_db:crm_products.crm_lead_view_form_inherint
+msgid "Valor do Emprestimo"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields.selection,name:crm_products.selection__res_partner__marital__widower
+msgid "Widower"
+msgstr "Viúvo"
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_representante
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__representante
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__representante
+#: model:ir.model.fields,field_description:crm_products.field_res_users__representante
+msgid "cpfRepresentanteLegal"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_product_bank
+msgid "product.bank"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_product_categoria
+msgid "product.categoria"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_product_convenio
+msgid "product.convenio"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model,name:crm_products.model_product_promotora
+msgid "product.promotora"
+msgstr ""
+
+#. module: crm_products
+#: model:ir.model.fields,field_description:crm_products.field_crm_lead__partner_orgao_expedidor
+#: model:ir.model.fields,field_description:crm_products.field_hr_employee_dependent__orgao_expedidor
+#: model:ir.model.fields,field_description:crm_products.field_res_partner__orgao_expedidor
+#: model:ir.model.fields,field_description:crm_products.field_res_users__orgao_expedidor
+#: model:ir.model.fields,field_description:crm_products.field_sale_order__partner_orgao_expedidor
+msgid "Órgão Expedidor"
+msgstr ""

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_bank,crm_products.product.bank,model_product_bank,base.group_user,1,1,1,1
+access_product_promotora,crm_products.product.promotora,model_product_promotora,base.group_user,1,1,1,1
+access_product_categoria,crm_products.product.categoria,model_product_categoria,base.group_user,1,1,1,1
+access_product_convenio,crm_products.product.convenio,model_product_convenio,base.group_user,1,1,1,1
+access_mt_wizzard_apimargem,crm_products.mt.wizzard.apimargem,model_mt_wizzard_apimargem,base.group_user,1,1,1,1
+access_sale_order_notes_wizard,crm_products.sale.order.notes.wizard,model_sale_order_notes_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,37 @@
+from odoo import _, api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
+
+class CrmStageInherint(models.Model):
+
+    _inherit = 'crm.stage'
+
+    teams_allowed_edit = fields.Many2many('crm.team', string='Equipes permitidas editar')
+
+
+
+class CrmInherint(models.Model):
+
+    _inherit = 'crm.lead'
+    stage_edit = fields.Boolean(default=False ,compute='_compute_stage_edit')
+
+    @api.depends('stage_edit', 'stage_id.teams_allowed_edit')
+    def _compute_stage_edit(self):
+        for rec in self:
+            teams_allowed = rec.stage_id.mapped('teams_allowed_edit')
+            user = self.env.user
+            allowed_team_members = self.env['crm.team.member'].search([
+                ('crm_team_id', 'in', teams_allowed.ids),
+                ('user_id', '=', user.id)
+            ])
+            
+            if allowed_team_members:
+                rec.stage_edit = True
+            else:
+                rec.stage_edit = False
+
+    operator_id = fields.Many2one(
+        'res.users', string='Operador',
+        default=False,
+        domain="[('share', '=', False)]",
+        check_company=True, index=True, tracking=True)

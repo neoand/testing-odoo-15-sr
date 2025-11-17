@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View - Extending chatroom.conversation -->
+        <record id="view_chatroom_conversation_form_inherit_sms" model="ir.ui.view">
+            <field name="name">chatroom.conversation.form.inherit.sms</field>
+            <field name="model">chatroom.conversation</field>
+            <field name="inherit_id" ref="chatroom.view_chatroom_conversation_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Adicionar notebook aba SMS Details no final do form -->
+                <xpath expr="//form/sheet" position="inside">
+                    <notebook>
+                        <page string="Detalhes SMS" attrs="{'invisible': [('sms_message_id', '=', False)]}">
+                            <group>
+                                <group name="sms_ids">
+                                    <field name="sms_request_id" readonly="1"/>
+                                    <field name="sms_message_id" readonly="1"/>
+                                    <field name="sms_reference" readonly="1"/>
+                                </group>
+                                <group name="sms_status">
+                                    <field name="sms_status" widget="badge"
+                                           decoration-success="sms_status == 'delivered'"
+                                           decoration-info="sms_status in ('pending', 'sent')"
+                                           decoration-danger="sms_status in ('failed', 'rejected', 'expired')"/>
+                                    <field name="sms_status_updated_at" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <group>
+                                <button name="action_view_sms_log" type="object"
+                                        string="Ver Log SMS" class="oe_highlight"
+                                        icon="fa-file-text-o"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

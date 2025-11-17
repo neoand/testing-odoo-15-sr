@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Estende view Kanban de conversas para mostrar canal (SMS/WhatsApp) -->
+    <record id="view_acrux_chat_conversation_kanban_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.conversation.kanban.sms</field>
+        <field name="model">acrux.chat.conversation</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_conversation_view_kanban"/>
+        <field name="arch" type="xml">
+            <!-- Adiciona badge com tipo de canal no card Kanban -->
+            <xpath expr="//div[@class='oe_kanban_details']" position="inside">
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <span t-if="record.channel_type.raw_value == 'sms'"
+                              class="badge badge-pill badge-danger">
+                            📱 SMS
+                        </span>
+                        <span t-if="record.channel_type.raw_value == 'whatsapp'"
+                              class="badge badge-pill badge-success">
+                            💬 WhatsApp
+                        </span>
+                        <span t-if="record.channel_type.raw_value == 'instagram'"
+                              class="badge badge-pill badge-info">
+                            📸 Instagram
+                        </span>
+                    </div>
+                    <div class="col-6 text-right">
+                        <small t-if="record.sms_segment_count.raw_value > 0"
+                               class="text-muted">
+                            <t t-esc="record.sms_segment_count.raw_value"/> seg |
+                            R$ <t t-esc="record.sms_cost.raw_value"/>
+                        </small>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Estende form view para mostrar campos SMS -->
+    <record id="view_acrux_chat_conversation_form_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.conversation.form.sms</field>
+        <field name="model">acrux.chat.conversation</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_conversation_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Adiciona campo channel_type -->
+            <field name="connector_id" position="after">
+                <field name="channel_type" readonly="1"/>
+                <field name="sms_message_id" attrs="{'invisible': [('channel_type', '!=', 'sms')]}" readonly="1"/>
+            </field>
+
+            <!-- Adiciona estatísticas SMS na lateral -->
+            <xpath expr="//group[@name='stats']" position="inside">
+                <field name="sms_segment_count" attrs="{'invisible': [('channel_type', '!=', 'sms')]}"/>
+                <field name="sms_cost" widget="monetary" attrs="{'invisible': [('channel_type', '!=', 'sms')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Estende tree view para mostrar canal -->
+    <record id="view_acrux_chat_conversation_tree_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.conversation.tree.sms</field>
+        <field name="model">acrux.chat.conversation</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_conversation_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="channel_type" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Estende search view para adicionar filtros SMS/WhatsApp -->
+    <record id="view_acrux_chat_conversation_search_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.conversation.search.sms</field>
+        <field name="model">acrux.chat.conversation</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_conversation_view_search"/>
+        <field name="arch" type="xml">
+            <!-- Adiciona filtros por canal -->
+            <filter name="current" position="after">
+                <separator/>
+                <filter string="SMS" name="filter_sms" domain="[('channel_type', '=', 'sms')]"/>
+                <filter string="WhatsApp" name="filter_whatsapp" domain="[('channel_type', '=', 'whatsapp')]"/>
+                <filter string="Instagram" name="filter_instagram" domain="[('channel_type', '=', 'instagram')]"/>
+            </filter>
+
+            <!-- Adiciona group by canal -->
+            <filter name="group_connector" position="after">
+                <filter string="Canal" name="group_channel" context="{'group_by': 'channel_type'}"/>
+            </filter>
+
+            <!-- Adiciona busca por canal -->
+            <field name="connector_id" position="after">
+                <field name="channel_type"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Nova action para "Minhas Conversas SMS" -->
+    <record id="action_acrux_chat_conversation_sms" model="ir.actions.act_window">
+        <field name="name">Minhas Conversas SMS</field>
+        <field name="res_model">acrux.chat.conversation</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('channel_type', '=', 'sms')]</field>
+        <field name="context">{
+            'search_default_my_conv': 1,
+            'search_default_current': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Nenhuma conversa SMS ativa
+            </p>
+            <p>
+                As conversas SMS aparecem aqui quando clientes respondem aos seus SMS.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu: Contact Center > SMS Conversations -->
+    <menuitem id="menu_acrux_chat_conversation_sms"
+              name="SMS Conversations"
+              parent="whatsapp_connector.chatroom_menu"
+              action="action_acrux_chat_conversation_sms"
+              sequence="15"/>
+
+    <!-- Dashboard Action: Todas Conversas (SMS + WhatsApp) -->
+    <record id="action_acrux_chat_conversation_all_channels" model="ir.actions.act_window">
+        <field name="name">Todos os Canais</field>
+        <field name="res_model">acrux.chat.conversation</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{
+            'search_default_my_conv': 1,
+            'search_default_current': 1,
+        }</field>
+    </record>
+
+    <!-- Menu: Contact Center > All Channels -->
+    <menuitem id="menu_acrux_chat_conversation_all"
+              name="All Channels"
+              parent="whatsapp_connector.chatroom_menu"
+              action="action_acrux_chat_conversation_all_channels"
+              sequence="1"/>
+</odoo>

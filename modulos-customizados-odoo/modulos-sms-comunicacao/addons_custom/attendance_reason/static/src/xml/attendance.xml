@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="HrAttendanceKioskConfirm">
+        <t t-jquery="[t-if='!widget.use_pin']" t-operation="before">
+            <div class="row mt8 mb8">
+                <div class="col-8" style="margin-left: auto; margin-right: auto;">
+                    <select name="reasons" id="oe_attendance_reasons" class="o_input">
+                        <option value="" disabled="true" selected="true">Select / Enter your Reason here.</option>
+                        <t t-foreach="[widget.reasons]" t-as="reasons">
+                            <t t-foreach="reasons" t-as="reason" >
+                                <t t-if="reason.attendance_state != widget.employee_state or reason.attendance_state == False">
+                                    <option t-att-value="reason.name"><t t-esc="reason.name"/></option>
+                                </t>
+                            </t>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="HrAttendanceMyMainMenu">
+        <t t-jquery="a.o_hr_attendance_sign_in_out_icon.fa-sign-out" t-operation="before">
+            <div class="row mt8 mb8">
+                <div class="col-8" style="margin-left: auto; margin-right: auto;">                    
+                    <input type="text" name="reasons" id="oe_attendance_reasons" list="reasons_list" class="o_input mt8" 
+                        placeholder="Select / Enter your Reason here." autocomplete="off"/>
+                    <datalist id="reasons_list">
+                        <t t-foreach="[widget.reasons]" t-as="reasons">
+                            <t t-foreach="reasons" t-as="reason" >
+                                <t t-if="reason.attendance_state != widget.employee.attendance_state or reason.attendance_state == False">
+                                    <option t-att-value="reason.name"/>                     
+                                </t>                                       
+                            </t>
+                        </t>
+                    </datalist>
+                </div>
+            </div>            
+        </t>
+    </t>
+
+</templates>

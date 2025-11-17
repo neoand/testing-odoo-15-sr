@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default SMS Templates -->
+
+        <!-- Template 1: Welcome Message -->
+        <record id="sms_template_welcome" model="chatroom.sms.template">
+            <field name="code">welcome</field>
+            <field name="name">Boas-vindas</field>
+            <field name="message">Olá {nome}! Bem-vindo à {empresa}. Estamos felizes em tê-lo conosco!</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Template 2: Reminder Message -->
+        <record id="sms_template_reminder" model="chatroom.sms.template">
+            <field name="code">reminder</field>
+            <field name="name">Lembrete</field>
+            <field name="message">{nome}, este é um lembrete sobre seu compromisso em {data} às {hora}.</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Template 3: Confirmation Message -->
+        <record id="sms_template_confirmation" model="chatroom.sms.template">
+            <field name="code">confirmation</field>
+            <field name="name">Confirmação</field>
+            <field name="message">Olá {nome}! Confirmamos seu pedido. Em breve entraremos em contato pelo telefone {telefone}.</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

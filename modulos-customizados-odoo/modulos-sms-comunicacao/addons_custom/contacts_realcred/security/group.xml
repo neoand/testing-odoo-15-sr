@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record model="ir.module.category" id="module_contacts_realcred">
+		<field name="name">Contatos RC</field>
+		<field name="description">Contatos RC</field>
+		<field name="sequence">4</field>
+	</record>
+
+	<record id="contacts_realcred_manager" model="res.groups">
+		<field name="category_id" ref="module_contacts_realcred" />
+		<field name="name">Manager</field>
+	</record>
+
+	<record id="contacts_realcred_user" model="res.groups">
+		<field name="category_id" ref="module_contacts_realcred" />
+		<field name="name">User</field>
+	</record>
+
+</odoo>

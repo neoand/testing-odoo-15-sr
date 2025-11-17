@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    
+    <t t-extend="acrux_chat_toolbox">
+        <t t-jquery="button#o_chat_button_emoji" t-operation="before">
+            <div class="acrux_audio_recorder_container o_hidden" />
+        </t>
+    </t>
+    
+    
+    <t t-name="acrux_audio_recorder" >
+        <div class="acrux_audio_recorder">
+            <button id="o_chat_button_audio_cancel" class="o_chat_button_audio_cancel o_chat_option_button o_hidden text-danger">
+                <i id="o_chat_button_audio_cancel" class="fa fa-trash"/>
+            </button>
+            <div class="audio_player o_hidden" />
+            <div class="recording_elapsed_time o_hidden">
+                <i class="red_recording_dot fa fa-circle o_hidden" />
+                <span class="elapsed_time o_hidden" />
+            </div>
+            <button id="o_chat_button_audio_pause" class="o_chat_button_audio_pause o_chat_option_button o_hidden">
+                <i id="o_chat_button_audio_pause" class="fa fa-pause" />
+            </button>
+            <button id="o_chat_button_audio_record" class="o_chat_button_audio_record o_chat_option_button">
+                <i id="o_chat_button_audio_record" class="fa fa-microphone" />
+            </button>
+        </div>
+    </t>
+
+</templates>

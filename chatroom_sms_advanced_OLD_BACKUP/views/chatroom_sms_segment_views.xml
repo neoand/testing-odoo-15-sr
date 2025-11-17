@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="view_chatroom_sms_segment_tree" model="ir.ui.view">
+            <field name="name">chatroom.sms.segment.tree</field>
+            <field name="model">chatroom.sms.segment</field>
+            <field name="arch" type="xml">
+                <tree string="Segmentos SMS" decoration-muted="not active">
+                    <field name="name" string="Nome"/>
+                    <field name="kolmeya_id" string="ID Kolmeya"/>
+                    <field name="room_count" string="Quantidade de Salas"/>
+                    <field name="active" string="Ativo"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_chatroom_sms_segment_form" model="ir.ui.view">
+            <field name="name">chatroom.sms.segment.form</field>
+            <field name="model">chatroom.sms.segment</field>
+            <field name="arch" type="xml">
+                <form string="Segmento SMS">
+                    <header>
+                        <button name="action_sync_segment" type="object"
+                                string="Sincronizar com Kolmeya"
+                                class="oe_highlight" icon="fa-refresh"
+                                help="Sincroniza este segmento com a API Kolmeya"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_rooms" type="object"
+                                    class="oe_stat_button" icon="fa-users">
+                                <field name="room_count" widget="statinfo" string="Salas"/>
+                            </button>
+                        </div>
+
+                        <widget name="web_ribbon" title="Arquivado" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <group>
+                            <group name="main_info">
+                                <field name="name" string="Nome" required="1" placeholder="Ex: Clientes VIP"/>
+                                <field name="kolmeya_id" string="ID na Kolmeya" required="1"/>
+                                <field name="active" string="Ativo"/>
+                            </group>
+                            <group name="sync_info">
+                                <field name="last_sync" readonly="1" string="Última Sincronização"/>
+                            </group>
+                        </group>
+
+                        <group string="Descrição">
+                            <field name="description" nolabel="1" placeholder="Descreva este segmento de clientes..."/>
+                        </group>
+
+                        <notebook>
+                            <page string="Salas Associadas" name="rooms">
+                                <field name="room_ids" nolabel="1">
+                                    <tree string="Salas" create="false" delete="false">
+                                        <field name="name" string="Nome"/>
+                                        <field name="phone" string="Telefone"/>
+                                        <field name="phone_blacklisted" string="Blacklist"/>
+                                        <field name="phone_not_disturb" string="Não Perturbe"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_chatroom_sms_segment_search" model="ir.ui.view">
+            <field name="name">chatroom.sms.segment.search</field>
+            <field name="model">chatroom.sms.segment</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Segmentos">
+                    <field name="name" string="Nome" filter_domain="[('name', 'ilike', self)]"/>
+                    <field name="kolmeya_id" string="ID Kolmeya"/>
+                    <field name="description" string="Descrição" filter_domain="[('description', 'ilike', self)]"/>
+
+                    <separator/>
+
+                    <filter string="Ativos" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Arquivados" name="inactive" domain="[('active', '=', False)]"/>
+
+                    <separator/>
+
+                    <filter string="Com Salas" name="with_rooms" domain="[('room_count', '&gt;', 0)]"/>
+                    <filter string="Sem Salas" name="without_rooms" domain="[('room_count', '=', 0)]"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Agrupar Por">
+                        <filter string="Status" name="group_by_active" context="{'group_by': 'active'}"/>
+                        <filter string="ID Kolmeya" name="group_by_kolmeya" context="{'group_by': 'kolmeya_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_chatroom_sms_segment" model="ir.actions.act_window">
+            <field name="name">Segmentos SMS</field>
+            <field name="res_model">chatroom.sms.segment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_chatroom_sms_segment_search"/>
+            <field name="context">{
+                'search_default_active': 1,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crie seu primeiro segmento de SMS
+                </p>
+                <p>
+                    Segmentos permitem organizar e categorizar suas salas de chat
+                    para envios segmentados de SMS através da API Kolmeya.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_chatroom_sms_segment"
+                  name="Segmentos"
+                  parent="chatroom.menu_chatroom_root"
+                  action="action_chatroom_sms_segment"
+                  sequence="22"/>
+
+    </data>
+</odoo>

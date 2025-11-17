@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+      <record id="product_template_only_form_view_inherint" model="ir.ui.view">
+          <field name="name">product.template.only.form.view.inherit</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_only_form_view"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="bank" string="Banco"/>
+                <field name="promotora"/>
+                <field name="categoria"/>
+                <field name="convenio"/>
+
+              </xpath>
+          </field>
+      </record>
+
+      <record id="sale_view_order_form_inherint" model="ir.ui.view">
+          <field name="name">sale.view.order.form.inherit</field>
+          <field name="model">sale.order</field>
+          <field name="inherit_id" ref="sale.view_order_form"/>
+          <field name="priority" eval="16" />
+          <field name="arch" type="xml">
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="date_order" />
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="attrs">{'invisible':1}</attribute>
+            </xpath>
+            <field name="user_id" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>
+                <attribute name="default"> </attribute>
+            </field>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="ade" />
+                <field name="user_id" widget="many2one_avatar_user" />
+                <field name="operator_id" widget="many2one_avatar_user"/>
+            </xpath>
+            
+            <xpath expr="//button[@name='action_draft']" position="replace">
+                <!-- <button name="action_confirm_rc" string="Averbar" type="object" class="btn btn-success" attrs="{'invisible': [('state', 'not in', ['draft'] )]}" /> -->
+                <button name="action_draft" string="Restablecer a Análise" type="object" class="btn btn-info" attrs="{'invisible': [('state', 'not in', ['cancel'] )]}" />
+            </xpath>
+
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="mt_state" widget="statusbar" statusbar_visible="draft,cancel,sale,pago_pelo_banco,estornado" options="{'clickable': '1'}"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='575']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree" position="replace">
+
+                <tree string="Sales Order Lines" editable="bottom" >
+                        <field name="ade" />
+                        <field name="product_promotora" />
+                        <field name="product_bank" />
+                        <field name="product_id" />
+                        <field name="monthly_amount"  sum="monthly_amount"  />
+                        <field name="rc_recurring_prazo"   />
+                        
+                        <field name="price_unit"  widget="monetary"  sum="Bruto" string="Bruto"/>
+                        <field name="liquido"  sum="liquido"  />
+                        <field name="currency_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="name" invisible="1"/>
+                        <field name="product_uom_qty" invisible="1"/>
+                        <field name="qty_delivered" invisible="1"/>
+                        <field name="qty_invoiced" invisible="1"/>
+                        <field name="qty_to_invoice" invisible="1"/>
+                        <field name="analytic_tag_ids" invisible="1"/>
+                    
+                    </tree>
+
+            </xpath>
+
+            <xpath expr="//field[@name='tax_totals_json']" position="replace">
+                <field name="amount_total" string="Bruto" colspan="2"/>
+                <field name="liquido_total" string="Liquido"  colspan="2"/>
+                <field name="monthly_amount_total" string="Valor de Parcelas"  colspan="2"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='order_lines']" position="after">
+
+                <page string="Dados Contato" >   
+           
+                <group name="lead_partner" >
+                    <field name="partner_marital" />
+                    <field name="partner_state_solicitud" />
+                    <field name="partner_mother_name" />
+                    <field name="partner_father_name" /> 
+                    <field name="partner_nacionalidade" /> 
+                    <field name="partner_naturalidade" /> 
+                    <field name="partner_data_emissao" /> 
+                    <field name="partner_orgao_expedidor" /> 
+                    <field name="partner_bank_account" /> 
+                    <field name="partner_matricula_1" /> 
+
+                    <field name="partner_matricula_2" /> 
+                    <field name="partner_senha_1" /> 
+                    <field name="partner_senha_2" /> 
+                    <field name="partner_reception_type" /> 
+                    <field name="partner_agency_regis" /> 
+                    <field name="partner_account_regis" /> 
+
+                </group>
+                         
+                </page>
+            </xpath>
+          </field>
+
+
+      </record>
+
+    <record id="mt_sale_order_view_search_inherit" model="ir.ui.view">
+        <field name="name">mt.sale.order.search.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath  expr="//filter[@name='my_sale_orders_filter']" position="before">
+            <filter string="ADE establecida" name="filter_ade" domain="[('ade', '!=', False)]" />  
+            </xpath>
+            <xpath expr="//search/field[@name='name']" position="before">
+                
+                <field name="ade" string="ADE"   context="{'search_default_custom_ade': '1'}"/>
+            </xpath>
+           <xpath expr="//search/group/filter[@name='salesperson']" position="after">
+                <filter string="Operador" domain="[]" name='operator_id' context="{'group_by':'operator_id'}"/>
+            </xpath>
+            
+        </field>
+    </record>
+    
+    
+
+    <!--
+    <record id="view_sale_order_tree_custom" model="ir.ui.view">
+        <field name="name">sale.order.tree.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="ade"/>
+            </xpath>
+        </field>
+    </record>
+    -->
+
+    <record id="view_sale_quotation_tree_custom" model="ir.ui.view">
+        <field name="name">sale.order.quotation.tree.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="ade"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="mt_state" 
+                optional="show" 
+                widget="badge" 
+                decoration-success="mt_state == 'pago_pelo_banco'"
+                decoration-warning="mt_state == 'estornado'" 
+                decoration-info="mt_state == 'sale' or mt_state == 'draft'"
+                decoration-danger="mt_state == 'cancel'"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="operator_id" context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_sale_order_tree_custom_sr" model="ir.ui.view">
+        <field name="name">sale.order.tree.custom_sr</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="ade"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="mt_state" 
+                optional="show" 
+                widget="badge" 
+                decoration-success="mt_state == 'pago_pelo_banco'"
+                decoration-warning="mt_state == 'estornado'" 
+                decoration-info="mt_state == 'sale' or mt_state == 'draft'"
+                decoration-danger="mt_state == 'cancel'"/>
+            </xpath>
+        </field>
+    </record>
+
+      <record id="res_partner_view_form_inherint" model="ir.ui.view">
+          <field name="name">res.partner.view.form.inherit</field>
+          <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//notebook/page[@name='contact_addresses']" position="after">
+                <page string="Margem" >   
+                <group col="4" string="Detalle de Margem">              
+                    <field name="name" />
+                    <field name="margem_disponivel" />
+                    <field name="margem_disponivel_cartao" />
+                    <field name="margem_disponivel_rcc" />
+                    <field name="especie_beneficio" /> 
+                    <field name="situacao_beneficio" /> 
+                    <field name="numero_matricula" /> 
+                    <field name="data_despacho_beneficio" /> 
+                    <field name="procurador" /> 
+                    <field name="representante" /> 
+                </group>
+                </page>
+
+                <page string="Dados Contato" >   
+           
+                    <group name="lead_partner" >
+                        <field name="marital" />
+                        <field name="state_solicitud" />
+                        <field name="mother_name" />
+                        <field name="father_name" /> 
+                        <field name="nacionalidade" /> 
+                        <field name="naturalidade" /> 
+                        <field name="data_emissao" /> 
+                        <field name="orgao_expedidor" /> 
+                        <field name="bank_id" /> 
+                        <field name="matricula_1" /> 
+
+                        <field name="matricula_2" /> 
+                        <field name="senha_1" /> 
+                        <field name="senha_2" /> 
+                        <field name="reception_type" /> 
+                        <field name="agency_regis" /> 
+                        <field name="account_regis" /> 
+
+                    </group>
+                         
+                </page>
+            </xpath> 
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="campaign_id" string="Campainha"/>
+                <field name="medium_id" string="metade"/>
+                <field name="source_id" string="Fonte"/>    
+            </xpath> 
+
+        </field>
+      </record>
+    </data>
+</odoo>

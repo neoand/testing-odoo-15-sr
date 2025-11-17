@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Graph View -->
+        <record id="view_chatroom_sms_dashboard_graph" model="ir.ui.view">
+            <field name="name">chatroom.sms.dashboard.graph</field>
+            <field name="model">chatroom.sms.dashboard</field>
+            <field name="arch" type="xml">
+                <graph string="Dashboard SMS" type="line" stacked="False">
+                    <field name="period" type="row" interval="day"/>
+                    <field name="total_sent" type="measure"/>
+                    <field name="total_delivered" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Pivot View -->
+        <record id="view_chatroom_sms_dashboard_pivot" model="ir.ui.view">
+            <field name="name">chatroom.sms.dashboard.pivot</field>
+            <field name="model">chatroom.sms.dashboard</field>
+            <field name="arch" type="xml">
+                <pivot string="Análise SMS" display_quantity="true">
+                    <field name="period" type="row" interval="day"/>
+                    <field name="total_sent" type="measure"/>
+                    <field name="total_delivered" type="measure"/>
+                    <field name="total_failed" type="measure"/>
+                    <field name="delivery_rate" type="measure"/>
+                    <field name="total_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_chatroom_sms_dashboard_tree" model="ir.ui.view">
+            <field name="name">chatroom.sms.dashboard.tree</field>
+            <field name="model">chatroom.sms.dashboard</field>
+            <field name="arch" type="xml">
+                <tree string="Dashboard SMS" create="false" delete="false" edit="false"
+                      decoration-success="delivery_rate &gt;= 90"
+                      decoration-warning="delivery_rate &gt;= 70 and delivery_rate &lt; 90"
+                      decoration-danger="delivery_rate &lt; 70">
+                    <field name="period" string="Período"/>
+                    <field name="total_sent" string="Enviados" sum="Total Enviados"/>
+                    <field name="total_delivered" string="Entregues" sum="Total Entregues"/>
+                    <field name="total_failed" string="Falhas" sum="Total Falhas"/>
+                    <field name="delivery_rate" string="Taxa Entrega (%)" widget="percentage" avg="Média"/>
+                    <field name="total_cost" string="Custo Total (R$)" sum="Custo Total"/>
+                    <field name="avg_delivery_time" string="Tempo Médio (min)" avg="Média"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_chatroom_sms_dashboard_search" model="ir.ui.view">
+            <field name="name">chatroom.sms.dashboard.search</field>
+            <field name="model">chatroom.sms.dashboard</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Dashboard">
+                    <field name="period" string="Período"/>
+
+                    <separator/>
+
+                    <filter string="Hoje" name="today"
+                            domain="[('period', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Esta Semana" name="this_week"
+                            domain="[('period', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="Este Mês" name="this_month"
+                            domain="[('period', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="Últimos 30 Dias" name="last_30_days"
+                            domain="[('period', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+
+                    <separator/>
+
+                    <filter string="Alta Taxa de Entrega (&gt;= 90%)" name="high_delivery"
+                            domain="[('delivery_rate', '&gt;=', 90)]"/>
+                    <filter string="Média Taxa de Entrega (70-90%)" name="medium_delivery"
+                            domain="[('delivery_rate', '&gt;=', 70), ('delivery_rate', '&lt;', 90)]"/>
+                    <filter string="Baixa Taxa de Entrega (&lt; 70%)" name="low_delivery"
+                            domain="[('delivery_rate', '&lt;', 70)]"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Agrupar Por">
+                        <filter string="Período" name="group_by_period" context="{'group_by': 'period:day'}"/>
+                        <filter string="Semana" name="group_by_week" context="{'group_by': 'period:week'}"/>
+                        <filter string="Mês" name="group_by_month" context="{'group_by': 'period:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_chatroom_sms_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard SMS</field>
+            <field name="res_model">chatroom.sms.dashboard</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="search_view_id" ref="view_chatroom_sms_dashboard_search"/>
+            <field name="context">{
+                'search_default_this_month': 1,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Dashboard de SMS
+                </p>
+                <p>
+                    Visualize estatísticas e métricas dos envios de SMS realizados.
+                    Os dados são agregados por período e permitem análises detalhadas
+                    de performance, custos e taxa de entrega.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_chatroom_sms_dashboard"
+                  name="Dashboard SMS"
+                  parent="chatroom.menu_chatroom_root"
+                  action="action_chatroom_sms_dashboard"
+                  sequence="10"/>
+
+    </data>
+</odoo>

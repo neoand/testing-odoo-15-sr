@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!-- MENU RAIZ - SMS                                              -->
+        <!-- ============================================================ -->
+
+        <menuitem
+            id="menu_chatroom_sms_root"
+            name="SMS"
+            web_icon="chatroom_sms_advanced,static/description/icon.png"
+            sequence="100"/>
+
+        <!-- ============================================================ -->
+        <!-- MENU 1 - DASHBOARD                                           -->
+        <!-- ============================================================ -->
+
+        <menuitem
+            id="menu_sms_dashboard"
+            name="Dashboard"
+            parent="menu_chatroom_sms_root"
+            action="action_chatroom_sms_dashboard"
+            sequence="10"/>
+
+        <!-- ============================================================ -->
+        <!-- MENU 2 - ENVIAR SMS (com submenus)                           -->
+        <!-- ============================================================ -->
+
+        <menuitem
+            id="menu_send_sms"
+            name="Enviar SMS"
+            parent="menu_chatroom_sms_root"
+            sequence="20"/>
+
+        <menuitem
+            id="menu_send_bulk_sms"
+            name="Envio em Massa"
+            parent="menu_send_sms"
+            action="action_chatroom_send_bulk_sms"
+            sequence="20"/>
+
+        <menuitem
+            id="menu_sms_test"
+            name="Teste de SMS"
+            parent="menu_send_sms"
+            action="action_chatroom_sms_test"
+            sequence="21"/>
+
+        <!-- ============================================================ -->
+        <!-- MENU 3 - HISTÓRICO (com submenus)                            -->
+        <!-- ============================================================ -->
+
+        <menuitem
+            id="menu_sms_history"
+            name="Histórico"
+            parent="menu_chatroom_sms_root"
+            sequence="30"/>
+
+        <menuitem
+            id="menu_sms_log"
+            name="Log de SMS"
+            parent="menu_sms_history"
+            action="action_chatroom_sms_log"
+            sequence="30"/>
+
+        <menuitem
+            id="menu_sms_scheduled"
+            name="SMS Agendados"
+            parent="menu_sms_history"
+            action="action_chatroom_sms_scheduled"
+            sequence="31"/>
+
+        <!-- ============================================================ -->
+        <!-- MENU 4 - CONFIGURAÇÃO (com submenus + grupos)                -->
+        <!-- ============================================================ -->
+
+        <menuitem
+            id="menu_sms_config"
+            name="Configuração"
+            parent="menu_chatroom_sms_root"
+            groups="chatroom_sms_advanced.group_sms_manager"
+            sequence="50"/>
+
+        <menuitem
+            id="menu_sms_api"
+            name="APIs SMS"
+            parent="menu_sms_config"
+            action="action_chatroom_sms_api"
+            groups="chatroom_sms_advanced.group_sms_manager"
+            sequence="50"/>
+
+        <menuitem
+            id="menu_sms_template"
+            name="Templates"
+            parent="menu_sms_config"
+            action="action_chatroom_sms_template"
+            groups="chatroom_sms_advanced.group_sms_manager"
+            sequence="51"/>
+
+        <menuitem
+            id="menu_sms_segment"
+            name="Segmentos"
+            parent="menu_sms_config"
+            action="action_chatroom_sms_segment"
+            groups="chatroom_sms_advanced.group_sms_manager"
+            sequence="52"/>
+
+    </data>
+</odoo>

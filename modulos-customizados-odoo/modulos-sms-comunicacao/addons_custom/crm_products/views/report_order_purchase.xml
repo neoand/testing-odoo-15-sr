@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="purchases_prevision_wizard" model="ir.ui.view">
+            <field name="name">purchases.prevision.wizard</field>
+            <field name="model">purchases.prevision.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Reporte" >
+                    <header>
+                    </header>
+                    <sheet>
+                        <div >
+                            <label for="namefilter" class="oe_edit_only" />
+                            <h1>
+                                <field name="namefilter" placeholder="namefilter"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type_search" />
+                                <field name="start_date" attrs = "{'readonly':[('type_search','=','week')],'required':[('type_search','!=','week')]}"/>
+                                <field name="end_date" attrs = "{'readonly':[('type_search','=','week')],'required':[('type_search','!=','week')]}"/>
+                                <field name="week" widget="radio" />
+                                <field name="week_extra"/>
+                                <field name="aux_name" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="type_search_cierre"/>
+                                <field name="cancel_start_date" attrs = "{'invisible':['|',('type_search_cierre','=','not_cierre'),('type_search_cierre','=','end')],'required':[('type_search_cierre','=','start')]}"/>
+                                <field name="cancel_end_date" attrs = "{'invisible':['|',('type_search_cierre','=','not_cierre'),('type_search_cierre','=','start')],'required':[('type_search_cierre','=','end')]}"/>
+                            </group>
+                        </group>
+                        <footer >
+                            <button string="Consultar Previsión"
+                                class="btn-info"
+                                name="show_report"
+                                type="object"/>
+
+                            <button string="Guardar Previsión"
+                                class="btn-success"
+                                name="save_view_report"
+                                type="object"/>
+
+                            <button string="Cancel"
+                                class="btn-default"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+        <record id="action_purchases_prevision_wizard" model="ir.actions.act_window">
+            <field name="name">GENERAR PREVISIÓN</field>
+            <field name="res_model">purchases.prevision.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchases_prevision_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Generar Prevision"
+                  id="report_supplier_invoicer_child_menus"
+                  parent="previsions_menu"
+                  sequence="1"
+                  groups="general_report_manager"
+                  action="action_purchases_prevision_wizard"/>
+
+</odoo>

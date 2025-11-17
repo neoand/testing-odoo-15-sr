@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sms_message_tree" model="ir.ui.view">
+        <field name="name">sms.message.tree</field>
+        <field name="model">sms.message</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="partner_id"/>
+                <field name="phone"/>
+                <field name="direction"/>
+                <field name="state"/>
+                <field name="body"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sms_message_form" model="ir.ui.view">
+        <field name="name">sms.message.form</field>
+        <field name="model">sms.message</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_send" string="Send" type="object" class="oe_highlight" 
+                            states="draft,error"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft,outgoing"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="phone"/>
+                            <field name="direction"/>
+                        </group>
+                        <group>
+                            <field name="provider_id"/>
+                            <field name="sent_date"/>
+                            <field name="delivered_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="body"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

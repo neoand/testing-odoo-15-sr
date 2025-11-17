@@ -1,0 +1,93 @@
+
+.o_acrux_chat .acrux_audio_recorder {
+    display: flex;
+    background-color: #f2f2f2;
+}
+
+.o_acrux_chat .acrux_audio_recorder .recording_elapsed_time {
+    /*targeting Chrome & Safari*/
+    display: -webkit-flex;
+    /*targeting IE10*/
+    display: -ms-flex;
+    display: flex;
+    justify-content: center;
+    /*horizontal centering*/
+    align-items: center;
+}
+
+.o_acrux_chat .acrux_audio_recorder .red_recording_dot {
+    width: 280px; /* esto es el tamaño del reproductor de audio, traido del base*/
+    text-align: right;
+    font-size: 25px;
+    color: red;
+    margin-right: 12px;
+    /*transitions with Firefox, IE and Opera Support browser support*/
+    animation-name: flashing-recording-dot;
+    -webkit-animation-name: flashing-recording-dot;
+    -moz-animation-name: flashing-recording-dot;
+    -o-animation-name: flashing-recording-dot;
+    animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -o-animation-duration: 2s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+}
+
+.o_acrux_chat .acrux_audio_recorder .o_acrux_audio_player .time {
+    display: none;
+}
+
+.o_acrux_chat .acrux_audio_recorder .acrux_audio_player {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    display: flex;
+}
+
+/* The animation code */
+@keyframes flashing-recording-dot {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes flashing-recording-dot {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-moz-keyframes flashing-recording-dot {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-o-keyframes flashing-recording-dot {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

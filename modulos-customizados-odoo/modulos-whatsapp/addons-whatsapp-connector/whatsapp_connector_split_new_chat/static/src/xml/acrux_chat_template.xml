@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="acrux_chat_action">
+        <t t-jquery=".o_acrux_group.o_zone_new_chats > .o_acrux_chat_sidebar_title" t-operation="append">
+            <div class="btn-group btn-group-toggle btn-sm">
+                <label id="chat_filter_my" t-attf-class="btn btn-sm btn-primary {{widget.conv_filter == 'mines' ? 'active' : ''}}">
+                    Mines
+                </label>
+                <label id="chat_filter_all" t-attf-class="btn btn-sm btn-primary {{widget.conv_filter == 'all' ? 'active' : ''}}">
+                    All
+                </label>
+            </div>
+        </t>
+    </t>
+
+</templates>

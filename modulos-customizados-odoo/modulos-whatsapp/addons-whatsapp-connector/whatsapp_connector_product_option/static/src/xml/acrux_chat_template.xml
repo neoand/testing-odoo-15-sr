@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="acrux_chat_product">
+        <t t-jquery="div.o_product_record > .product_options_btn" t-operation="append" >
+            <button class="btn btn-sm text-primary fa fa-paper-plane acrux_open_send_wizard" type="button"/>
+        </t>
+    </t>
+
+</templates>

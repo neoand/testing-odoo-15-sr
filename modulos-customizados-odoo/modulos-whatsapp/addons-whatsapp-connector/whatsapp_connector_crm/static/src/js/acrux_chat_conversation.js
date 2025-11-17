@@ -1,0 +1,1 @@
+odoo.define("whatsapp_connector_crm.conversation",(function(require){"use strict";var Conversation=require("whatsapp_connector.conversation");return Conversation.include({init:function(parent,options){this._super.apply(this,arguments),this.crm_lead_id=this.options.crm_lead_id||[!1,""]}}),Conversation}));

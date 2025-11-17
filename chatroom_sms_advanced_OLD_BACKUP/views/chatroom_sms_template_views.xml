@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="view_chatroom_sms_template_tree" model="ir.ui.view">
+            <field name="name">chatroom.sms.template.tree</field>
+            <field name="model">chatroom.sms.template</field>
+            <field name="arch" type="xml">
+                <tree string="Templates de SMS" decoration-muted="not active">
+                    <field name="name" string="Nome"/>
+                    <field name="code" string="Código"/>
+                    <field name="usage_count" string="Usos"/>
+                    <field name="active" string="Ativo"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_chatroom_sms_template_form" model="ir.ui.view">
+            <field name="name">chatroom.sms.template.form</field>
+            <field name="model">chatroom.sms.template</field>
+            <field name="arch" type="xml">
+                <form string="Template de SMS">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_preview_template" type="object"
+                                    class="oe_stat_button" icon="fa-eye"
+                                    string="Pré-visualizar"/>
+                            <button name="action_use_template" type="object"
+                                    class="oe_stat_button" icon="fa-paper-plane"
+                                    string="Usar Template"/>
+                        </div>
+
+                        <widget name="web_ribbon" title="Arquivado" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <group>
+                            <group name="main_info">
+                                <field name="name" string="Nome" required="1" placeholder="Ex: Boas-vindas"/>
+                                <field name="code" string="Código" required="1" placeholder="Ex: welcome_msg"/>
+                                <field name="active" string="Ativo"/>
+                            </group>
+                            <group name="stats">
+                                <field name="usage_count" string="Número de Usos" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Mensagem">
+                            <field name="message" widget="text" required="1"
+                                   placeholder="Digite a mensagem do template. Use {variavel} para substituições dinâmicas."/>
+                        </group>
+
+                        <group string="Variáveis Disponíveis">
+                            <field name="variables" readonly="1"
+                                   help="Variáveis disponíveis para uso no template: {contact_name}, {room_name}, {company_name}, {current_date}, {current_time}"/>
+                        </group>
+
+                        <div class="alert alert-info" role="alert">
+                            <strong>Dica:</strong> Use variáveis entre chaves para personalizar a mensagem.
+                            Exemplo: "Olá {contact_name}, bem-vindo à {room_name}!"
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_chatroom_sms_template_search" model="ir.ui.view">
+            <field name="name">chatroom.sms.template.search</field>
+            <field name="model">chatroom.sms.template</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Templates">
+                    <field name="name" string="Nome" filter_domain="[('name', 'ilike', self)]"/>
+                    <field name="code" string="Código" filter_domain="[('code', 'ilike', self)]"/>
+                    <field name="message" string="Mensagem" filter_domain="[('message', 'ilike', self)]"/>
+
+                    <separator/>
+
+                    <filter string="Ativos" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Arquivados" name="inactive" domain="[('active', '=', False)]"/>
+
+                    <separator/>
+
+                    <filter string="Mais Usados" name="most_used" domain="[('usage_count', '&gt;', 0)]"/>
+                    <filter string="Nunca Usados" name="never_used" domain="[('usage_count', '=', 0)]"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Agrupar Por">
+                        <filter string="Status" name="group_by_active" context="{'group_by': 'active'}"/>
+                        <filter string="Código" name="group_by_code" context="{'group_by': 'code'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_chatroom_sms_template" model="ir.actions.act_window">
+            <field name="name">Templates de SMS</field>
+            <field name="res_model">chatroom.sms.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_chatroom_sms_template_search"/>
+            <field name="context">{
+                'search_default_active': 1,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crie seu primeiro template de SMS
+                </p>
+                <p>
+                    Templates permitem reutilizar mensagens pré-definidas com variáveis dinâmicas.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_chatroom_sms_template"
+                  name="Templates de SMS"
+                  parent="chatroom.menu_chatroom_root"
+                  action="action_chatroom_sms_template"
+                  sequence="21"/>
+
+    </data>
+</odoo>

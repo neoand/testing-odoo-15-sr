@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SMS Security Groups -->
+
+        <!-- SMS User Group -->
+        <record id="group_sms_user" model="res.groups">
+            <field name="name">SMS User</field>
+            <field name="category_id" ref="base.module_category_operations"/>
+            <field name="comment">Pode enviar SMS e visualizar seus próprios logs</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- SMS Manager Group -->
+        <record id="group_sms_manager" model="res.groups">
+            <field name="name">SMS Manager</field>
+            <field name="category_id" ref="base.module_category_operations"/>
+            <field name="comment">Acesso completo: configurar API, ver todos logs, dashboard, etc</field>
+            <field name="implied_ids" eval="[(4, ref('group_sms_user'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================== -->
+        <!-- GRUPO OPERACIONAL                          -->
+        <!-- ========================================== -->
+        
+        <record id="group_operacional" model="res.groups">
+            <field name="name">Operacional</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+            <field name="comment">PROPÓSITO: Equipe de operações com acesso total em CRM e Vendas (sem delete em Vendas)
+
+QUEM: Analistas de operações, back-office, suporte de vendas
+
+PERMISSÕES:
+- CRM: CRUD completo (ver, criar, editar, deletar oportunidades)
+- Vendas: CRU (ver, criar, editar pedidos - SEM deletar)
+- Contatos: CRUD completo
+
+IMPLIED GROUPS:
+- Sales / User: All Documents (14)
+- Internal User (1)
+
+CRIADO: 17/11/2025 - Fase 2 de Reorganização
+ÚLTIMA REVISÃO: 17/11/2025
+RESPONSÁVEL: TI RealCred (ti@semprereal.com)
+            </field>
+        </record>
+
+    </data>
+</odoo>

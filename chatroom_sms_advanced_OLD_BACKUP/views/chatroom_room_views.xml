@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View - Extending chatroom.room -->
+        <record id="view_chatroom_room_form_inherit_sms" model="ir.ui.view">
+            <field name="name">chatroom.room.form.inherit.sms</field>
+            <field name="model">chatroom.room</field>
+            <field name="inherit_id" ref="chatroom.view_chatroom_room_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Adicionar campos após phone -->
+                <xpath expr="//field[@name='phone']" position="after">
+                    <group colspan="2">
+                        <field name="phone_blacklisted" widget="boolean_toggle"/>
+                        <field name="phone_not_disturb" widget="boolean_toggle"/>
+                    </group>
+                </xpath>
+
+                <!-- Adicionar seção de estatísticas SMS -->
+                <xpath expr="//field[@name='phone_not_disturb']" position="after">
+                    <separator string="Estatísticas SMS" colspan="2"/>
+                    <group colspan="2">
+                        <field name="sms_count_sent" readonly="1"/>
+                        <field name="sms_count_delivered" readonly="1"/>
+                        <field name="phone_status_checked_at" readonly="1"/>
+                    </group>
+                </xpath>
+
+                <!-- Adicionar botões no header -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_check_phone_status" type="object"
+                            class="oe_stat_button" icon="fa-check-circle"
+                            string="Verificar Status"
+                            help="Verifica status do telefone na API (blacklist, não perturbe, etc)"
+                            attrs="{'invisible': [('phone', '=', False)]}"/>
+
+                    <button name="add_to_blacklist" type="object"
+                            class="oe_stat_button" icon="fa-ban"
+                            string="Adicionar à Blacklist"
+                            help="Adiciona este número à blacklist"
+                            attrs="{'invisible': ['|', ('phone', '=', False), ('phone_blacklisted', '=', True)]}"/>
+
+                    <button name="remove_from_blacklist" type="object"
+                            class="oe_stat_button" icon="fa-check"
+                            string="Remover da Blacklist"
+                            help="Remove este número da blacklist"
+                            attrs="{'invisible': ['|', ('phone', '=', False), ('phone_blacklisted', '=', False)]}"/>
+
+                    <button name="action_view_sms_logs" type="object"
+                            class="oe_stat_button" icon="fa-list"
+                            string="Ver Logs SMS"
+                            help="Visualiza o histórico de SMS enviados para este número"
+                            attrs="{'invisible': [('phone', '=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

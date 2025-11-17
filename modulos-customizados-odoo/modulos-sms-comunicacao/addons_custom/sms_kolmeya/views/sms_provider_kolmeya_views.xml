@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sms_provider_kolmeya_form" model="ir.ui.view">
+        <field name="name">sms.provider.kolmeya.form</field>
+        <field name="model">sms.provider</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_provider_form"/>
+        <field name="arch" type="xml">
+            <field name="provider_type" position="after">
+                <field name="kolmeya_api_token" password="True" 
+                       attrs="{'invisible': [('provider_type', '!=', 'kolmeya')], 'required': [('provider_type', '=', 'kolmeya')]}"/>
+                <field name="kolmeya_segment_id" 
+                       attrs="{'invisible': [('provider_type', '!=', 'kolmeya')], 'required': [('provider_type', '=', 'kolmeya')]}"/>
+                <field name="kolmeya_balance" 
+                       attrs="{'invisible': [('provider_type', '!=', 'kolmeya')]}"/>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <group attrs="{'invisible': [('provider_type', '!=', 'kolmeya')]}">
+                    <button name="action_check_balance" string="Check Balance" 
+                            type="object" class="oe_highlight" 
+                            attrs="{'invisible': [('provider_type', '!=', 'kolmeya')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

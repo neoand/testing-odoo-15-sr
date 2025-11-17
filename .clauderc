@@ -1,0 +1,90 @@
+# Configuração Claude Code para Projeto Odoo 15
+# testing_odoo_15_sr
+
+# Informações do Projeto
+project_name: "Odoo 15 Testing - RealCred SMS & CRM"
+project_type: "odoo_custom"
+odoo_version: "15.0"
+language: "pt-BR"
+
+# Contexto do Projeto
+context: |
+  Este é um ambiente de teste/desenvolvimento Odoo 15 focado em:
+  - Módulo customizado: chatroom_sms_advanced (Contact Center SMS)
+  - Integração com API Kolmeya para envio de SMS
+  - Gestão de permissões CRM
+  - Customizações para empresa RealCred
+
+  Módulos principais:
+  - crm (CRM/Oportunidades)
+  - contacts (Parceiros/Clientes)
+  - chatroom_sms_advanced (SMS Contact Center)
+  - sale (Vendas)
+
+  Usuários e Perfis:
+  - Administradores (acesso total)
+  - Gestores CRM (gerenciam equipes)
+  - Vendedores (próprias oportunidades)
+  - Usuários internos (acesso limitado)
+
+# Diretrizes de Desenvolvimento
+guidelines:
+  - language: "Comentários e documentação em português brasileiro"
+  - code_style: "PEP 8 para Python, OCA guidelines para Odoo"
+  - security_first: "Sempre considerar permissões e security rules"
+  - odoo_patterns: "Seguir padrões Odoo (models, views, controllers)"
+  - documentation: "Documentar decisões importantes e código complexo"
+  - testing: "Encorajar criação de testes quando possível"
+
+# Padrões do Projeto
+patterns:
+  models:
+    - "Usar _name para novos models, _inherit para estender"
+    - "Sempre adicionar _description"
+    - "Campos obrigatórios com required=True"
+    - "Usar compute methods para campos calculados"
+
+  views:
+    - "ID único e descritivo (model_name.view_type_description)"
+    - "Priority adequado para herança"
+    - "Groups quando necessário restringir acesso"
+
+  security:
+    - "Sempre criar ir.model.access.csv para novos models"
+    - "Usar record rules para filtros por usuário/grupo"
+    - "Testar permissões com diferentes perfis"
+
+# Estrutura de Arquivos
+file_structure:
+  custom_modules: "./chatroom_sms_advanced, ./temp_modules"
+  documentation: "./*.md"
+  scripts: "./cleanup_scripts, ./*.sh"
+  server_config: "./servidor-testing-odoo"
+
+# Comandos Úteis
+useful_commands:
+  restart_odoo: "sudo systemctl restart odoo"
+  update_module: "odoo-bin -c odoo.conf -d DATABASE -u MODULE"
+  run_tests: "odoo-bin -c odoo.conf -d DATABASE -u MODULE --test-enable"
+  psql: "sudo -u postgres psql DATABASE"
+
+# Prioridades
+priorities:
+  - "Segurança e permissões corretas"
+  - "Experiência do usuário"
+  - "Performance (evitar N+1, otimizar queries)"
+  - "Manutenibilidade do código"
+  - "Documentação clara"
+
+# Atalhos e Convenções
+conventions:
+  commit_messages: "feat/fix/refactor/docs: descrição clara em pt-BR"
+  branch_naming: "feature/nome-da-feature ou fix/nome-do-bug"
+  documentation_format: "Markdown com exemplos práticos"
+
+# Notas Importantes
+notes: |
+  - Banco de dados: Verificar qual está sendo usado atualmente
+  - Backup: Sempre fazer backup antes de mudanças estruturais
+  - Testing: Este é ambiente de testes, mas tratar como produção
+  - Documentação: Manter arquivos .md atualizados com mudanças

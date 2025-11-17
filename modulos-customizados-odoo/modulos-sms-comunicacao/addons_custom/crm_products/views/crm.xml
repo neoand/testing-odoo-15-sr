@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+      <record id="crm_lead_view_form_inherint" model="ir.ui.view">
+          <field name="name">crm.lead.view.form.inherit</field>
+          <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//h2[@class='o_row no-gutters align-items-end']" position="replace">
+                <h1 class="o_row no-gutters align-items-end">
+                    <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}">
+                        <label for="expected_revenue" class="oe_edit_only" string="Valor do Emprestimo"/>
+                        <div class="o_row">
+                            <field name="company_currency" invisible="1"/>
+                            <field name="expected_revenue" class="oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                            
+                        </div>
+                    </div>
+                    <field name="recurring_revenue" class="pr-2 oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"  invisible="1"/>
+
+                    <field name="is_automated_probability" invisible="1"/>
+                    <field name="probability" widget="float" class="oe_inline" invisible="1"/>
+                    <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}" groups="crm.group_use_recurring_revenues" >
+                    <label for="recurring_plan" class="oe_edit_only" string="Prazo"/>
+                        <div class="o_row">
+                            <field name="recurring_plan" class="oe_inline" placeholder="E.g. Monthly" attrs="{'required': [('recurring_revenue', '!=', 0)]}" options="{'no_create': True, 'no_open': True}"/>
+                            
+                        </div>
+                    </div>
+                    <div class="col" attrs="{'invisible': [('type', '=', 'lead')]}" >
+                    <label for="monthly_amount" class="oe_edit_only" string="Valor da Parcela"/>
+                        <div class="o_row">
+                            <field name="stage_edit" />
+                            <field name="monthly_amount" class="oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                        </div>
+                    </div>
+
+                </h1>
+            </xpath>
+            <xpath expr="//notebook/page[@name='lead']" position="after">
+                <page string="Margem" >   
+                <button name="action_search_margem" type="object" string="Consultar Margem" class="btn-primary"  />
+                <group name="lead_partner" >
+                    <field name="partner_margem_disponivel" />
+                    <field name="partner_margem_disponivel_cartao" />
+                    <field name="partner_margem_disponivel_rcc" />
+                    <field name="partner_especie_beneficio" /> 
+                    <field name="partner_situacao_beneficio" /> 
+                    <field name="partner_numero_matricula" /> 
+                    <field name="partner_data_despacho_beneficio" /> 
+                    <field name="partner_procurador" /> 
+                    <field name="partner_representante" /> 
+ 
+                </group>
+                         
+                </page>
+                <page string="Dados Contato" >   
+           
+                <group name="lead_partner" >
+                    <field name="partner_marital" />
+                    <field name="partner_state_solicitud" />
+                    <field name="partner_mother_name" />
+                    <field name="partner_father_name" /> 
+                    <field name="partner_nacionalidade" /> 
+                    <field name="partner_naturalidade" /> 
+                    <field name="partner_data_emissao" /> 
+                    <field name="partner_orgao_expedidor" /> 
+                    <field name="partner_bank_account" /> 
+                    <field name="partner_matricula_1" /> 
+
+                    <field name="partner_matricula_2" /> 
+                    <field name="partner_senha_1" /> 
+                    <field name="partner_senha_2" /> 
+                    <field name="partner_reception_type" /> 
+                    <field name="partner_agency_regis" /> 
+                    <field name="partner_account_regis" /> 
+
+                </group>
+                         
+                </page>
+            </xpath>  
+
+            <xpath expr="//field[@name='date_deadline']" position="before">
+                <field name="date_lead_closed" />
+            </xpath>
+
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="operator_id" widget="many2one_avatar_user"/>
+            </xpath>
+        </field>
+      </record>
+
+
+    <record id="mt_wizzard_api_form" model="ir.ui.view">
+            <field name="name">mt.wizzard.apimargem.form</field>
+            <field name="model">mt.wizzard.apimargem</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+            <form string="Consulta Margem" >
+                    <sheet>
+                
+                        <group>
+                            <group>
+                                <field string="CPF" name="cpf" required="1"/>
+                                <field string="NB" name="nb" required="1"/>
+                            </group>
+                        </group>
+
+                        <footer >
+                            <button string="Consultar"
+                                class="btn-success"
+                                name="search_margem"
+                                type="object"/>
+
+                            <button string="Cancelar ação"
+                                class="btn-default"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+
+            </field>
+    </record>
+
+
+    <record id="crm_stage_form_view_inherint" model="ir.ui.view">
+        <field name="name">crm.stage.form.view.inherint</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+               <field name="teams_allowed_edit" widget="many2many_tags" options="{'no_create': True}" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="crm_lead_tree_view_inherint" model="ir.ui.view">
+        <field name="name">crm.lead.tree.view.inherint</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="operator_id" context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_filter_view_inherint" model="ir.ui.view">
+        <field name="name">crm.lead.filter.view.inherint</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+           <xpath expr="//search/group/filter[@name='salesperson']" position="after">
+                <filter string="Operador" domain="[]" name='operator_id' context="{'group_by':'operator_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>

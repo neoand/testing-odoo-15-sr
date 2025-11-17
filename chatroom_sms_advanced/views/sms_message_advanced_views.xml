@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View -->
+    <record id="view_sms_message_form_advanced" model="ir.ui.view">
+        <field name="name">sms.message.form.advanced</field>
+        <field name="model">sms.message</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_message_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add buttons to header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_view_campaign" string="View Campaign" type="object" class="btn-secondary" attrs="{'invisible': [('campaign_id', '=', False)]}"/>
+                <button name="action_add_to_blacklist" string="Add to Blacklist" type="object" class="btn-warning" confirm="Add this phone number to blacklist?" attrs="{'invisible': [('phone', '=', False)]}"/>
+            </xpath>
+
+            <!-- Add advanced fields after provider_id -->
+            <xpath expr="//field[@name='provider_id']" position="after">
+                <field name="campaign_id" readonly="1"/>
+                <field name="scheduled_id" readonly="1"/>
+                <field name="is_scheduled" invisible="1"/>
+            </xpath>
+
+            <!-- Add cost field -->
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="cost" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Tree View -->
+    <record id="view_sms_message_tree_advanced" model="ir.ui.view">
+        <field name="name">sms.message.tree.advanced</field>
+        <field name="model">sms.message</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_message_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Add campaign column -->
+            <xpath expr="//field[@name='provider_id']" position="after">
+                <field name="campaign_id" optional="hide"/>
+                <field name="scheduled_id" optional="hide"/>
+            </xpath>
+
+            <!-- Add cost column -->
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="cost" optional="show" sum="Total Cost"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Search View -->
+    <record id="view_sms_message_search_advanced" model="ir.ui.view">
+        <field name="name">sms.message.search.advanced</field>
+        <field name="model">sms.message</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_message_search"/>
+        <field name="arch" type="xml">
+
+            <!-- Add campaign filter -->
+            <xpath expr="//filter[@name='provider']" position="after">
+                <separator/>
+                <filter string="Campaign SMS" name="with_campaign" domain="[('campaign_id', '!=', False)]"/>
+                <filter string="Scheduled SMS" name="with_scheduled" domain="[('scheduled_id', '!=', False)]"/>
+            </xpath>
+
+            <!-- Add group by campaign -->
+            <xpath expr="//filter[@name='group_provider']" position="after">
+                <filter string="Campaign" name="group_campaign" context="{'group_by': 'campaign_id'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

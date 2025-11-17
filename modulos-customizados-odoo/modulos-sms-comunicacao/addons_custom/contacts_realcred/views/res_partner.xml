@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="res_partner_batch_contacts_form_inherint" model="ir.ui.view">
+          <field name="name">res.partner.batch.contacts.form.inherit</field>
+          <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook/page[@name='contact_addresses']" position="before">
+                <page string="Beneficios" >   
+<!--                   
+ <field name="beneficios_ids"  mode="tree"  >
+                    <tree >
+                     <field name="cpf" />
+                     <field name="especie" />
+                     <field name="nb" />
+                     <field name="data_ddb" />
+                     <field name="date_birth" />
+                     <field name="data_ddb" />
+                    </tree>
+                    </field>
+-->    
+            </page>
+     
+            </xpath> 
+        </field>
+      </record>
+</odoo>

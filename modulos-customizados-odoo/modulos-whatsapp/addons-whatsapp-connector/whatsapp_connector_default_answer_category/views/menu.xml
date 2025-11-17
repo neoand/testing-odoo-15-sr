@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem action="view_whatsapp_connector_default_answer_category_action"
+            id="view_whatsapp_connector_default_answer_category_menu"
+            parent="whatsapp_connector.whatsapp_connector_settings_menu"
+            sequence="135"/>
+    </data>
+</odoo>

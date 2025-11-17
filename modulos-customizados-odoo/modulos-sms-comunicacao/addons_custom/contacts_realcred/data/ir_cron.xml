@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cron_check_previsiones" model="ir.cron">
+        <field name="name">Check data lemit</field>
+        <field name="model_id" ref="model_contacts_realcred_campaign"/>
+        <field name="state">code</field>
+        <field name="code">model.check_data_limit_send()</field>
+        <field name="active" eval="False"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="nextcall" eval="(datetime.now()).strftime('%Y-%m-%d 01:00:00')" />   <!--Dynamic-->
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+
+    <record id="cron_send_sms_kolmeya" model="ir.cron">
+        <field name="name">Check send SMS KOLMEYA</field>
+        <field name="model_id" ref="model_contacts_realcred_campaign"/>
+        <field name="state">code</field>
+        <field name="code">model.check_data_kolmeya_send()</field>
+        <field name="active" eval="False"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="nextcall" eval="(datetime.now()).strftime('%Y-%m-%d 01:00:00')" />   <!--Dynamic-->
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+
+    <record id="cron_send_response_sms_kolmeya" model="ir.cron">
+        <field name="name">Check response SMS KOLMEYA</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model.getSmsKolmeya()</field>
+        <field name="active" eval="True"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="nextcall" eval="(datetime.now()).strftime('%Y-%m-%d 01:00:00')" />   <!--Dynamic-->
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+
+</odoo>

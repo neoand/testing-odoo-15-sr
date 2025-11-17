@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_sms_scheduled_tree" model="ir.ui.view">
+        <field name="name">sms.scheduled.tree</field>
+        <field name="model">sms.scheduled</field>
+        <field name="arch" type="xml">
+            <tree string="Scheduled SMS" decoration-info="state=='draft'" decoration-success="state=='active'" decoration-muted="state=='cancelled'">
+                <field name="name"/>
+                <field name="provider_id"/>
+                <field name="schedule_type"/>
+                <field name="next_run"/>
+                <field name="last_run"/>
+                <field name="recipient_count"/>
+                <field name="total_runs"/>
+                <field name="state" widget="badge" decoration-info="state=='draft'" decoration-success="state=='active'" decoration-muted="state=='cancelled'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sms_scheduled_form" model="ir.ui.view">
+        <field name="name">sms.scheduled.form</field>
+        <field name="model">sms.scheduled</field>
+        <field name="arch" type="xml">
+            <form string="Scheduled SMS">
+                <header>
+                    <button name="action_activate" string="Activate" type="object" class="btn-primary" states="draft"/>
+                    <button name="action_run_now" string="Run Now" type="object" class="btn-success" states="active,draft"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="active,draft"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" states="cancelled"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g., Weekly Marketing SMS"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="basic">
+                            <field name="provider_id" options="{'no_create': True}"/>
+                            <field name="template_id" options="{'no_create': True}"/>
+                        </group>
+                        <group name="schedule">
+                            <field name="schedule_type"/>
+                            <field name="schedule_date"/>
+                            <field name="schedule_time" widget="float_time"/>
+                            <field name="interval" attrs="{'invisible': [('schedule_type', '=', 'once')], 'required': [('schedule_type', '!=', 'once')]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="execution">
+                            <field name="next_run" readonly="1"/>
+                            <field name="last_run" readonly="1"/>
+                        </group>
+                        <group name="stats">
+                            <field name="total_runs" readonly="1"/>
+                            <field name="total_sent" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recipients" name="recipients">
+                            <group>
+                                <field name="recipient_count" readonly="1"/>
+                            </group>
+                            <group string="Manual Selection">
+                                <field name="partner_ids" widget="many2many_tags" nolabel="1"/>
+                            </group>
+                            <group string="Dynamic Filter (Advanced)">
+                                <field name="domain_filter" nolabel="1" placeholder='[("customer_rank", ">", 0)]'/>
+                            </group>
+                        </page>
+                        <page string="Message & Chatter" name="message">
+                            <field name="message_ids" widget="mail_thread"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_sms_scheduled_kanban" model="ir.ui.view">
+        <field name="name">sms.scheduled.kanban</field>
+        <field name="model">sms.scheduled</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="next_run"/>
+                <field name="schedule_type"/>
+                <field name="recipient_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb8">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                </div>
+                                <span class="badge badge-pill">
+                                    <field name="state"/>
+                                </span>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="schedule_type"/>
+                                <field name="next_run" widget="date"/>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <span><i class="fa fa-users"/> <field name="recipient_count"/> recipients</span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sms_scheduled_search" model="ir.ui.view">
+        <field name="name">sms.scheduled.search</field>
+        <field name="model">sms.scheduled</field>
+        <field name="arch" type="xml">
+            <search string="Scheduled SMS">
+                <field name="name" string="Description"/>
+                <field name="provider_id"/>
+                <field name="template_id"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter string="One Time" name="once" domain="[('schedule_type', '=', 'once')]"/>
+                <filter string="Recurring" name="recurring" domain="[('schedule_type', 'in', ['daily', 'weekly', 'monthly'])]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Provider" name="group_provider" context="{'group_by': 'provider_id'}"/>
+                    <filter string="Schedule Type" name="group_schedule_type" context="{'group_by': 'schedule_type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sms_scheduled" model="ir.actions.act_window">
+        <field name="name">Scheduled SMS</field>
+        <field name="res_model">sms.scheduled</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first scheduled SMS task
+            </p>
+            <p>
+                Schedule SMS to be sent automatically at specific times or on recurring basis.
+            </p>
+        </field>
+    </record>
+
+</odoo>

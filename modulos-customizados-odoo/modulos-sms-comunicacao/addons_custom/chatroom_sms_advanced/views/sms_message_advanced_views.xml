@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View -->
+    <record id="view_sms_message_form_advanced" model="ir.ui.view">
+        <field name="name">sms.message.form.advanced</field>
+        <field name="model">sms.message</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_message_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add buttons to header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_view_campaign" string="View Campaign" type="object" class="btn-secondary" attrs="{'invisible': [('campaign_id', '=', False)]}"/>
+                <button name="action_add_to_blacklist" string="Add to Blacklist" type="object" class="btn-warning" confirm="Add this phone number to blacklist?" attrs="{'invisible': [('phone', '=', False)]}"/>
+            </xpath>
+
+            <!-- Add advanced fields in first group -->
+            <xpath expr="//sheet/group/group[1]" position="inside">
+                <field name="campaign_id" readonly="1"/>
+                <field name="scheduled_id" readonly="1"/>
+                <field name="is_scheduled" invisible="1"/>
+            </xpath>
+
+            <!-- Add cost field in second group -->
+            <xpath expr="//sheet/group/group[2]" position="inside">
+                <field name="cost" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Tree View -->
+    <record id="view_sms_message_tree_advanced" model="ir.ui.view">
+        <field name="name">sms.message.tree.advanced</field>
+        <field name="model">sms.message</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_message_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Add campaign and cost columns at the end -->
+            <xpath expr="//tree" position="inside">
+                <field name="campaign_id" optional="hide"/>
+                <field name="scheduled_id" optional="hide"/>
+                <field name="cost" optional="show" sum="Total Cost"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

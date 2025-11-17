@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="acrux chat audio assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/whatsapp_connector_audio_record/static/src/js/acrux_chat_conversation.js" />
+            <script type="text/javascript" src="/whatsapp_connector_audio_record/static/src/js/acrux_audio_recorder.js" />
+            <script type="text/javascript" src="/whatsapp_connector_audio_record/static/src/js/acrux_chat_toolbox.js" />
+            
+            <link rel="stylesheet" href="/whatsapp_connector_audio_record/static/src/css/acrux_chat.css" type="text/css" />
+        </xpath>
+    </template>
+</odoo>

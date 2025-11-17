@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- SMS Advanced User Group -->
+        <record id="group_sms_advanced_user" model="res.groups">
+            <field name="name">SMS Advanced User</field>
+            <field name="category_id" ref="base.module_category_marketing"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Can view and use SMS advanced features:
+                - View campaigns
+                - Send bulk SMS
+                - View dashboard
+                - View scheduled tasks
+            </field>
+        </record>
+
+        <!-- SMS Advanced Manager Group -->
+        <record id="group_sms_advanced_manager" model="res.groups">
+            <field name="name">SMS Advanced Manager</field>
+            <field name="category_id" ref="base.module_category_marketing"/>
+            <field name="implied_ids" eval="[(4, ref('group_sms_advanced_user'))]"/>
+            <field name="comment">
+                Full access to SMS advanced features:
+                - Create/edit campaigns
+                - Manage scheduled tasks
+                - Manage blacklist
+                - Configure providers
+                - View all statistics
+            </field>
+        </record>
+
+        <!-- Record Rules -->
+
+        <!-- SMS Scheduled - User can see all -->
+        <record id="sms_scheduled_rule_user" model="ir.rule">
+            <field name="name">SMS Scheduled: User Access</field>
+            <field name="model_id" ref="model_sms_scheduled"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_sms_advanced_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- SMS Scheduled - Manager has full access -->
+        <record id="sms_scheduled_rule_manager" model="ir.rule">
+            <field name="name">SMS Scheduled: Manager Full Access</field>
+            <field name="model_id" ref="model_sms_scheduled"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_sms_advanced_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- SMS Campaign - User can see all -->
+        <record id="sms_campaign_rule_user" model="ir.rule">
+            <field name="name">SMS Campaign: User Access</field>
+            <field name="model_id" ref="model_sms_campaign"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_sms_advanced_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- SMS Campaign - Manager has full access -->
+        <record id="sms_campaign_rule_manager" model="ir.rule">
+            <field name="name">SMS Campaign: Manager Full Access</field>
+            <field name="model_id" ref="model_sms_campaign"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_sms_advanced_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- SMS Blacklist - Manager only -->
+        <record id="sms_blacklist_rule_manager" model="ir.rule">
+            <field name="name">SMS Blacklist: Manager Only</field>
+            <field name="model_id" ref="model_sms_blacklist"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_sms_advanced_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+
+
+
+        <menuitem
+                id="menu_contacts_realcred"
+                name="Contatos Realcred"
+                web_icon="contacts_realcred,static/description/icon.png"
+                sequence="0"
+                action="action_view_contacts_realcred"
+        />
+
+        <menuitem
+                id="show_menu_contacts_realcred"
+                name="Contatos Realcred"
+                parent="menu_contacts_realcred"
+                sequence="10"
+                action="action_view_contacts_realcred"
+        />
+
+
+
+
+    </data>
+
+
+
+     <record id="contacts_realcred_wizard" model="ir.ui.view">
+            <field name="name">action.contacts.realcred.wizard</field>
+            <field name="model">contacts.realcred.wizard</field>
+            <field name="arch" type="xml">
+            <form string="-" >
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <div >
+                            <label for="name_campaign" class="oe_edit_only" />
+                            <h1>
+                                <field name="name_campaign" placeholder="name_campaign"/>
+                            </h1>
+                        </div>
+                        <footer >
+<!--                             <button string="Consultar Previsión"
+                                class="btn-info"
+                                name="show_report"
+                                type="object"/> -->
+
+                            <button string="Guardar Previsión"
+                                class="btn-success"
+                                name="save_view_report"
+                                type="object"/>
+
+                            <button string="Cancel"
+                                class="btn-default"
+                                special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+        <record id="action_contacts_realcred_wizard" model="ir.actions.act_window">
+            <field name="name">GENERAR CAMPANA</field>
+            <field name="res_model">contacts.realcred.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="contacts_realcred_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+<!--         <menuitem name="Generar Campana"
+                  id="action_generate_contacts_realcred_wizard"
+                  parent="menu_contacts_realcred"
+                  sequence="1"
+                  action="action_contacts_realcred_wizard"/>
+
+ -->
+
+        <record id="action_contacts_realcred_campaign" model="ir.actions.act_window">
+            <field name="name">GENERAR CAMPANA</field>
+            <field name="res_model">contacts.realcred.campaign</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Ver Campanhas"
+                  id="action_show_contacts_realcred_campaign"
+                  parent="menu_contacts_realcred"
+                  sequence="30"
+                  groups="contacts_realcred.contacts_realcred_manager"
+                  action="action_contacts_realcred_campaign"/>
+
+
+
+
+
+</odoo>

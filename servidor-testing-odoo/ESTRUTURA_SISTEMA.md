@@ -1,0 +1,269 @@
+# Estrutura do Sistema e Serviços
+
+## Diretórios Principais
+
+### Diretório Raiz (/)
+```
+/odoo/              - Instalação do Odoo e dados
+/home/              - Diretórios home dos usuários
+/etc/               - Arquivos de configuração do sistema
+/var/                - Dados variáveis (logs, cache, etc.)
+/opt/                - Software adicional instalado
+/dockers/            - Diretório relacionado a Docker
+```
+
+### Diretório Odoo (/odoo)
+
+**Estrutura:**
+```
+/odoo/
+├── odoo-server/          - Código fonte do Odoo
+├── custom/               - Módulos customizados (11 diretórios)
+├── filestore/            - Arquivos armazenados pelo Odoo
+├── backups/              - Backups do sistema
+├── iurd-cm-mx/           - Módulo customizado específico
+└── requirements.txt      - Dependências Python
+```
+
+**Propriedade:**
+- **Usuário:** `odoo`
+- **Grupo:** `odoo`
+
+**Configuração:**
+- **Arquivo de Config:** `/etc/odoo-server.conf`
+- **Comando de Execução:** `python3 /odoo/odoo-server/odoo-bin -c /etc/odoo-server.conf`
+
+## Serviços em Execução
+
+### Odoo Server
+
+**Status:** ✅ Rodando
+
+**Processos:**
+- **Processo Principal:** PID 584
+- **Workers:** Múltiplos processos worker (PIDs: 1138-1186)
+- **Gevent Worker:** PID 1155 (porta 8072)
+- **Workers Adicionais:** PIDs 1159, 1162, 1182, 1184, 1186
+
+**Portas:**
+- **8069:** HTTP principal (localhost apenas)
+- **8072:** Gevent worker (localhost apenas)
+
+**Acesso:**
+- O acesso externo é feito através do Nginx (portas 80/443)
+- Odoo não está exposto diretamente na rede externa
+
+### PostgreSQL
+
+**Status:** ✅ Rodando
+
+**Versão:** PostgreSQL 12
+
+**Portas:**
+- **5432:** Porta principal (acessível externamente)
+- **5433:** Porta alternativa (localhost apenas)
+
+**Bancos de Dados Identificados:**
+- `postgres` - Banco padrão do PostgreSQL
+- `realcred` - Banco de dados do Odoo (múltiplas conexões ativas)
+
+**Processos:**
+- **Processo Principal:** PID 842 (porta 5432)
+- **Processo Secundário:** PID 843 (porta 5433)
+- **Conexões Ativas:** Múltiplas conexões do Odoo para o banco `realcred`
+
+### Nginx
+
+**Status:** ✅ Rodando
+
+**Portas:**
+- **80:** HTTP
+- **443:** HTTPS
+
+**Processos:**
+- **Master:** PID 629
+- **Workers:** PIDs 630, 631
+
+**Função:**
+- Proxy reverso para o Odoo
+- SSL/TLS termination
+- Servir conteúdo estático
+
+### SSH (sshd)
+
+**Status:** ✅ Rodando
+
+**Porta:** 22
+
+**Processo:** PID 880
+
+### Fluent Bit (Logging)
+
+**Status:** ✅ Rodando
+
+**Porta:** 20202
+
+**Processo:** PID 1022
+
+**Função:** Coleta e envia logs para serviços de monitoramento
+
+### OpenTelemetry Collector
+
+**Status:** ✅ Rodando
+
+**Porta:** 20201
+
+**Processo:** PID 947
+
+**Função:** Coleta métricas e traces para observabilidade
+
+## Usuários do Sistema
+
+### Usuário Odoo
+- **Username:** `odoo`
+- **UID:** (verificar com `id odoo`)
+- **Home:** `/odoo` (ou `/home/odoo`)
+- **Função:** Executa os processos do Odoo
+
+### Usuário PostgreSQL
+- **Username:** `postgres`
+- **Função:** Gerencia o banco de dados PostgreSQL
+
+### Usuário SSH
+- **Username:** `admin_iurd_mx`
+- **Função:** Acesso administrativo via SSH
+
+## Configurações Importantes
+
+### Arquivo de Configuração do Odoo
+- **Localização:** `/etc/odoo-server.conf`
+- **Conteúdo:** Configurações do servidor Odoo, banco de dados, workers, etc.
+
+### Configuração do Nginx
+- **Localização:** `/etc/nginx/`
+- **Sites Disponíveis:** `/etc/nginx/sites-available/`
+- **Sites Habilitados:** `/etc/nginx/sites-enabled/`
+
+### Configuração do PostgreSQL
+- **Localização:** `/etc/postgresql/12/main/`
+- **Arquivo Principal:** `postgresql.conf`
+- **Arquivo de Autenticação:** `pg_hba.conf`
+
+## Logs do Sistema
+
+### Logs do Odoo
+```bash
+# Verificar localização nos logs do sistema
+sudo journalctl -u odoo -n 50
+
+# Ou verificar arquivos de log do Odoo
+ls -la /var/log/odoo/
+```
+
+### Logs do Nginx
+```bash
+# Logs de acesso
+sudo tail -f /var/log/nginx/access.log
+
+# Logs de erro
+sudo tail -f /var/log/nginx/error.log
+```
+
+### Logs do PostgreSQL
+```bash
+# Logs do PostgreSQL
+sudo tail -f /var/log/postgresql/postgresql-12-main.log
+```
+
+### Logs do Sistema
+```bash
+# Logs gerais do sistema
+sudo journalctl -n 50
+```
+
+## Comandos de Verificação
+
+### Verificar Status dos Serviços
+```bash
+# Odoo (se tiver serviço systemd)
+sudo systemctl status odoo
+
+# PostgreSQL
+sudo systemctl status postgresql
+
+# Nginx
+sudo systemctl status nginx
+```
+
+### Verificar Processos
+```bash
+# Processos Odoo
+ps aux | grep odoo | grep -v grep
+
+# Processos PostgreSQL
+ps aux | grep postgres | grep -v grep
+
+# Processos Nginx
+ps aux | grep nginx | grep -v grep
+```
+
+### Verificar Portas
+```bash
+# Todas as portas em uso
+sudo ss -tulpn | grep LISTEN
+
+# Porta específica do Odoo
+sudo ss -tulpn | grep 8069
+
+# Porta do PostgreSQL
+sudo ss -tulpn | grep 5432
+```
+
+## Acesso aos Serviços
+
+### Acesso Web ao Odoo
+- **URL Externa:** `http://35.199.92.1` ou `https://35.199.92.1`
+- **URL Interna:** `http://localhost:8069` (apenas no servidor)
+- **Proxy:** Nginx faz proxy para `http://127.0.0.1:8069`
+
+### Acesso ao PostgreSQL
+```bash
+# Localmente no servidor
+sudo -u postgres psql
+
+# Conectar ao banco realcred
+sudo -u postgres psql -d realcred
+
+# Ou como usuário odoo
+psql -U odoo -d realcred
+```
+
+### Acesso via SSH
+```bash
+gcloud compute ssh odoo-sr-tensting --zone=southamerica-east1-b
+```
+
+## Espaço em Disco
+
+### Uso Atual
+- **Total:** 291 GB
+- **Usado:** 168 GB (58%)
+- **Disponível:** 124 GB
+
+### Diretórios que Mais Usam Espaço
+```bash
+# Verificar uso por diretório
+sudo du -h --max-depth=1 / | sort -hr | head -10
+```
+
+## Backup
+
+### Backups do Odoo
+- **Localização:** `/odoo/backups/`
+- **Frequência:** (verificar configuração de cron)
+
+### Backups do Disco (GCP)
+- **Frequência:** Diário (12:00 AM - 1:00 AM)
+- **Vault:** `default-vault-southamerica-east1`
+- **Plano:** `default-compute-instance-plan-southamerica-east1`
+

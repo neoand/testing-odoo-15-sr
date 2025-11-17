@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+      <record id="crm_lead_view_form_inherint" model="ir.ui.view">
+          <field name="name">crm.lead.view.form.inherit</field>
+          <field name="model">crm.lead</field>
+          <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+          <field name="arch" type="xml">
+          
+              <xpath expr="//button[@name='action_set_lost']" position="before">
+                <button name="action_send_api" string="Consulta por CPF"  type="object" class="btn btn-danger"   />
+                <button name="action_atribuir_venda" string="Atribuir venda"  type="object" invisible="" class="btn btn-info"   />
+              </xpath>
+
+              <xpath expr="//field[@name='email_from']/.." position="after">
+                <field name="cpf" string="CPF"/>
+                <field name="url_origen" string="URL origem"  widget="url" readonly="1" />
+                <field name="perfil" string="Perfil"/>
+                <field name="producto"/>
+                <field name="is_admin" />
+              </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_admin', '!=', True)]}</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_admin', '!=', True)]}</attribute>
+                </xpath>
+
+          </field>
+      </record>
+
+
+        <record id="mt_wizzard_api_form" model="ir.ui.view">
+                <field name="name">mt.wizzard.api.form</field>
+                <field name="model">mt.wizzard.api</field>
+                <field name="type">form</field>
+                <field name="mode">primary</field>
+                <field name="arch" type="xml">
+                <form string="Consulta por CPF" >
+                        <sheet>
+                            <field name="cpf" required="1"/>
+                        
+                            <footer >
+                                <button string="Consultar"
+                                    class="btn-success"
+                                    name="send_api"
+                                    type="object"/>
+
+                                <button string="Cancelar ação"
+                                    class="btn-default"
+                                    special="cancel" />
+                            </footer>
+                        </sheet>
+                    </form>
+
+                </field>
+        </record>
+
+    </data>
+</odoo>

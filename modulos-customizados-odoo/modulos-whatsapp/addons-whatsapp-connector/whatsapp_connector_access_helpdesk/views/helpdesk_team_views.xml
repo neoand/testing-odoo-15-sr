@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="helpdesk_team_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.team.tree acrux access</field>
+        <field name="model">helpdesk.ticket.team</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.view_helpdesk_team_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_ids']" position="before">
+                <field name="chatroom_user_ids" widget="many2many_avatar_user" options="{'no_create': True}"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="helpdesk_team_view_form" model="ir.ui.view">
+        <field name="name">helpdesk.team.form acrux access</field>
+        <field name="model">helpdesk.ticket.team</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.view_helpdesk_team_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='alias_user_id']" position="after">
+                <div>
+                    <label for="chatroom_user_ids" class="mt16 mb8"/>
+                </div>
+                <div>
+                    <field name="chatroom_user_ids" widget="many2many_avatar_user" options="{'no_create': True}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

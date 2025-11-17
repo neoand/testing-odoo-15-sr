@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_phonecall_smartbutton" model="ir.ui.view">
+        <field name="name">res.partner.form.phonecall.smartbutton</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name= button_box]" position="inside">
+                <button name="action_view_phonecall" type="object"
+                        class="oe_stat_button" icon="fa-phone"
+                        context="{default_partner_id: id, search_default_partner_id: id}">
+                    <field name="phonecall_count" widget="statinfo" string="Ligações"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit ChatRoom Default Answer Category</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="whatsapp_connector.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='acrux_configuration']/div/div[hasclass('o_setting_right_pane')]" position="inside">
+                <h6>Edit Default Answers Before Send</h6>
+                <div class="text-muted">
+                    In chatroom you can edit default answer before send. Click in send button and edit at input. It only works with text message.
+                </div>
+                <div class="mb16">
+                    <field name="chatroom_edit_default_answer" widget="boolean_toggle" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

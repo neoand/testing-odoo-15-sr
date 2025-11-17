@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_internal_user_crud,res.partner.internal.user.crud,base.model_res_partner,base.group_user,1,1,1,1
+access_crm_lead_operacional,crm.lead.operacional,crm.model_crm_lead,realcred_permissions.group_operacional,1,1,1,1
+access_sale_order_operacional,sale.order.operacional,sale.model_sale_order,realcred_permissions.group_operacional,1,1,1,0
+access_sale_order_line_operacional,sale.order.line.operacional,sale.model_sale_order_line,realcred_permissions.group_operacional,1,1,1,0
+access_crm_lead_accountant,crm.lead.accountant,crm.model_crm_lead,account.group_account_user,1,0,0,0

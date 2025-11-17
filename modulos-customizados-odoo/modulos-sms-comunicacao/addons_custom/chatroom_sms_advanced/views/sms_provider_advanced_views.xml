@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View -->
+    <record id="view_sms_provider_form_advanced" model="ir.ui.view">
+        <field name="name">sms.provider.form.advanced</field>
+        <field name="model">sms.provider</field>
+        <field name="inherit_id" ref="sms_base_sr.view_sms_provider_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add header with buttons -->
+            <xpath expr="//form" position="inside">
+                <header>
+                    <button name="action_check_balance_now" string="Check Balance Now" type="object" class="btn-secondary"/>
+                    <button name="action_view_messages" string="View Messages" type="object" class="btn-secondary"/>
+                </header>
+            </xpath>
+
+            <!-- Add button box at the beginning of sheet -->
+            <xpath expr="//sheet" position="before">
+                <header/>
+            </xpath>
+            
+            <xpath expr="//sheet" position="inside">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_messages" type="object" class="oe_stat_button" icon="fa-envelope">
+                        <field name="total_sent_count" widget="statinfo" string="Sent"/>
+                    </button>
+                    <button name="action_view_messages" type="object" class="oe_stat_button" icon="fa-check-circle">
+                        <field name="total_delivered_count" widget="statinfo" string="Delivered"/>
+                    </button>
+                    <button class="oe_stat_button" icon="fa-percent" type="object" name="action_view_messages">
+                        <field name="delivery_rate" widget="percentpie" string="Delivery Rate"/>
+                    </button>
+                </div>
+            </xpath>
+
+            <!-- Add notebook with advanced settings -->
+            <xpath expr="//sheet/group" position="after">
+                <notebook>
+                    <page string="Advanced Settings" name="advanced">
+                        <group>
+                            <group string="Balance Warning">
+                                <field name="balance_warning_enabled"/>
+                                <field name="balance_warning_threshold" attrs="{'invisible': [('balance_warning_enabled', '=', False)]}"/>
+                                <field name="balance_last_check" readonly="1"/>
+                                <field name="balance_warning_user_ids" widget="many2many_tags" attrs="{'invisible': [('balance_warning_enabled', '=', False)]}"/>
+                            </group>
+                            <group string="Do Not Disturb (DND)">
+                                <field name="dnd_enabled"/>
+                                <field name="dnd_start_hour" attrs="{'invisible': [('dnd_enabled', '=', False)]}" widget="integer"/>
+                                <field name="dnd_end_hour" attrs="{'invisible': [('dnd_enabled', '=', False)]}" widget="integer"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Statistics" name="statistics">
+                        <group>
+                            <group string="Message Stats">
+                                <field name="total_sent_count" readonly="1"/>
+                                <field name="total_delivered_count" readonly="1"/>
+                                <field name="total_failed_count" readonly="1"/>
+                            </group>
+                            <group string="Performance">
+                                <field name="delivery_rate" readonly="1" widget="percentage"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

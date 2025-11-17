@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Template: Welcome Message -->
+        <record id="sms_template_welcome" model="sms.template">
+            <field name="name">Welcome Message</field>
+            <field name="body">Olá {partner.name}! Bem-vindo(a) à nossa empresa. Estamos felizes em tê-lo(a) conosco! 😊</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+        </record>
+
+        <!-- Template: Appointment Reminder -->
+        <record id="sms_template_appointment_reminder" model="sms.template">
+            <field name="name">Appointment Reminder</field>
+            <field name="body">Olá {partner.name}, este é um lembrete do seu compromisso agendado. Qualquer dúvida, entre em contato!</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+        </record>
+
+        <!-- Template: Promotional Message -->
+        <record id="sms_template_promotional" model="sms.template">
+            <field name="name">Promotional Campaign</field>
+            <field name="body">🎉 PROMOÇÃO ESPECIAL para você, {partner.name}! Aproveite descontos incríveis. Válido por tempo limitado!</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+        </record>
+
+        <!-- Template: Payment Reminder -->
+        <record id="sms_template_payment_reminder" model="sms.template">
+            <field name="name">Payment Reminder</field>
+            <field name="body">Olá {partner.name}, identificamos uma pendência financeira. Entre em contato para regularização. Obrigado!</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+        </record>
+
+        <!-- Template: Thank You Message -->
+        <record id="sms_template_thank_you" model="sms.template">
+            <field name="name">Thank You Message</field>
+            <field name="body">Obrigado pela sua preferência, {partner.name}! Sua satisfação é nossa prioridade. Até breve! ❤️</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+        </record>
+
+    </data>
+</odoo>

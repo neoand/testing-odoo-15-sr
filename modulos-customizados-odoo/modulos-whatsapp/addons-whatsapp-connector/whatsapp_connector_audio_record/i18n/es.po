@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* whatsapp_connector_audio_record
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-17 14:28+0000\n"
+"PO-Revision-Date: 2022-08-17 14:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: whatsapp_connector_audio_record
+#: model:ir.model.fields,field_description:whatsapp_connector_audio_record.field_acrux_chat_connector__allow_record_audio
+#: model:ir.model.fields,field_description:whatsapp_connector_audio_record.field_acrux_chat_conversation__allow_record_audio
+msgid "Allow Record Audio"
+msgstr "Permitir Grabar Audio"
+
+#. module: whatsapp_connector_audio_record
+#: model:ir.model,name:whatsapp_connector_audio_record.model_acrux_chat_conversation
+msgid "Chat Conversation"
+msgstr "Conversación Chat"
+
+#. module: whatsapp_connector_audio_record
+#: model:ir.model,name:whatsapp_connector_audio_record.model_acrux_chat_connector
+msgid "Connector Definition"
+msgstr "Definición de Conector"
+
+#. module: whatsapp_connector_audio_record
+#. openerp-web
+#: code:addons/whatsapp_connector_audio_record/static/src/js/acrux_audio_recorder.js:0
+#, python-format
+msgid "Microphone not found."
+msgstr "Micrófono no encontrado."
+
+#. module: whatsapp_connector_audio_record
+#. openerp-web
+#: code:addons/whatsapp_connector_audio_record/static/src/js/acrux_audio_recorder.js:0
+#, python-format
+msgid "Microphone permission not granted."
+msgstr "Permiso de micrófono no concedido."
+
+#. module: whatsapp_connector_audio_record
+#. openerp-web
+#: code:addons/whatsapp_connector_audio_record/static/src/js/acrux_audio_recorder.js:0
+#, python-format
+msgid "Recording audio not supported."
+msgstr "No se admite la grabación de audio."

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_create,perm_write,perm_unlink
+access_acrux_chat_default_answer_category,access_acrux_chat_default_answer_category,model_acrux_chat_default_answer_category,whatsapp_connector.group_chat_basic,1,0,0,0
+access_acrux_chat_default_answer_category_admin,access_acrux_chat_default_answer_category_admin,model_acrux_chat_default_answer_category,base.group_system,1,1,1,1

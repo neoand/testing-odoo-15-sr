@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sms_scheduled_user,sms.scheduled user,model_sms_scheduled,group_sms_advanced_user,1,0,0,0
+access_sms_scheduled_manager,sms.scheduled manager,model_sms_scheduled,group_sms_advanced_manager,1,1,1,1
+access_sms_campaign_user,sms.campaign user,model_sms_campaign,group_sms_advanced_user,1,0,0,0
+access_sms_campaign_manager,sms.campaign manager,model_sms_campaign,group_sms_advanced_manager,1,1,1,1
+access_sms_blacklist_user,sms.blacklist user,model_sms_blacklist,group_sms_advanced_user,1,0,0,0
+access_sms_blacklist_manager,sms.blacklist manager,model_sms_blacklist,group_sms_advanced_manager,1,1,1,1
+access_sms_dashboard_user,sms.dashboard user,model_sms_dashboard,group_sms_advanced_user,1,0,0,0
+access_sms_dashboard_manager,sms.dashboard manager,model_sms_dashboard,group_sms_advanced_manager,1,0,0,0
+access_sms_bulk_send_user,sms.bulk.send user,model_sms_bulk_send,group_sms_advanced_user,1,1,1,1
+access_sms_bulk_send_manager,sms.bulk.send manager,model_sms_bulk_send,group_sms_advanced_manager,1,1,1,1

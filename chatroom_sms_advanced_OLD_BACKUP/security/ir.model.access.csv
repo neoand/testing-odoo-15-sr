@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_chatroom_sms_log_user,chatroom.sms.log.user,model_chatroom_sms_log,group_sms_user,1,0,0,0
+access_chatroom_sms_log_manager,chatroom.sms.log.manager,model_chatroom_sms_log,group_sms_manager,1,1,1,1
+access_chatroom_sms_template_user,chatroom.sms.template.user,model_chatroom_sms_template,group_sms_user,1,0,0,0
+access_chatroom_sms_template_manager,chatroom.sms.template.manager,model_chatroom_sms_template,group_sms_manager,1,1,1,1
+access_chatroom_sms_scheduled_user,chatroom.sms.scheduled.user,model_chatroom_sms_scheduled,group_sms_user,1,0,1,0
+access_chatroom_sms_scheduled_manager,chatroom.sms.scheduled.manager,model_chatroom_sms_scheduled,group_sms_manager,1,1,1,1
+access_chatroom_sms_segment_user,chatroom.sms.segment.user,model_chatroom_sms_segment,group_sms_user,1,0,0,0
+access_chatroom_sms_segment_manager,chatroom.sms.segment.manager,model_chatroom_sms_segment,group_sms_manager,1,1,1,1
+access_chatroom_sms_dashboard_user,chatroom.sms.dashboard.user,model_chatroom_sms_dashboard,group_sms_user,1,0,0,0
+access_chatroom_sms_dashboard_manager,chatroom.sms.dashboard.manager,model_chatroom_sms_dashboard,group_sms_manager,1,0,0,0
+access_chatroom_send_bulk_sms_user,chatroom.send.bulk.sms.user,model_chatroom_send_bulk_sms,group_sms_user,1,0,1,0
+access_chatroom_send_bulk_sms_manager,chatroom.send.bulk.sms.manager,model_chatroom_send_bulk_sms,group_sms_manager,1,1,1,1
+access_chatroom_sms_test_manager,chatroom.sms.test.manager,model_chatroom_sms_test,group_sms_manager,1,1,1,1
+access_chatroom_sms_api_user,chatroom.sms.api.user,model_chatroom_sms_api,group_sms_user,1,0,0,0
+access_chatroom_sms_api_manager,chatroom.sms.api.manager,model_chatroom_sms_api,group_sms_manager,1,1,1,0

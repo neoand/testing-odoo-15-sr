@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sms_provider_kolmeya_user,sms.provider.kolmeya.user,sms_base_sr.model_sms_provider,sms_base_sr.group_sms_user,1,0,0,0
+access_sms_provider_kolmeya_manager,sms.provider.kolmeya.manager,sms_base_sr.model_sms_provider,sms_base_sr.group_sms_manager,1,1,1,1

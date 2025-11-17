@@ -1,0 +1,139 @@
+
+/*
+ es una copia de la regla
+ .o_acrux_chat .o_acrux_chat_content .o_chat_msg_content
+*/
+.o_acrux_chat .o_acrux_chat_content .acrux_chat_message_quote {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    max-height: 100%;
+    z-index: 10;
+}
+
+.o_acrux_chat .o_acrux_chat_content .acrux_chat_message_quote:hover > div {
+    background-color: #dcf8c6;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_message.active_quote {
+    border: 3px solid #5fbd16; 
+}
+
+.o_acrux_chat .o_acrux_chat_content .acrux_chat_message_quote,
+.o_acrux_chat .o_acrux_chat_content .acrux_chat_message_quote .o_Attachment_image.o-attachment-viewable {
+    cursor: pointer;
+}
+
+.o_acrux_chat .o_acrux_chat_content .acrux_chat_message_quote .o_chat_message {
+    margin: 3px !important;
+}
+
+.o_acrux_chat .o_chat_toolbox .o_chat_toolbox_message_quote {
+    display: flex;
+    flex-flow: row;
+    padding-left: 6%;
+    padding-right: 4%;
+    max-height: 5em;
+}
+
+.o_acrux_chat .o_chat_toolbox .o_chat_toolbox_message_quote .o_chat_toolbox_message_quote_content {
+    flex: 1 1 auto;
+    display: flex;
+    max-width: 100%;
+}
+
+.o_acrux_chat .o_chat_toolbox .o_chat_toolbox_message_quote .o_chat_toolbox_message_quote_content .o_chat_message {
+    max-width: 100%;
+/*    flex: 1 1 auto;*/
+    display: flex;
+    flex-flow: row;
+}
+
+.o_acrux_chat .o_chat_toolbox .o_chat_toolbox_message_quote .o_chat_toolbox_close_message {
+    display: block;
+    cursor: pointer;
+}
+
+.o_acrux_chat .o_chat_toolbox .o_chat_toolbox_message_quote .o_chat_toolbox_close_message svg {
+    align-self: center;
+    pointer-events: none;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_toolbox .o_chat_msg_content {
+    flex: 1 1 auto;
+    display: flex;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_toolbox .o_chat_msg_content .o_chat_space {
+    display: none;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_toolbox .o_chat_msg_content .o_acrux_location_img {
+    width: auto;
+    height: auto;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_toolbox .o_chat_msg_hour {
+    align-self: end;
+}
+
+.o_chat_message .o_chat_message_options {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    opacity: 0.418377;
+    cursor: pointer;
+    z-index: 10;
+    display: none;
+}
+
+.o_chat_message:hover .o_chat_message_options {
+    display: block;
+}
+
+.o_chat_message .acrux_chat_message_quote .o_chat_message .o_chat_message_options,
+.o_chat_toolbox .o_chat_message:hover .o_chat_message_options,
+.o_chat_toolbox .o_chat_message .o_chat_message_options,
+.o_chat_toolbox .acrux_chat_message_quote,
+.o_acrux_chat .o_acrux_chat_content .o_chat_toolbox .acrux_chat_message_quote {
+    display: none;
+}
+
+.o_action > .o_chat_message:hover .o_chat_message_options {
+    display: none;
+}
+
+.o_acrux_chat div#menu_message_option {
+    position: relative;
+    display: inline-block;
+}
+
+.o_acrux_chat div#menu_message_option span {
+    color: black;
+    display: block;
+    font-size: 13px;
+    z-index: 10;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.o_acrux_chat div#menu_message_option span:hover {
+    background-color: #dcf8c6;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_message .o_chat_msg_deleted,
+.o_action .o_chat_message .o_chat_msg_deleted {
+    font-style: italic;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.o_acrux_chat .o_acrux_chat_content .o_chat_message .acrux_chat_message_quote .o_chat_message {
+    max-width: 100%;
+    float: none;
+}
+
+.o_chat_message .acrux_chat_message_quote .o_message_title,
+.o_chat_toolbox .acrux_chat_message_quote .o_message_title{
+    display: none;
+}

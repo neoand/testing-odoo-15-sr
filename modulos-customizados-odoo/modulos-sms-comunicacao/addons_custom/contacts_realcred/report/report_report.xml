@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <report
+            id ="action_contacts_realcred_batch_xls"
+            model="contacts.realcred.campaign"
+            string="Download contatos atualizados"
+            report_type="xlsx"
+            name="contacts.realcred.batch.xlsx"
+            file="Download contatos atualizados"
+            attachment_use="False"
+            menu="True"/>
+
+    </data>
+</odoo>

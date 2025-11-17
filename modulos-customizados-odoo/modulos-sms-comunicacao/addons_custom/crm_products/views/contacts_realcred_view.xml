@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+
+        <!-- Tree view for "model" -->
+        <record id="view_contacts_realcred_batch_tree" model="ir.ui.view">
+            <field name="name">view.contacts.realcred.batch.tree</field>
+            <field name="model">contacts.realcred.batch</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="contacts_realcred_tree" create="true" delete="true" edit="true">
+                    <field name="name"/>
+                    <field name="cpf"/>
+                    <field name="telefone1"/>
+                    <field name="whatsapp1"/>
+                    <field name="type_sex"/>
+                    <field name="date_birth"/>
+                    <field name="age"/>
+                    <field name="especie"/>
+                    <field name="nb"/>
+                    <field name="vl_bruto_atrasados"/>
+                    <field name="salario"/>
+                    <field name="data_ddb"/>
+
+                    <field name="nome_mae"/>
+                    <field name="falecido"/>
+                    <field name="situacao_cpf"/>
+                    <field name="renda"/>
+                    <field name="ocupacao"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "model" -->
+        <record id="view_contacts_realcred_form" model="ir.ui.view">
+            <field name="name">view.contacts.realcred.form</field>
+            <field name="model">contacts.realcred.batch</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="contacts_realcred_form" create="true" delete="true" edit="true">
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_inline"
+                                    placeholder="name" />
+                            </h1>
+                        </div>
+                        <group>
+
+                            <group>
+                                <field name="name"/>
+                                <field name="cpf"/>
+                                <field name="telefone1"/>
+                                <field name="whatsapp1"/>
+                                <field name="type_sex"/>
+                                <field name="date_birth"/>
+                                <field name="age"/>
+                                <field name="vi_rmi"/>
+                                <field name="uf"/>
+
+                            </group>
+                            <group>
+                               <field name="especie"/>
+                                <field name="nb"/>
+                                <field name="vl_bruto_atrasados"/>
+                                <field name="salario"/>
+                                <field name="data_ddb"/>
+
+                                <field name="nome_mae"/>
+                                <field name="falecido"/>
+                                <field name="situacao_cpf"/>
+                                <field name="renda"/>
+                                <field name="ocupacao"/>
+
+
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "model" -->
+        <record id="view_contacts_realcred_search" model="ir.ui.view">
+            <field name="name">view.contacts.realcred.search</field>
+            <field name="model">contacts.realcred.batch</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="contacts_realcred_search">
+                    <field name="name"/>
+                    <field name="uf"/>
+                    <field name="vi_rmi"/>
+                    <field name="cpf"/>
+                    <field name="telefone1"/>
+                    <field name="whatsapp1"/>
+                    <field name="type_sex"/>
+                    <field name="date_birth"/>
+                    <field name="age"/>
+                    <field name="especie"/>
+                    <field name="nb"/>
+                    <field name="vl_bruto_atrasados"/>
+                    <field name="salario"/>
+                    <field name="data_ddb"/>
+                </search>
+            </field>
+        </record>
+
+
+
+        <record id="action_view_contacts_realcred" model="ir.actions.act_window">
+            <field name="name">Contatos Realcred</field>
+            <field name="res_model">contacts.realcred.batch</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('partner_type', '=', 'customer'), ('mt_is_from_portal', '=', True)]</field> -->
+        </record>
+
+</odoo>

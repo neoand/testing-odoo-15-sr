@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* whatsapp_connector_message_option
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-18 15:39+0000\n"
+"PO-Revision-Date: 2022-02-18 15:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Answer"
+msgstr "Responder"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: whatsapp_connector_message_option
+#: model:ir.model,name:whatsapp_connector_message_option.model_acrux_chat_conversation
+msgid "Chat Conversation"
+msgstr "Conversación Chat"
+
+#. module: whatsapp_connector_message_option
+#: model:ir.model,name:whatsapp_connector_message_option.model_acrux_chat_message
+msgid "Chat Message"
+msgstr "Mensaje Chat"
+
+#. module: whatsapp_connector_message_option
+#: model:ir.model,name:whatsapp_connector_message_option.model_acrux_chat_connector
+msgid "Connector Definition"
+msgstr "Definición de Conector"
+
+#. module: whatsapp_connector_message_option
+#: model:ir.model.fields,field_description:whatsapp_connector_message_option.field_acrux_chat_message__date_delete
+msgid "Date Delete"
+msgstr "Fecha Eliminado"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Delete"
+msgstr "Eliminar"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Delete for all"
+msgstr "Eliminar para todos"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Delete for me"
+msgstr "Eliminar para mí"
+
+#. module: whatsapp_connector_message_option
+#: code:addons/whatsapp_connector_message_option/models/Message.py:0
+#: model_terms:ir.ui.view,arch_db:whatsapp_connector_message_option.view_whatsapp_connector_message_search
+#, python-format
+msgid "Deleted"
+msgstr "Eliminado"
+
+#. module: whatsapp_connector_message_option
+#. openerp-web
+#: code:addons/whatsapp_connector_message_option/static/src/js/acrux_chat.js:0
+#, python-format
+msgid "Do you want delete this message?"
+msgstr "Usted quiere eliminar este mensaje?"
+
+#. module: whatsapp_connector_message_option
+#: model:ir.model.fields,field_description:whatsapp_connector_message_option.field_acrux_chat_message__quote_id
+msgid "Queted Message"
+msgstr "Mensaje Citado"
+
+#. module: whatsapp_connector_message_option
+#: model_terms:ir.ui.view,arch_db:whatsapp_connector_message_option.view_whatsapp_connector_message_search
+msgid "Quoted"
+msgstr "Citado"

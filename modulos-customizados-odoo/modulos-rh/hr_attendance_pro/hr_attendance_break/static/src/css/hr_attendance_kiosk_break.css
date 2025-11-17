@@ -1,0 +1,28 @@
+.o_hr_attendance_kiosk_mode .o_hr_attendance_break_resume_icon {
+    cursor: pointer;
+    margin: 0.1em 0 0.1em;
+    padding: 0.15em 0.3em;
+    border-radius: .1em;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+.o_hr_attendance_kiosk_mode .o_hr_attendance_break_resume_icon.btn-secondary:hover {
+    color: #7C7BAD;
+}
+
+.o_hr_show{
+    display: block !important;
+}
+.o_hr_hide{
+    display: none !important;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_break_back_icon {
+    cursor: pointer;
+    margin: 0.1em 0 0.1em;
+    padding: 0.15em 0.3em;
+    border-radius: .1em;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+.o_hr_attendance_kiosk_mode .o_hr_attendance_break_back_icon.btn-secondary:hover {
+    color: #7C7BAD;
+}

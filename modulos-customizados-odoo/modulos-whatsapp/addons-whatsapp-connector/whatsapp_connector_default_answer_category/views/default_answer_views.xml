@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_whatsapp_connector_default_answer_tree" model="ir.ui.view">
+        <field name="name">acrux.chat.default.answer.tree Default Answer Category</field>
+        <field name="model">acrux.chat.default.answer</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_default_answer_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="category_id" options="{'no_create': True, 'no_open': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_whatsapp_connector_default_answer_form" model="ir.ui.view">
+        <field name="name">acrux.chat.default.answer.form Default Answer Category</field>
+        <field name="model">acrux.chat.default.answer</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_default_answer_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="category_id" options="{'no_create': True, 'no_open': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_whatsapp_connector_default_answer_search" model="ir.ui.view">
+        <field name="name">acrux.chat.default.answer.search Default Answer Category</field>
+        <field name="model">acrux.chat.default.answer</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_default_answer_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="category_id" />
+            </field>
+            <xpath expr="//group" position="inside">
+                <filter name="group_by_category" string="Category" context="{'group_by':'category_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

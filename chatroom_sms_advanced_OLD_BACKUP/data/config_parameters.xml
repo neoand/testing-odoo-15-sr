@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- SMS Configuration Parameters -->
+
+        <!-- Webhook URL for SMS Status Updates -->
+        <record id="config_param_webhook_url" model="ir.config_parameter">
+            <field name="key">chatroom_sms.webhook_url</field>
+            <field name="value">https://SEU_SERVIDOR/chatroom/webhook/kolmeya/status</field>
+        </record>
+
+        <!-- Webhook URL for SMS Reply -->
+        <record id="config_param_webhook_reply_url" model="ir.config_parameter">
+            <field name="key">chatroom_sms.webhook_reply_url</field>
+            <field name="value">https://SEU_SERVIDOR/chatroom/webhook/kolmeya/reply</field>
+        </record>
+
+        <!-- Enable/Disable Balance Check -->
+        <record id="config_param_balance_check_enabled" model="ir.config_parameter">
+            <field name="key">chatroom_sms.balance_check_enabled</field>
+            <field name="value">True</field>
+        </record>
+
+        <!-- Default Cost Per SMS -->
+        <record id="config_param_default_cost_per_sms" model="ir.config_parameter">
+            <field name="key">chatroom_sms.default_cost_per_sms</field>
+            <field name="value">0.10</field>
+        </record>
+
+    </data>
+</odoo>

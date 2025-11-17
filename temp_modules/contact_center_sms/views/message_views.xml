@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Estende form view de mensagens para mostrar info SMS -->
+    <record id="view_acrux_chat_message_form_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.message.form.sms</field>
+        <field name="model">acrux.chat.message</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_message_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Adiciona badge SMS -->
+            <field name="ttype" position="after">
+                <field name="is_sms" invisible="1"/>
+                <field name="sms_message_id" attrs="{'invisible': [('is_sms', '=', False)]}" readonly="1"/>
+            </field>
+
+            <!-- Adiciona info de custo SMS -->
+            <xpath expr="//group[@name='message_info']" position="inside">
+                <field name="sms_segment_count" attrs="{'invisible': [('is_sms', '=', False)]}"/>
+                <field name="sms_cost" widget="monetary" attrs="{'invisible': [('is_sms', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Estende tree view -->
+    <record id="view_acrux_chat_message_tree_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.message.tree.sms</field>
+        <field name="model">acrux.chat.message</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_message_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="ttype" position="after">
+                <field name="is_sms" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Estende form view de connector para SMS -->
+    <record id="view_acrux_chat_connector_form_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.connector.form.sms</field>
+        <field name="model">acrux.chat.connector</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_connector_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Adiciona campos SMS específicos -->
+            <field name="connector_type" position="after">
+                <field name="sms_provider_id"
+                       attrs="{'invisible': [('connector_type', '!=', 'sms')],
+                               'required': [('connector_type', '=', 'sms')]}"/>
+            </field>
+
+            <!-- Adiciona página de configuração SMS -->
+            <xpath expr="//notebook" position="inside">
+                <page string="SMS Configuration" attrs="{'invisible': [('connector_type', '!=', 'sms')]}">
+                    <group>
+                        <group string="Kolmeya API">
+                            <field name="sms_api_token" password="True"/>
+                            <field name="sms_segment_id"/>
+                            <field name="sms_balance" widget="monetary"/>
+                        </group>
+                        <group string="Statistics">
+                            <field name="sms_sent_count"/>
+                            <field name="sms_received_count"/>
+                            <field name="sms_total_cost" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group>
+                        <button name="action_test_connection"
+                                string="Test Connection"
+                                type="object"
+                                class="btn-primary"
+                                icon="fa-plug"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Estende tree view do connector -->
+    <record id="view_acrux_chat_connector_tree_sms" model="ir.ui.view">
+        <field name="name">acrux.chat.connector.tree.sms</field>
+        <field name="model">acrux.chat.connector</field>
+        <field name="inherit_id" ref="whatsapp_connector.acrux_chat_connector_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="connector_type" position="after">
+                <field name="sms_provider_id" optional="show"/>
+                <field name="sms_balance" optional="show" widget="monetary"/>
+            </field>
+        </field>
+    </record>
+</odoo>

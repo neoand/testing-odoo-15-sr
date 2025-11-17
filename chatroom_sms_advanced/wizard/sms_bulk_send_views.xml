@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_sms_bulk_send_form" model="ir.ui.view">
+        <field name="name">sms.bulk.send.form</field>
+        <field name="model">sms.bulk.send</field>
+        <field name="arch" type="xml">
+            <form string="Send Bulk SMS">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Bulk SMS Wizard</strong>
+                        <p>Send SMS to multiple recipients at once. You can select recipients manually or use a domain filter.</p>
+                    </div>
+
+                    <group>
+                        <group string="Selection Method">
+                            <field name="selection_type" widget="radio"/>
+                        </group>
+                        <group string="Provider">
+                            <field name="provider_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+
+                    <group string="Recipients" attrs="{'invisible': [('selection_type', '=', 'domain')]}">
+                        <field name="partner_ids" widget="many2many_tags" nolabel="1" options="{'no_create': True}"/>
+                    </group>
+
+                    <group string="Domain Filter" attrs="{'invisible': [('selection_type', '=', 'manual')]}">
+                        <field name="domain_filter" nolabel="1" placeholder='[("customer_rank", ">", 0)]'/>
+                        <p class="text-muted">
+                            Examples:<br/>
+                            - All customers: [("customer_rank", ">", 0)]<br/>
+                            - With mobile: [("mobile", "!=", False)]<br/>
+                            - City: [("city", "=", "São Paulo")]
+                        </p>
+                    </group>
+
+                    <group>
+                        <group string="Message">
+                            <field name="template_id" options="{'no_create': True}"/>
+                            <field name="body" nolabel="1" placeholder="Type your message here...&#10;&#10;You can use variables:&#10;{name} - Partner name&#10;{phone} - Phone number"/>
+                        </group>
+                        <group string="Statistics">
+                            <field name="total_recipients" readonly="1"/>
+                            <field name="estimated_segments" readonly="1"/>
+                            <field name="estimated_cost" readonly="1" widget="monetary"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Campaign (Optional)">
+                            <field name="create_campaign"/>
+                            <field name="campaign_name" attrs="{'invisible': [('create_campaign', '=', False)], 'required': [('create_campaign', '=', True)]}"/>
+                            <field name="campaign_id" attrs="{'invisible': [('create_campaign', '=', True)]}" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Options">
+                            <field name="skip_blacklist"/>
+                            <field name="skip_no_phone"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <footer>
+                    <button name="action_send_bulk" string="Send SMS" type="object" class="btn-primary" confirm="Are you sure you want to send SMS to all recipients?"/>
+                    <button name="action_preview" string="Preview" type="object" class="btn-secondary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sms_bulk_send" model="ir.actions.act_window">
+        <field name="name">Send Bulk SMS</field>
+        <field name="res_model">sms.bulk.send</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+</odoo>

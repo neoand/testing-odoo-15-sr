@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_sms_blacklist_tree" model="ir.ui.view">
+        <field name="name">sms.blacklist.tree</field>
+        <field name="model">sms.blacklist</field>
+        <field name="arch" type="xml">
+            <tree string="SMS Blacklist" decoration-muted="active==False">
+                <field name="phone"/>
+                <field name="partner_id"/>
+                <field name="reason"/>
+                <field name="synced_kolmeya" widget="boolean"/>
+                <field name="last_sync_date"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sms_blacklist_form" model="ir.ui.view">
+        <field name="name">sms.blacklist.form</field>
+        <field name="model">sms.blacklist</field>
+        <field name="arch" type="xml">
+            <form string="SMS Blacklist">
+                <header>
+                    <button name="sync_to_kolmeya" string="Sync to Provider" type="object" class="btn-primary" attrs="{'invisible': [('synced_kolmeya', '=', True)]}"/>
+                    <button name="action_remove_from_blacklist" string="Remove from Blacklist" type="object" class="btn-warning" confirm="Are you sure you want to remove this number from blacklist?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <group name="basic">
+                            <field name="phone"/>
+                            <field name="partner_id"/>
+                            <field name="reason"/>
+                        </group>
+                        <group name="sync">
+                            <field name="synced_kolmeya" readonly="1"/>
+                            <field name="last_sync_date" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="create_uid" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Additional notes about this blacklist entry..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sms_blacklist_search" model="ir.ui.view">
+        <field name="name">sms.blacklist.search</field>
+        <field name="model">sms.blacklist</field>
+        <field name="arch" type="xml">
+            <search string="SMS Blacklist">
+                <field name="phone"/>
+                <field name="partner_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Synced" name="synced" domain="[('synced_kolmeya', '=', True)]"/>
+                <filter string="Not Synced" name="not_synced" domain="[('synced_kolmeya', '=', False)]"/>
+                <separator/>
+                <filter string="User Request" name="user_request" domain="[('reason', '=', 'user_request')]"/>
+                <filter string="Auto Bounce" name="auto_bounce" domain="[('reason', '=', 'auto_bounce')]"/>
+                <filter string="Manual" name="manual" domain="[('reason', '=', 'manual')]"/>
+                <filter string="Legal" name="legal" domain="[('reason', '=', 'legal')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Reason" name="group_reason" context="{'group_by': 'reason'}"/>
+                    <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Created By" name="group_create_uid" context="{'group_by': 'create_uid'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sms_blacklist" model="ir.actions.act_window">
+        <field name="name">SMS Blacklist</field>
+        <field name="res_model">sms.blacklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No blacklisted numbers yet
+            </p>
+            <p>
+                Add phone numbers to prevent sending SMS to them.
+                Blacklisted numbers are automatically synchronized with your SMS provider.
+            </p>
+        </field>
+    </record>
+
+</odoo>

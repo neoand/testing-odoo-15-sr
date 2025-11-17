@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_whatsapp_connector_message_search" model="ir.ui.view">
+        <field name="name">acrux.chat.message.option.search</field>
+        <field name="model">acrux.chat.message</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_message_search" />
+        <field name="arch" type="xml">
+            <field name="contact_id" position="after">
+                <field name="quote_id"/>
+            </field>
+            <field name="date_message" position="after">
+                <field name="date_delete"/>
+            </field>
+            <xpath expr="//filter[@name='filter_event']" position="after">
+                <filter name="filter_deleted" string="Deleted" domain="[('date_delete', '!=', False)]"/>
+                <filter name="filter_quote_id" string="Quoted" domain="[('quote_id', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_whatsapp_connector_message_tree" model="ir.ui.view">
+        <field name="name">acrux.chat.message.option.tree</field>
+        <field name="model">acrux.chat.message</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_message_tree" />
+        <field name="arch" type="xml">
+            <field name="date_message" position="after">
+                <field name="date_delete"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_whatsapp_connector_message_form" model="ir.ui.view">
+        <field name="name">acrux.chat.message.option.form</field>
+        <field name="model">acrux.chat.message</field>
+        <field name="inherit_id" ref="whatsapp_connector.view_whatsapp_connector_message_form" />
+        <field name="arch" type="xml">
+            <field name="contact_id" position="after">
+                <field name="quote_id"/>
+            </field>
+            <field name="date_message" position="after">
+                <field name="date_delete"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
