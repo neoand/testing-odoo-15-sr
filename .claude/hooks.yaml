@@ -1,0 +1,107 @@
+# 🪝 Claude Code Hooks Configuration
+# ADR-008: Sistema Avançado de Gestão de Contexto e Auto-Educação
+#
+# Hooks documentados em: .claude/memory/decisions/ADR-008-ADVANCED-CONTEXT.md
+#
+# Hooks disponíveis:
+# - PreCompact: Antes de auto-compactar contexto
+# - SessionStart: Ao iniciar nova sessão
+# - UserPromptSubmit: Antes de processar cada prompt do usuário
+# - ToolUse: Antes/depois de usar ferramentas
+#
+# Referência: https://code.claude.com/docs/en/hooks.md
+
+---
+
+# 🔄 Hook 1: PreCompact - Salvar Contexto Crítico
+# Trigger: Apenas auto-compact (95% capacidade)
+# Objetivo: Salvar snapshot do contexto ANTES de compactar
+
+- matcher: PreCompact
+  trigger: auto  # Apenas auto-compact, não manual
+  hooks:
+    - type: command
+      command: .claude/scripts/bash/pre-compact-save-context.sh
+      description: "💾 Salva contexto crítico antes de auto-compact"
+
+---
+
+# 🚀 Hook 2: SessionStart - Auto-Restauração
+# Trigger: Após compactação
+# Objetivo: Re-educar Claude automaticamente
+
+- matcher: SessionStart
+  trigger: compact  # Após compactar
+  hooks:
+    - type: prompt
+      system_prompt: |
+        🔄 **CONTEXTO RESTAURADO PÓS-COMPACT**
+
+        Você acabou de ser recompactado. IMPORTANTE - Re-eduque-se IMEDIATAMENTE:
+
+        **1. Leia os seguintes arquivos (em paralelo):**
+        - `.claude/memory/context-snapshots/` (último snapshot)
+        - `CLAUDE.md` (regras fundamentais)
+        - `.claude/memory/decisions/ADR-INDEX.md` (decisões críticas)
+
+        **2. Re-eduque-se sobre:**
+        - Últimas decisões técnicas (ADRs recentes)
+        - TODOs em andamento
+        - Estado atual do projeto
+        - Última sincronização com template
+
+        **3. Contexto do Projeto:**
+        - Projeto: testing-odoo-15-sr (Odoo 15)
+        - Template: Claude-especial (sincronização dual)
+        - Performance: Claude Max 20x (paralelização máxima)
+        - Workflow: Git anti-rebase, commits descritivos
+
+        **4. Responda ao usuário:**
+        "✅ Re-educado! [resumo conciso do contexto recuperado: últimos ADRs, TODOs ativos, branch atual]"
+
+        **NUNCA esqueça:** ADR-006 (Sincronização Dual) - TUDO genérico vai para ambos repos!
+
+---
+
+# 📍 Hook 3: UserPromptSubmit - Contexto Dinâmico
+# Trigger: Antes de CADA prompt do usuário
+# Objetivo: Injetar contexto atualizado automaticamente
+
+- matcher: UserPromptSubmit
+  hooks:
+    - type: command
+      command: .claude/scripts/bash/inject-dynamic-context.sh
+      description: "📍 Injeta contexto dinâmico (git branch, mudanças, etc)"
+
+---
+
+# 🎯 Configurações Adicionais
+
+# Desabilitar hooks específicos (se necessário):
+# disabled_hooks:
+#   - PreCompact
+#   - SessionStart
+#   - UserPromptSubmit
+
+# Timeout para comandos (milissegundos):
+command_timeout: 10000  # 10 segundos
+
+# Modo verbose para debug:
+verbose: false
+
+---
+
+# 📝 Notas de Implementação
+#
+# Sprint 1 (ADR-008):
+# ✅ PreCompact hook - Salva ADRs, commits, TODOs
+# ✅ SessionStart hook - Re-educação automática
+# ✅ UserPromptSubmit hook - Contexto dinâmico (branch, changes)
+#
+# Sprint 2 (Futuro):
+# - Output Styles (odoo-expert, performance-guru, architect)
+#
+# Sprint 3 (Futuro):
+# - @imports para CLAUDE.md modular
+#
+# Última atualização: 2025-11-17
