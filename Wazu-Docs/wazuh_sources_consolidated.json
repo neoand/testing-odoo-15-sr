@@ -1,0 +1,214 @@
+{
+  "REPOSITÓRIOS_OFICIAIS": {
+    "Core_e_Manager": {
+      "url": "https://github.com/wazuh/wazuh",
+      "descrição": "Manager + Agent core em C/C++",
+      "relevância": "CRÍTICO"
+    },
+    "API_RESTful": {
+      "url": "https://github.com/wazuh/wazuh-api",
+      "descrição": "REST API com autenticação JWT",
+      "relevância": "CRÍTICO"
+    },
+    "Dashboard_Plugins": {
+      "url": "https://github.com/wazuh/wazuh-dashboard-plugins",
+      "descrição": "UI em React + Kibana integration",
+      "relevância": "ALTO"
+    },
+    "Kubernetes_Oficial": {
+      "url": "https://github.com/wazuh/wazuh-kubernetes",
+      "descrição": "Helm Charts e K8s deployment",
+      "relevância": "ALTO"
+    },
+    "Kubernetes_Comunidade": {
+      "url": "https://github.com/kajov/wazuh-kubernetes-helmchart",
+      "descrição": "Helm Chart comunitário (Helm 2)",
+      "relevância": "MÉDIO"
+    },
+    "Deployment_Guide": {
+      "url": "https://github.com/wazuh/wazuh-deployment-guide",
+      "descrição": "Production-ready deployment",
+      "relevância": "ALTO"
+    }
+  },
+  "DOCUMENTAÇÃO_OFICIAL": {
+    "Portal_Principal": "https://documentation.wazuh.com",
+    "Quickstart": "https://documentation.wazuh.com/current/quickstart.html",
+    "Installation_Guide": "https://documentation.wazuh.com/current/installation-guide/index.html",
+    "API_Reference": "https://documentation.wazuh.com/current/api/index.html",
+    "API_Getting_Started": "https://documentation.wazuh.com/current/user-manual/api/getting-started.html",
+    "FIM_Capabilities": "https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/index.html",
+    "FIM_PoC": "https://documentation.wazuh.com/current/proof-of-concept-guide/poc-file-integrity-monitoring.html",
+    "SCA_Capabilities": "https://documentation.wazuh.com/current/user-manual/capabilities/configuration-assessment/index.html",
+    "Vulnerability_Detection": "https://documentation.wazuh.com/current/user-manual/capabilities/vulnerability-detection/index.html",
+    "CDB_Lists": "https://documentation.wazuh.com/current/user-manual/ruleset/cdb-list.html",
+    "Kubernetes_Deployment": "https://documentation.wazuh.com/current/deployment-options/docker/kubernetes/index.html",
+    "Helm_Deployment": "https://documentation.wazuh.com/current/deployment-options/docker/kubernetes/wazuh-helm-chart.html",
+    "Troubleshooting": "https://documentation.wazuh.com/current/user-manual/manager/troubleshooting.html",
+    "Release_Notes": "https://github.com/wazuh/wazuh/releases"
+  },
+  "MÓDULOS_TÉCNICOS": {
+    "FIM": {
+      "documentação": "https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/index.html",
+      "funcionalidades": [
+        "Real-time file monitoring",
+        "Baseline checksum validation",
+        "MD5/SHA256 hash comparison",
+        "Permission & attribute tracking",
+        "Registry monitoring (Windows)"
+      ],
+      "compliance": [
+        "PCI DSS",
+        "HIPAA",
+        "NIST 800-53",
+        "GDPR"
+      ]
+    },
+    "API": {
+      "documentação": "https://documentation.wazuh.com/current/api/index.html",
+      "autenticação": "JWT Bearer Token",
+      "endpoints_principais": [
+        "/agents - Listar agentes",
+        "/agents/summary/status - Status resumido",
+        "/manager/info - Info do manager",
+        "/groups - Gerenciar grupos",
+        "/rules - Listar rules",
+        "/lists/files - CDB lists"
+      ],
+      "métodos": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "exemplos": "Python, PowerShell, cURL"
+    },
+    "Kubernetes": {
+      "helm_oficial": "https://github.com/wazuh/wazuh-kubernetes",
+      "helm_comunidade": "https://github.com/kajov/wazuh-kubernetes-helmchart",
+      "componentes": [
+        "Wazuh Manager (StatefulSet)",
+        "Elasticsearch (StatefulSet)",
+        "Wazuh Dashboard (Deployment)",
+        "Wazuh Agent (DaemonSet)"
+      ],
+      "versão_helm": "2.16.12+ (planejamento Helm 3)"
+    },
+    "SCA": {
+      "documentação": "https://documentation.wazuh.com/current/user-manual/capabilities/configuration-assessment/index.html",
+      "benchmarks": [
+        "CIS Benchmarks",
+        "PCI DSS",
+        "HIPAA",
+        "NIST 800-53",
+        "Custom policies"
+      ],
+      "formato": "YAML policies",
+      "localização": "/var/ossec/ruleset/sca/"
+    },
+    "Vulnerability_Detection": {
+      "documentação": "https://documentation.wazuh.com/current/user-manual/capabilities/vulnerability-detection/index.html",
+      "bancos": [
+        "NVD (National Vulnerability Database)",
+        "Ubuntu Security",
+        "Debian Security",
+        "Red Hat Advisories",
+        "Windows Update"
+      ]
+    },
+    "CDB_Lists": {
+      "documentação": "https://documentation.wazuh.com/current/user-manual/ruleset/cdb-list.html",
+      "usos": [
+        "Malware hashes",
+        "IP blocklists",
+        "Domain reputation",
+        "Allow/deny lists"
+      ],
+      "formato": "Key-value pairs"
+    }
+  },
+  "STACK_TECNOLÓGICO": {
+    "Backend": [
+      "C/C++ (core)",
+      "Python",
+      "Node.js (API)"
+    ],
+    "Search": [
+      "Elasticsearch 7.10+",
+      "OpenSearch 1.0+",
+      "Wazuh Indexer 4.3+"
+    ],
+    "UI": [
+      "React 16.8+",
+      "Kibana 7.10+",
+      "Wazuh Dashboard 2.0+"
+    ],
+    "Processing": [
+      "Filebeat 7.10+",
+      "Logstash 7.10+ (opcional)"
+    ],
+    "Container": [
+      "Docker 20.0+",
+      "Kubernetes 1.14+",
+      "Helm 2.16+/3.0+"
+    ],
+    "Protocolos": [
+      "HTTPS/TLS",
+      "TCP/1514",
+      "UDP/514",
+      "REST API"
+    ]
+  },
+  "ISSUES_CONHECIDAS": {
+    "Elasticsearch_Shards": {
+      "issue": "https://github.com/wazuh/wazuh-kibana-app/issues/1016",
+      "problema": "Red/Yellow status em índices",
+      "solução": "Rebalancear shards e reiniciar"
+    },
+    "GitHub_Integration_404": {
+      "issue": "https://github.com/wazuh/wazuh/issues/14964",
+      "problema": "Erro 404 ao integrar GitHub",
+      "causa": "Requer GitHub Enterprise Cloud + escopos",
+      "solução": "PAT com admin:org e read:audit_log"
+    },
+    "Agent_Connection": {
+      "problema": "Agent não conecta no Manager",
+      "causas": [
+        "Firewall",
+        "DNS",
+        "Permissões",
+        "Certificados"
+      ],
+      "debug": "netstat, telnet, logs agent"
+    },
+    "API_Token_Expired": {
+      "problema": "JWT Token inválido ou expirado",
+      "solução": "Regenerar token via /security/user/authenticate"
+    },
+    "Memory_Issues": {
+      "problema": "Manager/ES usando muita memória",
+      "soluções": [
+        "Aumentar Elasticsearch heap",
+        "Index rotation configurado",
+        "Desabilitar módulos não usados"
+      ]
+    },
+    "Kubernetes_CrashLoop": {
+      "problema": "Pods não iniciam",
+      "debug": "kubectl logs, describe pod, PVC check"
+    }
+  },
+  "INSTALAÇÃO_AGENTS": {
+    "Linux": "Repository Debian/RPM ou tarball manual",
+    "Windows": "MSI installer via PowerShell/CMD",
+    "macOS": "Homebrew ou manual",
+    "Docker": "Docker image wazuh/wazuh-agent",
+    "Ansible": "Playbooks do wazuh-ansible"
+  },
+  "COMUNIDADE": {
+    "Forum": "https://wazuh.com/community/",
+    "GitHub_Issues": "https://github.com/wazuh/wazuh/issues",
+    "Security_Advisories": "https://github.com/wazuh/wazuh/security/advisories",
+    "Release_Notes": "https://github.com/wazuh/wazuh/releases"
+  }
+}
