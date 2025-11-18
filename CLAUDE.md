@@ -26,73 +26,26 @@
 
 ## 📋 Importações de Contexto
 
+### Contextos Detalhados
 @.claude/memory/context/projeto.md
 @.claude/memory/context/odoo.md
 @.claude/memory/context/servidores.md
+
+### Decisões e Conhecimento
 @.claude/memory/decisions/ADR-INDEX.md
 @.claude/memory/errors/ERRORS-SOLVED.md
 @.claude/memory/patterns/PATTERNS.md
 @.claude/memory/commands/COMMAND-HISTORY.md
+
+### Aprendizados e Workflows
 @.claude/memory/learnings/git-workflow.md
+
+### Protocolos Críticos
 @.claude/memory/AUTO-LEARNING-PROTOCOL.md
 @.claude/memory/THINKING-MODE-PROTOCOL.md
-
----
-
-## 🧠 PROTOCOLO DE AUTO-APRENDIZADO (CRÍTICO!)
-
-### Regras Fundamentais
-
-**❌ NUNCA:**
-- Assumir ou deduzir sem verificar
-- Repetir comando que falhou sem modificação
-- Executar sem checar histórico primeiro
-- Esquecer de documentar erro resolvido
-- Criar script novo sem verificar inventário (.claude/scripts/)
-
-**✅ SEMPRE:**
-1. **ANTES de executar comando:** Verificar COMMAND-HISTORY.md
-2. **Se comando falhar:** Documentar IMEDIATAMENTE em ERRORS-SOLVED.md
-3. **Se usar sudo:** Salvar regra em COMMAND-HISTORY.md
-4. **Se pesquisar:** Salvar resultado em learnings/
-5. **Se incerto:** Pesquisar docs oficiais, NUNCA assumir
-6. **QUANDO APRENDER ALGO:** Ativar thinking mode, raciocinar profundamente, salvar "na rocha"
-7. **ANTES de criar script:** Verificar `.claude/scripts/` via skill `tool-inventory`, reutilizar se existir
-8. **QUANDO criar algo reutilizável:** Sincronizar com Claude-especial (ver ADR-006)
-9. **ANTES de commitar:** Verificar se deve ir para template
-10. **⚡ SEMPRE PARALELIZAR:** Tool calls independentes em UMA mensagem (ADR-007)
-
-### Checklist Pré-Execução
-
-```
-[ ] Verificar se já fiz isso antes (COMMAND-HISTORY.md)
-[ ] Verificar se erro já foi resolvido (ERRORS-SOLVED.md)
-[ ] Se SSH/sistema, confirmar se precisa sudo
-[ ] Se incerto, pesquisar docs oficiais
-[ ] Se falhar, documentar automaticamente
-```
-
-### Aprendizado Automático de Comandos
-
-**Exemplo:** Se `systemctl restart odoo` falhar com "Permission denied":
-1. ✅ Tentar com `sudo systemctl restart odoo`
-2. ✅ SALVAR em COMMAND-HISTORY.md: "systemctl SEMPRE precisa sudo"
-3. ✅ Próxima vez: usar sudo automaticamente
-
-**Sistema de Memória Crescente:**
-- Sessão 1: Conhecimento base
-- Sessão 2: Base + aprendizados da sessão 1
-- Sessão 3: Base + aprendizados sessões 1+2
-- Sessão N: Claude é EXPERT! 🧠⚡
-
-### Fontes Priorizadas (em ordem)
-
-1. **Docs Oficiais:** Odoo, Python, PostgreSQL (SEMPRE primeiro)
-2. **GitHub Issues:** Odoo/odoo, OCA (bugs conhecidos)
-3. **Stack Overflow:** Respostas aceitas + recentes
-4. **Memória Local:** COMMAND-HISTORY, ERRORS-SOLVED, PATTERNS
-
-**NUNCA usar informação não validada!**
+@.claude/memory/protocols/PERFORMANCE-PARALLELIZATION.md
+@.claude/memory/protocols/SYNC-DUAL-PROTOCOL.md
+@.claude/memory/protocols/LLM-TOOLS-OVERVIEW.md
 
 ---
 
@@ -143,145 +96,6 @@
 - **Kolmeya API:** SMS gateway principal
 - **PostgreSQL:** Queries otimizadas, índices críticos
 - **Mail:** Chatter customizado para SMS
-
----
-
-## ⚡ OTIMIZAÇÕES DE PERFORMANCE (CRÍTICO!)
-
-### Princípio Fundamental: PARALELIZAR SEMPRE!
-
-**Usuário tem Claude Max 20x - MAXIMIZAR VELOCIDADE!**
-
-**Checklist Rápido (A CADA Operação):**
-
-```
-[ ] Vou ler múltiplos arquivos? → UMA mensagem com todos Reads
-[ ] Vou executar múltiplos bash? → Verificar independência → & e wait
-[ ] Vou criar/editar múltiplos arquivos? → UMA mensagem com todos
-[ ] Commits em múltiplos repos? → Bash paralelo com &
-```
-
-**Regras de Ouro:**
-
-1. **Tool Calls Paralelos:**
-   - ✅ Read 5 arquivos → UMA mensagem (5x mais rápido)
-   - ✅ Write 3 arquivos → UMA mensagem (3x mais rápido)
-   - ❌ NUNCA fazer calls sequenciais se independentes!
-
-2. **Bash Paralelo:**
-   - ✅ `git status & git diff & git log & wait`
-   - ✅ `(cd repo1 && git push) & (cd repo2 && git push) & wait`
-   - ❌ NUNCA sequencial se independente!
-
-3. **Identificar Dependências:**
-   - Independentes → PARALELIZAR
-   - Dependentes → Sequencial (óbvio)
-
-**Objetivo:** Operações 5-10x mais rápidas!
-
-**Referência:** Ver ADR-007-PERFORMANCE.md para detalhes completos
-
----
-
-## 🔄 PROTOCOLO DE SINCRONIZAÇÃO DUAL (CRÍTICO!)
-
-### Regra de Ouro
-
-**TUDO que for desenvolvido, criado, aprimorado ou descoberto tem DUPLO DESTINO:**
-
-1. **Aplicado AQUI** (testing-odoo-15-sr)
-2. **Sincronizado com Template** (Claude-especial)
-
-### Checklist de Sincronização
-
-Ao criar/modificar algo, perguntar:
-
-```
-[ ] É genérico ou específico de Odoo?
-[ ] Útil para qualquer projeto ou só este?
-[ ] Se GENÉRICO:
-    [ ] Copiar para /Users/andersongoliveira/Claude-especial/
-    [ ] Remover partes específicas de Odoo
-    [ ] Commitar em Claude-especial
-    [ ] Push para GitHub
-    [ ] Documentar em sync-log.md
-[ ] Se ESPECÍFICO:
-    [ ] Apenas commitar aqui
-```
-
-### O Que Sincronizar
-
-**✅ SINCRONIZAR:**
-- Skills genéricos
-- Scripts bash/python reutilizáveis
-- Melhorias em protocolos
-- ADRs de arquitetura geral
-- Patterns universais
-- Melhorias em LLM_FIRST_TOOLS.md
-- Novos MCPs úteis
-
-**❌ NÃO SINCRONIZAR:**
-- Código Odoo específico
-- Scripts de servidores (odoo-restart, etc)
-- ADRs de negócio (Kolmeya, CRM)
-- Contexto de servidores
-- Erros específicos de Odoo
-
-**Referência Completa:** Ver ADR-006
-
----
-
-## 🤖 Sistema LLM-First Tools Híbrido (Skills + MCPs) v2.0
-
-### Skills Disponíveis (Auto-descoberta Scripts Internos)
-Claude descobre e usa automaticamente:
-
-1. **`tool-inventory`**
-   - Lista scripts disponíveis antes de criar novos
-   - Evita duplicação
-   - Uso: Automático quando for criar bash/python/npm scripts
-
-2. **`odoo-ops`**
-   - Operações Odoo (restart, logs, health-check)
-   - Uso: Automático quando mencionar Odoo services
-   - Funciona em ambos servidores (testing + production)
-
-### MCPs Instalados (Integrações Nativas) ✨
-Claude usa automaticamente como tools nativos:
-
-1. **GitHub MCP** (`github`)
-   - Repos, PRs, issues, commits, branches
-   - Uso: "Crie PR", "Liste issues", "Mostre commits"
-
-2. **Git MCP** (`git`)
-   - status, diff, log, commit, branch
-   - Uso: "Mostre mudanças", "Crie commit", "Histórico"
-
-3. **Filesystem MCP** (`filesystem`)
-   - Navegação avançada, busca, file operations
-   - Uso: "Encontre modelos que herdam X", "Arquivos modificados hoje"
-
-**Ver MCPs:** `claude mcp list` ou `cat .mcp.json`
-
-### Scripts Reutilizáveis
-Localização: `.claude/scripts/`
-
-**Bash:**
-- `odoo-restart.sh [testing|production]` - Reiniciar Odoo
-- `odoo-logs.sh [server] [lines|follow] [N]` - Ver logs
-- `odoo-health-check.sh [server]` - Health check completo
-
-### Workflow Híbrido (Exemplo)
-1. Você: "Faça deploy do chatroom_sms_advanced"
-2. **Skill tool-inventory** → Encontra deploy script
-3. **Skill odoo-ops** → Executa deploy
-4. **MCP Git** → git status, git diff
-5. **MCP Git** → Cria commit automaticamente
-6. **MCP GitHub** → Cria Pull Request
-7. **Skill odoo-ops** → Health check pós-deploy
-8. ✅ **Deploy completo + PR criado + Servidor OK!**
-
-**Documentação completa:** `.claude/LLM_FIRST_TOOLS.md` + [ADR-005](.claude/memory/decisions/ADR-INDEX.md#adr-005)
 
 ---
 
@@ -340,15 +154,16 @@ git commit -m "tipo: descrição"
 
 **Data:** 2025-11-17
 **Por:** Claude + Anderson
-**Versão:** 2.0 (com Auto-Aprendizado)
+**Versão:** 3.0 (Modular com @imports)
 **Próxima revisão:** Automática a cada sessão
 
 ---
 
 ## 📝 Notas
 
-- Este arquivo deve ser mantido ENXUTO (< 500 linhas)
+- Este arquivo deve ser mantido ENXUTO (< 200 linhas) ✅
 - Detalhes profundos vão em arquivos específicos em `.claude/memory/`
+- Protocolos grandes agora são @imports em `.claude/memory/protocols/`
 - Use `#` no chat para adicionar memórias rapidamente
 - Use `/memory` para editar este arquivo
 - Revise mensalmente para remover informações obsoletas

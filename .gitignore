@@ -48,6 +48,7 @@ addons/*/
 # ==================== Configuração Sensível ====================
 # NUNCA commitar credenciais!
 .env
+.claude.env  # Estado persistente Claude (local apenas)
 .env.*
 *.pem
 *.key
