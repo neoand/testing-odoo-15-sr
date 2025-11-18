@@ -31,6 +31,7 @@
 | 005 | 2025-11-17 | [Arquitetura LLM-First Tools](#adr-005) | ✅ Aceito | #infra #claude #automation |
 | 006 | 2025-11-17 | [Sincronização Dual com Template](#adr-006) | ✅ Aceito | #infra #template #workflow |
 | 007 | 2025-11-17 | [Otimizações Performance e Paralelização](ADR-007-PERFORMANCE.md) | ✅ Aceito | #performance #speed #parallel |
+| 008 | 2025-11-17 | [Sistema Avançado de Gestão de Contexto e Auto-Educação](ADR-008-ADVANCED-CONTEXT.md) | ✅ Aceito | #infra #claude #hooks #revolucionário |
 
 ---
 
@@ -746,8 +747,8 @@ git push
 
 ## 📊 Estatísticas
 
-**Total de ADRs:** 7
-**Aceitos:** 6
+**Total de ADRs:** 8
+**Aceitos:** 7
 **Propostos:** 1
 **Rejeitados:** 0
 **Obsoletos:** 0
