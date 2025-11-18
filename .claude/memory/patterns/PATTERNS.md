@@ -782,5 +782,289 @@ gcloud compute instances describe odoo-sr-tensting --zone=southamerica-east1-b -
 
 ---
 
+## 🧠 RAG (Retrieval-Augmented Generation) Patterns
+
+### 1. MCP Server para Auto-Invocação
+
+**Pattern:** RAG como MCP tool que Claude invoca automaticamente
+
+```python
+# Estrutura MCP Server
+#!/usr/bin/env python3
+import sys
+import json
+
+def handle_request(request):
+    """Processa requisição MCP"""
+    method = request.get('method', '')
+    params = request.get('params', {})
+
+    if method == 'search_knowledge':
+        return search_knowledge(params)
+    # Outros métodos...
+
+if __name__ == "__main__":
+    # Loop MCP stdin/stdout
+    for line in sys.stdin:
+        request = json.loads(line.strip())
+        response = handle_request(request)
+        print(json.dumps(response))
+        sys.stdout.flush()
+```
+
+**Configuração (.mcp.json):**
+```json
+{
+  "mcpServers": {
+    "knowledge": {
+      "type": "stdio",
+      "command": "python3.11",
+      "args": ["/absolute/path/to/mcp_server.py"],
+      "env": {}
+    }
+  }
+}
+```
+
+**Por que esse pattern:**
+- ✅ Claude invoca automaticamente quando precisa de contexto
+- ✅ Zero overhead - processo spawn sob demanda
+- ✅ stdio protocol = simples e robusto
+- ✅ Stateless - cada request independente
+
+---
+
+### 2. Session Memory com Embeddings
+
+**Pattern:** Salvar resumos de sessões com embeddings para busca semântica
+
+```python
+def save_session(summary, tasks_completed, learnings):
+    """
+    Salva sessão atual com embedding para futuras buscas
+    """
+    # Criar texto completo
+    full_content = f"""
+    Summary: {summary}
+    Tasks: {tasks}
+    Learnings: {learnings}
+    """
+
+    # Gerar embedding
+    embedding = model.encode(full_content).tolist()
+
+    # Salvar em ChromaDB
+    session_collection.add(
+        ids=[session_id],
+        embeddings=[embedding],
+        documents=[full_content],
+        metadatas=[{...}]
+    )
+
+    # Logging permanente (JSONL)
+    with open(log_file, 'a') as f:
+        f.write(json.dumps(session_data) + '\n')
+
+def search_similar_sessions(query, n_results=5):
+    """Busca sessões similares semanticamente"""
+    query_embedding = model.encode(query).tolist()
+    results = session_collection.query(
+        query_embeddings=[query_embedding],
+        n_results=n_results
+    )
+    return results
+```
+
+**Por que esse pattern:**
+- ✅ Continuidade entre sessões
+- ✅ Semantic search > keyword search
+- ✅ JSONL backup = durável
+- ✅ Injeta contexto automaticamente
+
+---
+
+### 3. Path Calculation em Scripts Python
+
+**Pattern:** Calcular PROJECT_ROOT a partir de localização do script
+
+```python
+from pathlib import Path
+
+# Script location: PROJECT_ROOT/.claude/scripts/python/script.py
+script_path = Path(__file__).resolve()
+
+# Calcular PROJECT_ROOT
+# script.py → python/ → scripts/ → .claude/ → PROJECT_ROOT
+PROJECT_ROOT = script_path.parent.parent.parent.parent
+
+# Construir paths relativos
+VECTORDB_PATH = str(PROJECT_ROOT / ".claude" / "vectordb")
+MEMORY_PATH = str(PROJECT_ROOT / ".claude" / "memory")
+
+# SEMPRE documentar estrutura esperada no comentário!
+```
+
+**Por que esse pattern:**
+- ✅ Portable - funciona em qualquer máquina
+- ✅ Não depende de $PWD
+- ✅ Robusto contra mudanças de working directory
+- ⚠️ Requires estrutura de diretórios consistente
+
+**Erros comuns:**
+```python
+# ❌ ERRADO - 3x parent (falta 1)
+PROJECT_ROOT = script_path.parent.parent.parent
+
+# ❌ ERRADO - hardcoded path
+PROJECT_ROOT = "/Users/user/project"
+
+# ❌ ERRADO - relative path
+PROJECT_ROOT = "../../../"
+
+# ✅ CORRETO
+PROJECT_ROOT = script_path.parent.parent.parent.parent
+```
+
+---
+
+### 4. Query Caching com LRU + TTL
+
+**Pattern:** Cache embeddings de queries com expiração
+
+```python
+class QueryCache:
+    def __init__(self, max_size=1000, ttl_hours=24):
+        self.max_size = max_size
+        self.ttl = timedelta(hours=ttl_hours)
+        self.cache = {}  # {hash: (embedding, timestamp)}
+
+    def get(self, query):
+        query_hash = hashlib.md5(query.encode()).hexdigest()[:12]
+        if query_hash in self.cache:
+            embedding, timestamp = self.cache[query_hash]
+            if datetime.now() - timestamp < self.ttl:
+                return embedding  # Cache HIT!
+        return None
+
+    def put(self, query, embedding):
+        query_hash = hashlib.md5(query.encode()).hexdigest()[:12]
+
+        # LRU eviction
+        if len(self.cache) >= self.max_size:
+            oldest = min(self.cache.items(), key=lambda x: x[1][1])
+            del self.cache[oldest[0]]
+
+        self.cache[query_hash] = (embedding, datetime.now())
+```
+
+**Por que esse pattern:**
+- ✅ 10-100x speedup para queries repetidas
+- ✅ LRU = memory bounded
+- ✅ TTL = freshness garantido
+- ✅ Hash de query = chave consistente
+
+---
+
+### 5. Batch Processing com Pré-Sorting
+
+**Pattern:** Ordenar textos por comprimento antes de batching
+
+```python
+def index_in_batches(chunks, batch_size=256):
+    """Processa chunks em batches otimizados"""
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i:i+batch_size]
+
+        # Pré-sort por comprimento (CRÍTICO!)
+        batch_sorted = sorted(batch, key=lambda x: len(x['content']))
+
+        # Encode batch
+        texts = [chunk['content'] for chunk in batch_sorted]
+        embeddings = model.encode(
+            texts,
+            batch_size=batch_size,
+            convert_to_tensor=True,
+            precision='float16'  # Mixed-precision
+        )
+
+        # Add to ChromaDB...
+```
+
+**Por que pré-sorting:**
+Sentence transformers fazem padding para o maior texto do batch.
+
+```
+# ❌ SEM pre-sorting:
+Batch: [50 tokens, 500 tokens, 100 tokens]
+Padding: Todos para 500 tokens → 90% desperdício!
+
+# ✅ COM pre-sorting:
+Batch: [50, 100, 120, 150, ...] tokens
+Padding: Todos para 150 tokens → 10% desperdício!
+```
+
+**Ganho:** 15-30% redução de cálculos desperdiçados
+
+---
+
+### 6. HNSW Parameters Tuning
+
+**Pattern:** Configurar HNSW baseado em caso de uso
+
+```python
+# ⚠️ HNSW params NÃO PODEM SER ALTERADOS após criação!
+# Sempre definir na criação da collection
+
+collection = client.get_or_create_collection(
+    name="project_knowledge",
+    metadata={
+        # Base de conhecimento média (~100-500 docs)
+        # Queries frequentes (alta taxa de busca)
+        # Precisão > velocidade extrema
+
+        "hnsw:space": "cosine",
+        "hnsw:M": 32,                    # ↑ = melhor recall, mais memória
+        "hnsw:construction_ef": 200,      # ↑ = melhor qualidade, indexação lenta
+        "hnsw:search_ef": 100,            # ↑ = melhor recall, busca lenta
+        "hnsw:num_threads": 8,
+        "hnsw:batch_size": 1000,
+        "hnsw:sync_threshold": 500
+    }
+)
+```
+
+**Guia de valores:**
+
+| Caso de Uso | M | construction_ef | search_ef |
+|-------------|---|-----------------|-----------|
+| Small DB, velocidade crítica | 16 | 100 | 10 |
+| Medium DB, balanced | 32 | 200 | 100 |
+| Large DB, precisão crítica | 64 | 400 | 200 |
+
+**Trade-offs:**
+- ↑ M = Melhor recall, mais memória, busca levemente mais lenta
+- ↑ construction_ef = Melhor qualidade de grafo, indexação MUITO mais lenta
+- ↑ search_ef = Melhor recall, busca mais lenta
+
+---
+
+## 🎯 Quick Reference RAG
+
+**Otimizações CRÍTICAS (300-500% ganho):**
+1. Mixed-Precision (FP16) → 2x velocidade
+2. Batch Processing → 3-5x velocidade
+3. Pré-Sorting → 15-30% economia
+4. Query Caching → 10-100x (cache hits)
+5. HNSW Tuning → 20-40% busca + 30% precisão
+6. Keep Data on GPU → 30-50% latência
+7. Reranking Batch → 50-100% reranking
+8. Monitoring → Visibilidade total
+
+**Documentação Completa:**
+- `.claude/memory/learnings/rag-optimizations-2025.md` (27 otimizações)
+- `.claude/memory/decisions/ADR-009-ADVANCED-RAG.md` (decisão arquitetural)
+
+---
+
 **Última atualização:** 2025-11-18
 **Contribuir:** Adicione novos padrões conforme descobertos!

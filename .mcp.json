@@ -29,6 +29,14 @@
         "/Users/andersongoliveira/testing_odoo_15_sr"
       ],
       "env": {}
+    },
+    "knowledge": {
+      "type": "stdio",
+      "command": "python3.11",
+      "args": [
+        "/Users/andersongoliveira/testing_odoo_15_sr/.claude/scripts/python/mcp_rag_server.py"
+      ],
+      "env": {}
     }
   }
 }

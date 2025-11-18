@@ -14,7 +14,11 @@ import torch
 from pathlib import Path
 
 # ====== CONFIGURAÇÃO ======
-VECTORDB_PATH = "./.claude/vectordb"
+# Determine project root
+# This script is at: PROJECT_ROOT/.claude/scripts/python/mcp_rag_server.py
+script_path = Path(__file__).resolve()
+PROJECT_ROOT = script_path.parent.parent.parent.parent
+VECTORDB_PATH = str(PROJECT_ROOT / ".claude" / "vectordb")
 EMBEDDING_MODEL = 'all-MiniLM-L6-v2'
 RERANKER_MODEL = 'cross-encoder/ms-marco-MiniLM-L-6-v2'
 

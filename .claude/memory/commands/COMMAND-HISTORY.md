@@ -447,6 +447,157 @@ sudo comando args
 
 ---
 
-**Última atualização:** 2025-11-17
+## 🐍 Python/Pip Commands
+
+### pip install com Python 3.11
+
+```bash
+# ✅ SEMPRE especificar Python 3.11
+python3.11 -m pip install PACKAGE
+
+# ❌ NUNCA usar pip genérico (pode instalar na versão errada)
+pip install PACKAGE
+
+# ✅ Verificar qual Python está usando pip
+which python3.11
+python3.11 --version
+```
+
+**Regra aprendida:** `python3.11 -m pip install` garante versão correta
+**Data:** 2025-11-18
+**Contexto:** Mac M3 com múltiplas versões Python
+**Packages instalados:**
+- `watchdog==6.0.0` (file system monitoring para RAG)
+
+---
+
+### Python Script Execution
+
+```bash
+# ✅ Executar script com Python 3.11
+python3.11 /path/to/script.py [args]
+
+# ✅ Tornar script executável
+chmod +x script.py
+./script.py  # Se tiver shebang #!/usr/bin/env python3.11
+
+# ✅ Verificar sintaxe sem executar
+python3.11 -m py_compile script.py
+```
+
+**Regra aprendida:** Sempre usar python3.11 explicitamente
+**Data:** 2025-11-18
+
+---
+
+### MCP Server Testing
+
+```bash
+# ✅ Testar MCP server (stdin/stdout protocol)
+echo '{"method": "METHOD_NAME", "params": {...}}' | python3.11 mcp_server.py
+
+# Exemplo: Testar RAG search
+echo '{"method": "search_knowledge", "params": {"query": "RAG", "n_results": 3}}' | \
+  python3.11 .claude/scripts/python/mcp_rag_server.py
+```
+
+**Regra aprendida:** MCP usa JSON via stdin, resposta via stdout
+**Data:** 2025-11-18
+**Contexto:** Testar MCP servers localmente antes de configurar em .mcp.json
+
+---
+
+## 🎯 ChromaDB + RAG Commands
+
+### Reindexação Manual
+
+```bash
+# ✅ Reindexar knowledge base
+cd /path/to/project
+python3.11 .claude/scripts/python/index-knowledge.py
+
+# ✅ Reindexação completa (apaga e recria)
+python3.11 .claude/scripts/python/index-knowledge.py --reindex
+```
+
+**Regra aprendida:** Reindex quando documentação muda manualmente
+**Data:** 2025-11-18
+**Trigger:** Mudanças em `.claude/memory/**/*.md`
+
+---
+
+### File Watcher (Background Process)
+
+```bash
+# ✅ Iniciar file watcher em background
+python3.11 .claude/scripts/python/file-watcher.py &
+
+# ✅ Verificar se está rodando
+ps aux | grep file-watcher.py | grep -v grep
+
+# ✅ Parar file watcher
+pkill -f file-watcher.py
+
+# ✅ Ver logs do watcher
+# (Output vai para terminal onde foi iniciado)
+```
+
+**Regra aprendida:** File watcher deve rodar em background para reindex automático
+**Data:** 2025-11-18
+**Contexto:** Monitora `.claude/memory/` e reindexar quando .md muda
+
+---
+
+### Session Memory Commands
+
+```bash
+# ✅ Testar session memory
+python3.11 .claude/scripts/python/session-memory.py test
+
+# ✅ Buscar sessões similares
+python3.11 .claude/scripts/python/session-memory.py search "query text"
+
+# ✅ Ver estatísticas
+python3.11 .claude/scripts/python/session-memory.py stats
+```
+
+**Regra aprendida:** Session memory testa com comando `test`
+**Data:** 2025-11-18
+
+---
+
+## 🔍 Path Calculation (Python Scripts)
+
+### Estrutura Esperada
+
+```
+PROJECT_ROOT/
+└── .claude/
+    └── scripts/
+        └── python/
+            └── script.py
+```
+
+### Calcular PROJECT_ROOT
+
+```python
+from pathlib import Path
+
+# Script em: PROJECT_ROOT/.claude/scripts/python/script.py
+script_path = Path(__file__).resolve()
+
+# Voltar 4 níveis: script.py → python/ → scripts/ → .claude/ → PROJECT_ROOT
+PROJECT_ROOT = script_path.parent.parent.parent.parent
+
+# ✅ Sempre documentar estrutura no comentário!
+```
+
+**Regra aprendida:** 4x `.parent` para scripts em `.claude/scripts/python/`
+**Data:** 2025-11-18
+**Erro comum:** Usar 3x parent (falta 1 nível)
+
+---
+
+**Última atualização:** 2025-11-18
 **Próxima atualização:** Automática a cada novo aprendizado
 **Objetivo:** Claude cada vez mais inteligente, zero tempo perdido!
