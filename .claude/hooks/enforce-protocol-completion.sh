@@ -23,11 +23,13 @@ if echo "$USER_MESSAGE" | grep -qi "protocolo"; then
     echo "  [ ] 4. Determinar paralelização possível" >&2
     echo "" >&2
 
-    echo "📋 FASE 2: CONSULTA DE CONTEXTO (Paralela)" >&2
-    echo "  [ ] 5. Consultar RAG (knowledge base via MCP)" >&2
-    echo "  [ ] 6. Consultar Session Memory (sessões anteriores)" >&2
-    echo "  [ ] 7. Se necessário: Web Search (internet)" >&2
-    echo "  [ ] 8. Reranking de resultados para máxima relevância" >&2
+    echo "📋 FASE 2: CONSULTA DE CONTEXTO AUTOMÁTICA (RAG + Session Memory)" >&2
+    echo "  [ ] 5. 🧠 RAG AUTO-LEARNING: Buscar conhecimento pertinente" >&2
+    echo "      python3.11 .claude/scripts/python/rag_auto_learning.py --search 'KEYWORDS_DA_TAREFA'" >&2
+    echo "  [ ] 6. 🧠 SESSION MEMORY: Verificar sessões anteriores similares" >&2
+    echo "      python3.11 .claude/scripts/python/session-memory.py test" >&2
+    echo "  [ ] 7. 🌐 Se necessário: Web Search para conhecimento atualizado" >&2
+    echo "  [ ] 8. 🎯 Reranking e síntese do contexto obtido" >&2
     echo "" >&2
 
     echo "📋 FASE 3: EXECUÇÃO MULTI-AGENTE (Paralela)" >&2
@@ -53,10 +55,16 @@ if echo "$USER_MESSAGE" | grep -qi "protocolo"; then
     echo "  [ ] 22. Push para GitHub (ambos repos)" >&2
     echo "" >&2
 
-    echo "📋 FASE 6: VALIDAÇÃO FINAL (Obrigatória)" >&2
+    echo "📋 FASE 6: VALIDAÇÃO FINAL + AUTO-LEARNING (Obrigatória)" >&2
     echo "  [ ] 23. Revisar: TODAS as tarefas completadas?" >&2
     echo "  [ ] 24. Testar: Funciona corretamente?" >&2
     echo "  [ ] 25. Documentar: Tudo está salvo?" >&2
+    echo "  [ ] 26. 🧠 RAG UPDATE: Extrair conhecimento e atualizar automaticamente" >&2
+    echo "      python3.11 .claude/scripts/python/rag_auto_learning.py --scan" >&2
+    echo "  [ ] 27. 🧠 SESSION SAVE: Salvar sessão completa com aprendizados" >&2
+    echo "      python3.11 .claude/scripts/python/rag_auto_learning.py --save-session 'RESUMO_DA_SESSAO'" >&2
+    echo "  [ ] 28. 📊 RAG STATS: Verificar crescimento do conhecimento" >&2
+    echo "      python3.11 .claude/scripts/python/rag_auto_learning.py --stats" >&2
     echo "" >&2
 
     echo "⚡ REGRAS DE PARALELIZAÇÃO:" >&2
@@ -66,12 +74,13 @@ if echo "$USER_MESSAGE" | grep -qi "protocolo"; then
     echo "  4. RAG + Web Search → Paralelo sempre que possível" >&2
     echo "" >&2
 
-    echo "🧠 INTELIGÊNCIA AUMENTADA:" >&2
-    echo "  • Claude DEVE consultar RAG automaticamente" >&2
-    echo "  • Claude DEVE considerar session memory" >&2
-    echo "  • Claude PODE buscar na internet se necessário" >&2
-    echo "  • Claude DEVE fazer reranking para precisão" >&2
-    echo "  • Claude DEVE pensar antes de executar" >&2
+    echo "🧠 RAG AUTO-LEARNING INTEGRADO:" >&2
+    echo "  • Claude DEVE consultar RAG no início (FASE 2)" >&2
+    echo "  • Claude DEVE atualizar RAG no final (FASE 6)" >&2
+    echo "  • Conhecimento é extraído e indexado automaticamente" >&2
+    echo "  • Session memory integra com RAG para continuidade" >&2
+    echo "  • Claude fica mais inteligente a CADA PROTOCOLO!" >&2
+    echo "  • Comandos, erros, patterns e soluções são aprendidos automaticamente" >&2
     echo "" >&2
 
     echo "🔴 BLOQUEIO ATIVO: Exit Code 2" >&2
