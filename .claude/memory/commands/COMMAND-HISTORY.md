@@ -598,6 +598,69 @@ PROJECT_ROOT = script_path.parent.parent.parent.parent
 
 ---
 
-**Última atualização:** 2025-11-18
-**Próxima atualização:** Automática a cada novo aprendizado
-**Objetivo:** Claude cada vez mais inteligente, zero tempo perdido!
+---
+
+## 🦎 Pangolin Platform Commands
+
+### SSH Access (GCP VM)
+
+```bash
+# ✅ Método 1: SSH direto
+ssh admin@34.9.79.106
+
+# ✅ Método 2: gcloud CLI
+gcloud compute ssh pangolin --project=Mysql-OsTicket --zone=us-central1-c
+```
+
+**Regra aprendida:** Pangolin usa VM GCP, 2 métodos de acesso
+**Data:** 2025-11-18
+**Contexto:** Servidor pangolin @ 34.9.79.106
+
+### Docker Management (Pangolin)
+
+```bash
+# ✅ Ver status containers
+ssh admin@34.9.79.106 "docker ps"
+
+# ✅ Logs em tempo real
+ssh admin@34.9.79.106 "docker logs -f pangolin"
+
+# ✅ Restart serviço
+ssh admin@34.9.79.106 "docker restart pangolin"
+
+# ✅ Entrar no container
+ssh admin@34.9.79.106 "docker exec -it pangolin sh"
+```
+
+**Regra aprendida:** Pangolin roda em Docker, comandos remotos via SSH
+**Data:** 2025-11-18
+
+### Pangolin API (REST)
+
+```bash
+# ✅ Health check
+curl https://pangolin.keyanders.me/api/v1/health
+
+# ✅ Listar organizações
+curl https://pangolin.keyanders.me/api/v1/organizations \
+  -H "Authorization: Bearer io8yxoaf3emjt7n..."
+
+# ✅ Criar resource
+curl -X POST https://pangolin.keyanders.me/api/v1/resources \
+  -H "Authorization: Bearer io8yxoaf3emjt7n..." \
+  -H "Content-Type: application/json" \
+  -d '{"name":"API","type":"http","target":"192.168.1.10:8080"}'
+```
+
+**Regra aprendida:** Pangolin API usa Bearer token authentication
+**Data:** 2025-11-18
+**API Key:** io8yxoaf3emjt7n.dx2rr4bdcyjp42sc4wzddqixdbuywtatreudeb5g
+
+### Database Access (SQLite Remoto)
+
+```bash
+# ✅ Acessar SQLite no container
+ssh admin@34.9.79.106 "docker exec -it pangolin sqlite3 /app/config/db/sqlite.db"
+
+# ✅ Query remota
+ssh admin@34.9.

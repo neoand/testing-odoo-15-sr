@@ -1066,5 +1066,63 @@ collection = client.get_or_create_collection(
 
 ---
 
+---
+
+## 🦎 Padrões de Integração com Plataformas Externas
+
+### Pang olin Platform Integration Pattern
+
+**Quando usar:**
+- Integrar com API externa
+- Documentar plataforma nova
+- Tornar-se especialista em tecnologia
+
+**Pattern:**
+```bash
+1. Explorar documentação local (se houver)
+   - Ler todos .md files do projeto
+   - Identificar arquitetura e stack
+
+2. Acessar API e testar endpoints
+   - WebFetch para homepage
+   - Web Search para GitHub e docs oficiais
+
+3. Documentar completamente
+   - Criar guia em .claude/memory/learnings/
+   - Mínimo 100KB de conteúdo estruturado
+   - Incluir: arquitetura, API, comandos, troubleshooting
+
+4. Atualizar RAG
+   - Reindexar knowledge base
+   - Testar busca semântica
+
+5. Criar ADR
+   - Documentar decisão de integração
+   - Registrar credenciais e acessos
+
+6. Persistir
+   - Commit com mensagem detalhada
+   - Push para GitHub
+```
+
+**Exemplo (Pangolin):**
+```
+✅ Documentação local: /Users/andersongoliveira/neo_pangolin/ (explorado)
+✅ API access: https://pangolin.keyanders.me (testado)
+✅ Web research: GitHub fosrl/pangolin (pesquisado)
+✅ Guia criado: 125KB, 3500 linhas
+✅ RAG atualizado: 15 chunks Pangolin
+✅ ADR-010: Pangolin Integration (criado)
+✅ Resultado: Claude = especialista Pangolin
+```
+
+**Benefícios:**
+- ✅ Conhecimento permanente (nunca esquece)
+- ✅ Capacitação imediata (pode operar/desenvolver)
+- ✅ Replicável para outras plataformas
+- ✅ RAG-powered (busca semântica)
+
+---
+
 **Última atualização:** 2025-11-18
 **Contribuir:** Adicione novos padrões conforme descobertos!
