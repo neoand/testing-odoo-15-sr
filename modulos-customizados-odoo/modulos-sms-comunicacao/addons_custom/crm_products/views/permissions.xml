@@ -2,20 +2,28 @@
 <odoo>
 
     <data noupdate="1">
+        <!-- ========== Personal Leads Rule ========== -->
+        <!-- Vendedores podem VER apenas suas próprias oportunidades -->
         <record id="crm_rule_personal_lead" model="ir.rule">
-            <field name="name">Personal Leads RC</field>
+            <field name="name">Personal Leads RC - Salesman Access</field>
             <field ref="model_crm_lead" name="model_id"/>
-            <field name="perm_read" eval="False"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
             <field name="domain_force">['|','&amp;',('user_id','=',user.id),('user_id','=',False),('stage_edit','=',True)]</field>
             <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
         </record>
 
-
-
+        <!-- ========== All Leads Rule ========== -->
+        <!-- Gerentes de vendas podem VER oportunidades da equipe -->
         <record id="crm_rule_all_lead" model="ir.rule">
-            <field name="name">All Leads RC</field>
+            <field name="name">All Leads RC - Sales Manager Access</field>
             <field ref="model_crm_lead" name="model_id"/>
-             <field name="perm_read" eval="False"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
             <field name="domain_force">['|','&amp;',('team_id', '=',user.team_id.id),( 'team_id.user_id', '=', user.id),('stage_edit','=',True)]</field>
             <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
         </record>

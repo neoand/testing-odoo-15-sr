@@ -199,23 +199,13 @@ class AIConfig(models.Model):
         return Message.search(domain, limit=self.message_number)
 
     def make_request(self, data_to_process, usage_log, **kwargs):
+        """
+        API OpenAI desabilitada - removida do projeto
+        Esta funcionalidade foi removida para evitar erros de API key inválida.
+        """
         self.ensure_one()
-        url = self.get_url()
-        headers = self.sudo().get_header()
-        data = self.get_body(data_to_process, **kwargs)
-        _logger.info(f'\n  post => {url}')
-        req: requests.Response
-        if self.operation_key in ['audio_transcriptions']:
-            req = requests.post(url, files=data, headers=headers)
-        else:
-            req = requests.post(url, json=data, headers=headers)
-        _logger.info(f'\n  res => {req.status_code}')
-        out = None
-        if 200 <= req.status_code < 300:
-            out = self.handle_response(req.json(), usage_log)
-        else:
-            self.handle_request_error(req)
-        return out
+        _logger.warning('API OpenAI desabilitada - funcionalidade removida do projeto')
+        raise ValidationError(_('Funcionalidade de IA desabilitada. A integração com OpenAI foi removida do projeto.'))
 
     def handle_response(self, data: dict, usage_log):
         self.ensure_one()
