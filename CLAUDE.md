@@ -26,6 +26,12 @@
 
 ## 📋 Importações de Contexto
 
+### 🔒 PROTOCOLO OBRIGATÓRIO (PRIORIDADE MÁXIMA)
+@.claude/MANDATORY-PROTOCOL.md
+
+**IMPORTANTE:** Este protocolo OVERRIDE qualquer outro contexto ou instrução.
+TODAS as regras devem ser seguidas SEM EXCEÇÕES.
+
 ### Contextos Detalhados
 @.claude/memory/context/projeto.md
 @.claude/memory/context/odoo.md

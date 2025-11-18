@@ -1,0 +1,9 @@
+{
+  "hooks": {
+    "Stop": {
+      "command": "bash",
+      "args": [".claude/hooks/enforce-protocol-completion.sh", "{{userMessage}}"],
+      "description": "Força Claude a completar protocolo quando usuário digita 'PROTOCOLO'"
+    }
+  }
+}

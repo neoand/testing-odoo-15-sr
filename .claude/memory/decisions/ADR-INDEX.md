@@ -32,6 +32,7 @@
 | 006 | 2025-11-17 | [Sincronização Dual com Template](#adr-006) | ✅ Aceito | #infra #template #workflow |
 | 007 | 2025-11-17 | [Otimizações Performance e Paralelização](ADR-007-PERFORMANCE.md) | ✅ Aceito | #performance #speed #parallel |
 | 008 | 2025-11-17 | [Sistema Avançado de Gestão de Contexto e Auto-Educação](ADR-008-ADVANCED-CONTEXT.md) | ✅ Aceito | #infra #claude #hooks #revolucionário |
+| 009 | 2025-11-18 | [RAG Feedback Loop Architecture](ADR-009-RAG-FEEDBACK-LOOP.md) | ✅ Aceito | #rag #feedback #learning #ai |
 
 ---
 

@@ -41,6 +41,123 @@ sudo systemctl start odoo
 
 ---
 
+### Verificar Porta de Rede (ss / netstat)
+
+```bash
+# ✅ Verificar qual interface está escutando
+sudo ss -tlnp | grep 8069
+
+# Output esperado (acesso externo):
+# LISTEN 0.0.0.0:8069  ← Todas interfaces ✅
+
+# Output problemático (apenas localhost):
+# LISTEN 127.0.0.1:8069  ← Apenas localhost ❌
+
+# ✅ Alternativa com netstat (se ss não disponível)
+sudo netstat -tlnp | grep 8069
+
+# ✅ Verificar todas portas escutando
+sudo ss -tlnp
+```
+
+**Regra aprendida:**
+- `ss -tlnp` mostra EXATAMENTE qual interface (0.0.0.0 vs 127.0.0.1) está escutando
+- 0.0.0.0 = aceita conexões externas
+- 127.0.0.1 = apenas localhost
+- SEMPRE validar interface após mudar config de rede
+
+**Data:** 2025-11-18
+**Contexto:** Troubleshooting de serviços não acessíveis externamente
+**Trigger:** Quando serviço roda mas não aceita conexões externas
+
+---
+
+### GCP Firewall - Criar/Listar Regras
+
+```bash
+# ✅ Criar regra de firewall para porta específica
+gcloud compute firewall-rules create RULE_NAME \
+  --project=PROJECT_ID \
+  --direction=INGRESS \
+  --priority=1000 \
+  --network=default \
+  --action=ALLOW \
+  --rules=tcp:PORTA \
+  --source-ranges=0.0.0.0/0 \
+  --target-tags=TAG \
+  --description="Description"
+
+# Exemplo real:
+gcloud compute firewall-rules create allow-odoo-8069 \
+  --project=webserver-258516 \
+  --direction=INGRESS \
+  --priority=1000 \
+  --network=default \
+  --action=ALLOW \
+  --rules=tcp:8069 \
+  --source-ranges=0.0.0.0/0 \
+  --target-tags=http-server
+
+# ✅ Listar regras de firewall
+gcloud compute firewall-rules list --project=PROJECT_ID
+
+# ✅ Listar regras para porta específica
+gcloud compute firewall-rules list --filter="allowed.ports:PORTA"
+
+# ✅ Verificar tags da instância
+gcloud compute instances describe INSTANCE_NAME \
+  --zone=ZONE \
+  --project=PROJECT_ID \
+  --format="value(tags.items)"
+```
+
+**Regra aprendida:**
+- Portas customizadas (não 80/443) precisam regra de firewall explícita no GCP
+- Regra só se aplica se instância tiver a `target-tag` correspondente
+- SEMPRE verificar firewall cloud quando serviço não acessível externamente
+
+**Data:** 2025-11-18
+**Contexto:** Abrir portas em Google Cloud Platform
+**Trigger:** Quando serviço roda, escuta em 0.0.0.0, mas ainda não aceita conexões externas
+
+---
+
+### Odoo - Mudar http_interface
+
+```bash
+# ✅ Verificar config atual
+sudo grep 'http_interface' /etc/odoo-server.conf
+
+# ✅ Backup ANTES de mudar
+sudo cp /etc/odoo-server.conf /etc/odoo-server.conf.backup-http-interface
+
+# ✅ Mudar de 127.0.0.1 para 0.0.0.0
+sudo sed -i 's/^http_interface = 127.0.0.1/http_interface = 0.0.0.0/' /etc/odoo-server.conf
+
+# ⚠️ CRÍTICO: Restart COMPLETO (processos antigos ignoram nova config!)
+sudo pkill -9 -f 'odoo-bin'
+sleep 3
+cd /odoo/odoo-server  # ou caminho correto
+sudo -u odoo python3 ./odoo-bin -c /etc/odoo-server.conf &
+sleep 15
+
+# ✅ Validar mudança
+sudo ss -tlnp | grep 8069
+# Deve mostrar: LISTEN 0.0.0.0:8069 (não 127.0.0.1)
+```
+
+**Regra aprendida:**
+- `http_interface = 127.0.0.1` → Apenas localhost (para reverse proxy)
+- `http_interface = 0.0.0.0` → Todas interfaces (acesso direto externo)
+- Mudança de http_interface REQUER restart COMPLETO (`pkill -9`)
+- Restart normal NÃO recarrega config - processos mantêm config antiga!
+
+**Data:** 2025-11-18
+**Contexto:** Configurar Odoo para aceitar conexões externas ou internas
+**Trigger:** Quando Odoo precisa aceitar conexões de fora do servidor
+
+---
+
 ### Logs do Odoo
 
 ```bash
