@@ -32,6 +32,27 @@ Sempre que sincronizar algo com o template, documentar aqui:
 - **Razão:** Protocolo fundamental para manter template atualizado
 - **Adaptação:** ADR-006 (específico) → ADR-003 (genérico para template)
 
+### 2025-11-17: Sprint 1 Implementation (Hooks + README + Windows)
+
+- **Tipo:** Implementação Completa (ADR-008 Sprint 1)
+- **Adicionado:** Hooks funcionais + README completo + Setup Windows
+- **Repos:** testing-odoo-15-sr + Claude-especial
+- **Commit projeto:** e8d7353
+- **Commit template:** 7373657
+- **Arquivos sincronizados:**
+  - `.claude/hooks.yaml` (adaptado para genérico)
+  - `.claude/scripts/bash/pre-compact-save-context.sh` (adaptado)
+  - `.claude/scripts/bash/inject-dynamic-context.sh` (adaptado)
+  - `README.md` (completo com Windows WSL2)
+- **Razão:** Implementar hooks funcionais para ZERO perda de contexto
+- **Impacto:**
+  - ✅ PreCompact hook salva contexto antes de auto-compact
+  - ✅ SessionStart hook restaura contexto automaticamente
+  - ✅ UserPromptSubmit hook injeta contexto dinâmico
+  - ✅ README com guia completo Windows WSL2
+  - ✅ Scripts testados e funcionais
+- **Adaptações:** Removidas referências Odoo, ADR-006→ADR-003, genérico
+
 ### 2025-11-17: ADR-008 Advanced Context → ADR-005 Template
 
 - **Tipo:** ADR (REVOLUCIONÁRIO!)
@@ -78,14 +99,15 @@ Sempre que sincronizar algo com o template, documentar aqui:
 
 ## 📈 Estatísticas
 
-**Total de sincronizações:** 5
+**Total de sincronizações:** 6
 **Skills sincronizados:** 1 (tool-inventory)
-**Scripts sincronizados:** 0
+**Scripts sincronizados:** 3 (hooks.yaml, pre-compact-save-context.sh, inject-dynamic-context.sh)
 **Protocolos sincronizados:** 2 (AUTO-LEARNING, THINKING-MODE)
 **ADRs sincronizados:** 5 (ADR-001→001, ADR-002→002, ADR-006→003, ADR-007→004, ADR-008→005)
 **Learnings sincronizados:** 2 (git-workflow, sync-log)
+**READMEs:** 2 (ambos repos atualizados com hooks + Windows WSL2)
 
-**Última sincronização:** 2025-11-17 (ADR-008 REVOLUCIONÁRIO!)
+**Última sincronização:** 2025-11-17 (Sprint 1 Hooks COMPLETO!)
 
 ---
 
