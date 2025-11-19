@@ -616,6 +616,52 @@ gcloud compute ssh pangolin --project=Mysql-OsTicket --zone=us-central1-c
 **Data:** 2025-11-18
 **Contexto:** Servidor pangolin @ 34.9.79.106
 
+---
+
+### GCP SSH para Servidor Odoo Testing
+
+```bash
+# ✅ Conectar ao servidor odoo-sr-tensting
+gcloud compute ssh odoo-sr-tensting --zone=southamerica-east1-b
+
+# ✅ Executar comando direto
+gcloud compute ssh odoo-sr-tensting --zone=southamerica-east1-b --command="comando"
+
+# ✅ Copiar arquivo para servidor
+gcloud compute scp --zone=southamerica-east1-b arquivo_local odoo-sr-tensting:/tmp/arquivo_remoto
+
+# ✅ Copiar arquivo do servidor
+gcloud compute scp --zone=southamerica-east1-b odoo-sr-tensting:/tmp/arquivo_remoto arquivo_local
+```
+
+**Regra aprendida:** gcloud SSH mais estável que SSH direto para instâncias GCP
+**Data:** 2025-11-18
+**Contexto:** Servidor Odoo Testing - odoo-sr-tensting
+**Trigger:** Debug e desenvolvimento em servidor GCP
+
+---
+
+### GCP SSH Error Handling
+
+```bash
+# ❌ ERRO COMUM: Exit code 255 com AttributeError
+ERROR: (gcloud.compute.ssh) [/usr/bin/ssh] exited with return code [255].
+ERROR: (gcloud.compute.ssh) AttributeError: 'str' object has no attribute 'direction'
+
+# ✅ SOLUÇÃO: Evitar strings com aspas duplas dentro de strings
+# RUIM:
+gcloud compute ssh ... --command="echo \"texto com aspas\""
+
+# BOM:
+gcloud compute ssh ... --command='echo "texto com aspas"'
+# OU
+gcloud compute ssh ... --command="echo 'texto com aspas'"
+```
+
+**Regra aprendida:** Nunca misturar tipos de aspas em comandos gcloud
+**Data:** 2025-11-18
+**Contexto:** Execução de comandos complexos via gcloud SSH
+
 ### Docker Management (Pangolin)
 
 ```bash

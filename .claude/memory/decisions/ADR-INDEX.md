@@ -34,6 +34,118 @@
 | 008 | 2025-11-17 | [Sistema Avançado de Gestão de Contexto e Auto-Educação](ADR-008-ADVANCED-CONTEXT.md) | ✅ Aceito | #infra #claude #hooks #revolucionário |
 | 009 | 2025-11-18 | [Sistema RAG Avançado com Inteligência Automática](ADR-009-ADVANCED-RAG.md) | ✅ Aceito | #rag #mcp #embeddings #revolucionário |
 | 009 | 2025-11-18 | [RAG Feedback Loop Architecture](ADR-009-RAG-FEEDBACK-LOOP.md) | ✅ Aceito | #rag #feedback #learning #ai |
+| 010 | 2025-11-18 | [Wazuh AI Security Specialization](ADR-010-WAZUH-SPECIALIZATION.md) | ✅ Aceito | #wazuh #security #ai #specialization |
+| 011 | 2025-11-19 | [UI Autopopulation - onchange vs compute](#adr-011) | ✅ Aceito | #odoo #ui #ux #autocompletion |
+
+---
+
+## ADR-011: UI Autopopulation - onchange vs compute
+
+**Data:** 2025-11-19
+**Status:** ✅ Aceito
+**Decisores:** Anderson + Claude
+
+### Contexto
+Precisávamos implementar autopopulação do campo phone number no formulário de SMS Message quando o usuário seleciona um contato. A decisão era entre usar `@api.onchange` (client-side) ou `@api.depends` (compute field server-side).
+
+### Decisão
+Usar `@api.onchange('partner_id')` para autopopulação em tempo real no formulário
+
+### Alternativas Consideradas
+
+1. **@api.depends + store=True (Compute Field)**
+   - ✅ Campo persistido no banco
+   - ✅ Cache automático do ORM
+   - ✅ Funciona em batch operations
+   - ❌ Recalcula a cada carregamento
+   - ❌ Mais overhead de queries
+   - ❌ Menos responsivo na UI
+
+2. **@api.onchange (Client-Side)**
+   - ✅ Resposta imediata na UI
+   - ✅ Sem queries desnecessárias ao carregar
+   - ✅ Melhor experiência do usuário
+   - ✅ Lógica simples
+   - ❌ Não persiste automaticamente
+   - ❌ Não funciona em batch
+   - ❌ Usuário pode modificar após
+
+3. **@api.model_create_multi (Override create)**
+   - ✅ Persiste no banco
+   - ✅ Controle total sobre lógica
+   - ❌ Não atualiza em tempo real
+   - ❌ Requer override de método principal
+
+4. **JavaScript Widget Customizado**
+   - ✅ Controle total da UI
+   - ✅ Muito responsivo
+   - ❌ Complexidade alta
+   - ❌ Requer desenvolvimento front-end
+   - ❌ Manutenção complexa
+
+### Consequências
+
+**Positivas:**
+- ✅ Experiência do usuário excelente - resposta imediata
+- ✅ Simplicidade de implementação - método único
+- ✅ Performance melhor - sem queries desnecessárias
+- ✅ Flexibilidade - usuário pode modificar manualmente
+- ✅ Padrão Odoo comprovado para UI interactions
+
+**Negativas:**
+- ⚠️ Campo não persiste automaticamente se usuário não salvar
+- ⚠️ Não funciona em importações em lote
+- ⚠️ Lógica precisa ser replicada se usada em outros contextos
+
+**Neutras:**
+- 📝 Decisão alinhada com padrões Odoo para UI interactions
+- 📝 Aplicável apenas para formulários, não para listagens
+
+### Implementação
+
+```python
+@api.onchange('partner_id')
+def _onchange_partner_id(self):
+    """Auto-populate phone number when partner is selected"""
+    if self.partner_id:
+        # Prioridade: mobile > phone > vazio
+        if self.partner_id.mobile:
+            self.phone = self.partner_id.mobile
+        elif self.partner_id.phone:
+            self.phone = self.partner_id.phone
+        else:
+            self.phone = False
+    else:
+        self.phone = False
+```
+
+### Quando Reavaliar
+
+- Se performance tornar-se problema com muitos registros
+- Se precisarmos da mesma lógica em batch operations
+- Se usuários solicitarem persistência automática
+- Se扩展到多字段联动时需要更复杂的逻辑
+
+### Padrões Estabelecidos
+
+**Uso de @api.onchange quando:**
+- Resposta em tempo real é necessária
+- Lógica é simples (1-3 campos)
+- Campo é frequentemente modificado manualmente
+- Performance de carregamento é crítica
+
+**Uso de @api.depends quando:**
+- Campo é raramente modificado manualmente
+- Cálculo é complexo ou custoso
+- Valor precisa persistir automaticamente
+- Campo é usado em listagens/filtros
+
+### Lições Aprendidas
+
+1. **UX > Persistência para campos de formulário:** Usuários preferem responsividade
+2. **Simplicidade é chave:** @api.onchange é mais simples que compute + override
+3. **Padrões Odoo existem por um motivo:** onchange é padrão para UI interactions
+4. **Considerar o contexto:** SMS é frequentemente criado manualmente, não em batch
 
 ---
 

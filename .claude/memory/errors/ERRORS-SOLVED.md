@@ -28,6 +28,60 @@
 
 ## 📋 Erros Resolvidos
 
+### [2025-11-18] GCloud SSH AttributeError - String Direction Error
+
+**Contexto:** Tentando executar comando SSH com string contendo aspas duplas dentro de outra string aspas duplas
+
+**Sintoma:**
+```
+ERROR: (gcloud.compute.ssh) [/usr/bin/ssh] exited with return code [255].
+ERROR: (gcloud.compute.ssh) AttributeError: 'str' object has no attribute 'direction'
+```
+
+**Causa Raiz:**
+Comando gcloud com string malformada contendo aspas aninhadas:
+
+```bash
+# ❌ ERRADO - aspas duplas dentro de aspas duplas
+gcloud compute ssh ... --command="echo \"texto com aspas\""
+```
+
+O parser gcloud tentava interpretar `\"texto com aspas\"` como um objeto com atributo `.direction`, causando AttributeError.
+
+**Solução:**
+Usar tipos de aspas diferentes ou escapar corretamente:
+
+```bash
+# ✅ Opção 1: Aspas simples externas
+gcloud compute ssh ... --command='echo "texto com aspas"'
+
+# ✅ Opção 2: Aspas simples internas
+gcloud compute ssh ... --command="echo 'texto com aspas'"
+
+# ✅ Opção 3: HEREDOC para comandos complexos
+gcloud compute ssh ... --command <<'EOF'
+echo "texto com aspas"
+comando complexo
+EOF
+```
+
+**Prevenção:**
+- **SEMPRE** usar um tipo de aspa para delimitar o comando e outro tipo internamente
+- **NUNCA** misturar aspas do mesmo tipo (`"..."`) dentro de outra string do mesmo tipo
+- Para comandos complexos com múltiplas linhas, preferir HEREDOC
+- Testar comando simples primeiro antes de adicionar complexidade
+
+**Regra geral de aspas:**
+```bash
+# Padrões seguros:
+gcloud compute ssh ... --command='comando "com aspas"'     # Externas simples, internas duplas
+gcloud compute ssh ... --command="comando 'com aspas'"    # Externas duplas, internas simples
+```
+
+**Tags:** #gcloud #ssh #error #string #parsing #command-line
+
+---
+
 ### [2025-11-18] Python Path Calculation Confusion - `.parent.parent.parent`
 
 **Contexto:** Implementando RAG Feedback Loop com scripts em `.claude/scripts/python/`, precisava calcular PROJECT_ROOT para acessar `.claude/vectordb` e `.claude/logs`

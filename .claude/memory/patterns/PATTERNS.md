@@ -48,6 +48,96 @@ module_name/
 
 ---
 
+## 🎯 Padrões de UI/UX Odoo
+
+### 1. @api.onchange para Autopopulação de Campos
+
+**Quando usar:** Para preencher automaticamente campos baseados em seleção do usuário em tempo real
+
+```python
+@api.onchange('partner_id')
+def _onchange_partner_id(self):
+    """Auto-populate phone number when partner is selected"""
+    if self.partner_id:
+        # Prioridade: mobile > phone > vazio
+        if self.partner_id.mobile:
+            self.phone = self.partner_id.mobile
+        elif self.partner_id.phone:
+            self.phone = self.partner_id.phone
+        else:
+            self.phone = False
+    else:
+        self.phone = False
+```
+
+**Padrão de prioridade para telefones:**
+1. `partner_id.mobile` (celular) - prioridade máxima
+2. `partner_id.phone` (telefone fixo) - fallback
+3. `False` (vazio) - se não houver telefones
+
+**Quando NÃO usar onchange:**
+- Cálculos complexos que impactam performance → use compute fields
+- Validações que devem persistir → use constraints
+- Operações que precisam de dados de múltiplos registros → use compute
+
+**Vantagens do onchange:**
+- ✅ Resposta imediata na UI
+- ✅ Não gera queries desnecessárias ao carregar
+- ✅ Melhor experiência do usuário
+- ✅ Lógica simples e clara
+
+**Cuidados:**
+- Mudanças não são salvas automaticamente
+- Usuário pode modificar manualmente após autopopulação
+- Não funciona em batch operations
+
+---
+
+### 2. Padrão de Autopopulação Multi-Campo
+
+**Para cenários com múltiplos campos relacionados:**
+
+```python
+@api.onchange('partner_id')
+def _onchange_partner_id(self):
+    """Auto-populate multiple fields when partner is selected"""
+    if self.partner_id:
+        # Dados de contato
+        self.phone = self.partner_id.mobile or self.partner_id.phone
+        self.email = self.partner_id.email
+
+        # Dados de endereço
+        if self.partner_id:
+            self.street = self.partner_id.street
+            self.street2 = self.partner_id.street2
+            self.city = self.partner_id.city
+            self.state_id = self.partner_id.state_id
+            self.zip = self.partner_id.zip
+            self.country_id = self.partner_id.country_id
+
+        # Dados financeiros
+        self.property_account_receivable_id = self.partner_id.property_account_receivable_id
+        self.payment_term_id = self.partner_id.property_payment_term_id
+
+    else:
+        # Limpar todos os campos relacionados
+        self.phone = False
+        self.email = False
+        self.street = False
+        self.city = False
+        self.state_id = False
+        self.zip = False
+        self.country_id = False
+```
+
+**Regra geral:**
+- Campos obrigatórios → sempre preencher
+- Campos opcionais → preencher se disponível
+- Campos sensíveis → permitir modificação pelo usuário
+- Campos calculados → considerar compute + store
+
+---
+
 ## 💻 Padrões de Código Python
 
 ### 1. Model Base Template
