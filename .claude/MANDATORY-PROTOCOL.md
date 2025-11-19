@@ -36,6 +36,24 @@ Checklist IMPERATIVO:
 [ ] 3. Ler .claude/memory/PATTERNS.md
 [ ] 4. Ler .claude/memory/AUTO-LEARNING-PROTOCOL.md
 [ ] 5. Ler .claude/memory/THINKING-MODE-PROTOCOL.md
+[ ] 6. Ler .claude/memory/protocols/PROTOCOL-V3-AUTOMATICO.md
+
+### **REGRA ESPECIAL: QUANDO USUÁRIO DIZ "protocolo"**
+
+**OBRIGATÓRIO executar Sistema Automático V3.0:**
+
+```
+Checklist "protocolo" detectado:
+[ ] 1. Analisar memória curto prazo (contexto recente)
+[ ] 2. Decidir AUTOMÁTICO se ativa thinking mode
+[ ] 3. Verificar se RAG é necessário
+[ ] 4. Gerar TODO list otimizado para paralelização
+[ ] 5. Pesquisar online se necessário
+[ ] 6. Apresentar solução completa
+[ ] 7. Aguardar "protocolo finalizado" para salvar
+```
+
+**NUNCA pular etapas do Sistema V3.0 quando "protocolo" for detectado!**
 ```
 
 **Se qualquer item NÃO foi verificado:** ❌ **PARAR e verificar ANTES de continuar**
