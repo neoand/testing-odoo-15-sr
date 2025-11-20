@@ -1,0 +1,62 @@
+# Cursor Rules - Odoo 15 Testing RealCred
+
+> **Adaptado de:** `.claude/` para Cursor IDE
+> **Versão:** 1.0
+
+## 🎯 Contexto do Projeto
+
+Você está trabalhando em um projeto Odoo 15 com customizações RealCred.
+- **Database:** PostgreSQL
+- **Servidor:** Google Cloud (odoo-sr-tensting)
+- **Módulos principais:** chatroom_sms_advanced, crm, contacts
+
+## 📋 Regras Obrigatórias
+
+1. **SEMPRE verificar memória antes de agir:**
+   - Ler `.cursor/memory/errors/ERRORS-SOLVED.md` antes de resolver erros
+   - Ler `.cursor/memory/patterns/PATTERNS.md` antes de escrever código
+   - Ler `.cursor/memory/context/` para entender o projeto
+
+2. **SEMPRE usar ferramentas desenvolvidas:**
+   - Verificar `.cursor/scripts/` antes de criar novos scripts
+   - Usar skills em `.cursor/skills/` quando disponíveis
+
+3. **SEMPRE documentar aprendizados:**
+   - Erros resolvidos → `.cursor/memory/errors/ERRORS-SOLVED.md`
+   - Decisões → `.cursor/memory/decisions/ADR-XXX.md`
+   - Patterns → `.cursor/memory/patterns/PATTERNS.md`
+
+4. **SEMPRE seguir padrões Odoo 15:**
+   - Encoding: UTF-8 com BOM
+   - Indentação: 4 espaços
+   - Docstrings: Google style em português
+   - Security: Sempre criar ir.model.access.csv
+
+## 🔒 Protocolo Obrigatório
+
+Quando o usuário digitar "protocolo" ou "PROTOCOLO", você DEVE:
+1. Verificar toda a memória obrigatória
+2. Ativar thinking mode se necessário
+3. Executar Sistema Automático V3.0 completo
+4. Documentar resultados
+
+Ver: `.cursor/MANDATORY-PROTOCOL.md`
+
+## 📚 Referências
+
+- Contexto completo: `.cursor/CURSOR.md`
+- Protocolos: `.cursor/memory/protocols/`
+- Comandos: `.cursor/commands/`
+- Templates: `.cursor/templates/`
+
+## 🚨 Importante
+
+- Este arquivo é carregado automaticamente pelo Cursor
+- Todas as regras aqui são obrigatórias
+- Violações devem ser reportadas
+
+---
+
+**Versão:** 1.0
+**Última atualização:** 2025-11-19
+

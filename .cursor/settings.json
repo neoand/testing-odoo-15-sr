@@ -1,0 +1,52 @@
+{
+  "hooks": {
+    "Stop": {
+      "command": "bash",
+      "args": [".cursor/hooks/enforce-protocol-completion.sh", "{{userMessage}}"],
+      "description": "Força Cursor AI a completar protocolo quando usuário digita 'PROTOCOLO'"
+    }
+  },
+  "memory": {
+    "autoLoad": true,
+    "paths": [
+      ".cursor/memory/context/",
+      ".cursor/memory/decisions/",
+      ".cursor/memory/errors/",
+      ".cursor/memory/patterns/",
+      ".cursor/memory/learnings/",
+      ".cursor/memory/odoo/",
+      ".cursor/memory/protocols/"
+    ]
+  },
+  "commands": {
+    "analyze": {
+      "path": ".cursor/commands/analyze.md",
+      "description": "Analisar código"
+    },
+    "debug": {
+      "path": ".cursor/commands/debug.md",
+      "description": "Debugar problemas"
+    },
+    "odoo-module": {
+      "path": ".cursor/commands/odoo-module.md",
+      "description": "Criar novo módulo Odoo"
+    },
+    "odoo-model": {
+      "path": ".cursor/commands/odoo-model.md",
+      "description": "Criar modelo Odoo"
+    },
+    "odoo-security": {
+      "path": ".cursor/commands/odoo-security.md",
+      "description": "Análise de segurança"
+    },
+    "refactor": {
+      "path": ".cursor/commands/refactor.md",
+      "description": "Refatorar código"
+    },
+    "review": {
+      "path": ".cursor/commands/review.md",
+      "description": "Code review"
+    }
+  }
+}
+

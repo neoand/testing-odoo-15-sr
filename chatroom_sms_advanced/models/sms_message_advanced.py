@@ -56,6 +56,13 @@ class SMSMessage(models.Model):
         for record in self:
             record.is_scheduled = bool(record.scheduled_id)
 
+    # ========== ONCHANGE METHODS ==========
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        """Auto-fill phone number when partner is selected"""
+        if self.partner_id:
+            self.phone = self.partner_id.mobile or self.partner_id.phone
+
     # ========== OVERRIDE METHODS ==========
     def action_send(self):
         """

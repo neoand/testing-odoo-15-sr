@@ -28,6 +28,42 @@
 
 ## 📋 Erros Resolvidos
 
+### [2025-11-19] Odoo 502 Bad Gateway - Debug Workers Problem
+
+**Contexto:** Odoo retornando 502 Bad Gateway, servidor instável e lento
+
+**Sintoma:**
+- Erro 502 Bad Gateway ao acessar interface web
+- Servidor respondendo lentamente
+- `ps aux | grep odoo-bin` mostrando apenas 1-2 processos
+- Nginx ativo mas sem conseguir conectar ao Odoo
+
+**Causa Raiz:** Odoo estava rodando com `--workers=0` (modo debug), que é apenas para desenvolvimento. Em produção precisa de múltiplos workers.
+
+**Solução (descoberta pelo Cursor):**
+```bash
+# Reiniciar Odoo com configuração correta de produção
+sudo systemctl restart odoo-server
+
+# Verificar que agora tem múltiplos processos
+ps aux | grep '[o]doo-bin' | wc -l  # Deve ser > 5
+
+# Reiniciar Nginx para reconhecer Odoo
+sudo systemctl restart nginx
+
+# Testar conectividade
+curl -I http://localhost:8069  # Deve retornar 200 OK
+```
+
+**Fontes:** Cursor IDE diagnosis e solução
+**Prevenção:**
+- NUNCA usar `--workers=0` em produção
+- Sempre usar `sudo systemctl restart odoo-server` (já configurado)
+- Verificar número de processos > 5 após reiniciar
+- Reiniciar Nginx junto com Odoo se necessário
+
+**Tags:** #odoo #502 #nginx #workers #debug #produção #crítico
+
 ### [2025-11-18] GCloud SSH AttributeError - String Direction Error
 
 **Contexto:** Tentando executar comando SSH com string contendo aspas duplas dentro de outra string aspas duplas

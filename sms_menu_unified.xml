@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ========== SMS ROOT MENU ========== -->
+        <menuitem id="menu_sms_root" name="SMS" web_icon="sms_core_unified,static/description/icon.png" sequence="50"/>
+
+        <!-- ========== SMS MESSAGES MENU ========== -->
+        <menuitem id="menu_sms_messages" name="Messages" parent="menu_sms_root" action="action_sms_message" sequence="10"/>
+
+        <!-- ========== SMS CONFIGURATION MENU ========== -->
+        <menuitem id="menu_sms_configuration" name="Configuration" parent="menu_sms_root" sequence="100"/>
+
+        <!-- ========== SMS PROVIDERS MENU (depois de criar) ========== -->
+        <!-- <menuitem id="menu_sms_providers" name="Providers" parent="menu_sms_configuration" action="action_sms_provider" sequence="10"/> -->
+
+        <!-- ========== SMS TEMPLATES MENU (depois de criar) ========== -->
+        <!-- <menuitem id="menu_sms_templates" name="Templates" parent="menu_sms_configuration" action="action_sms_template" sequence="20"/> -->
+
+    </data>
+</odoo>
