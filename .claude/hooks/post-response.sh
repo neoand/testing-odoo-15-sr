@@ -1,0 +1,140 @@
+#!/bin/bash
+#
+# Hook Pós-Resposta - Análise e Sugestões Automáticas
+#
+# Executado após cada resposta do Claude
+#
+
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+SESSION_ID="session-$(date +%Y%m%d-%H%M%S)"
+LOG_FILE=".claude/logs/session-analysis-$SESSION_ID.md"
+PROJECT_ROOT="/Users/andersongoliveira/testing_odoo_15_sr"
+
+# Criar arquivo de sessão
+mkdir -p "$(dirname "$LOG_FILE")"
+cat > "$LOG_FILE" << EOF
+# Session Analysis: $TIMESTAMP
+
+## Auto-suggestions for improvements
+
+EOF
+
+# Detectar problemas recorrentes
+if [[ -f ".claude/logs/odoo-error.log" ]]; then
+    ERROR_COUNT=$(tail -100 .claude/logs/odoo-error.log | grep -c "ERROR" || echo "0")
+    if [[ $ERROR_COUNT -gt 5 ]]; then
+        echo "- [ ] Investigar $ERROR_COUNT erros recorrentes do Odoo" >> "$LOG_FILE"
+        echo "  - Verificar .claude/logs/odoo-error.log para padrões" >> "$LOG_FILE"
+    fi
+fi
+
+# Verificar TODOs não resolvidos
+if grep -r "TODO" "$PROJECT_ROOT" --include="*.py" --include="*.md" --include="*.rst" 2>/dev/null | grep -q .; then
+    TODO_COUNT=$(grep -r "TODO" "$PROJECT_ROOT" --include="*.py" --include="*.md" --include="*.rst" 2>/dev/null | wc -l)
+    echo "- [ ] Revisar $TODO_COUNT itens TODO pendentes:" >> "$LOG_FILE"
+    grep -r "TODO" "$PROJECT_ROOT" --include="*.py" --include="*.md" --include="*.rst" 2>/dev/null | head -5 | sed 's/^/  - /' >> "$LOG_FILE"
+    echo "" >> "$LOG_FILE"
+fi
+
+# Verificar arquivos modificados recentemente
+MODIFIED_FILES=$(find "$PROJECT_ROOT" -name "*.py" -o -name "*.md" -o -name "*.xml" | xargs ls -lt | head -5)
+if [[ -n "$MODIFIED_FILES" ]]; then
+    echo "- [ ] Revisar arquivos modificados recentemente:" >> "$LOG_FILE"
+    echo "$MODIFIED_FILES" | awk '{print "  - " $9 " (modificado: " $6 " " $7 " " $8 ")"}' >> "$LOG_FILE"
+    echo "" >> "$LOG_FILE"
+fi
+
+# Análise de performance do sistema
+if command -v ps >/dev/null 2>&1; then
+    CPU_USAGE=$(ps aux | grep '[o]doo-bin' | awk '{sum+=$3} END {print sum+0}')
+    if (( $(echo "$CPU_USAGE > 80" | bc -l) )); then
+        echo "- [ ] Alto uso de CPU do Odoo detectado (${CPU_USAGE}%)" >> "$LOG_FILE"
+        echo "  - Considerar otimizar queries ou aumentar workers" >> "$LOG_FILE"
+    fi
+fi
+
+# Verificar espaço em disco
+DISK_USAGE=$(df -h "$PROJECT_ROOT" | tail -1 | awk '{print $5}' | sed 's/%//')
+if [[ $DISK_USAGE -gt 80 ]]; then
+    echo "- [ ] Espaço em disco baixo (${DISK_USAGE}% usado)" >> "$LOG_FILE"
+    echo "  - Limpar arquivos temporários e logs antigos" >> "$LOG_FILE"
+fi
+
+# Sugestões de automação
+if [[ -f "$PROJECT_ROOT/.gitignore" ]]; then
+    if grep -q "__pycache__" "$PROJECT_ROOT/.gitignore"; then
+        echo "- [ ] Adicionar script de limpeza de __pycache__" >> "$LOG_FILE"
+    fi
+fi
+
+# Verificar configurações de segurança
+if [[ -f ".claude/settings.json" ]]; then
+    if ! grep -q "permissions" ".claude/settings.json"; then
+        echo "- [ ] Adicionar restrições de permissões em settings.json" >> "$LOG_FILE"
+    fi
+fi
+
+# Sugestões de documentação
+if [[ $(find "$PROJECT_ROOT" -name "*.py" -type f | wc -l) -gt 10 ]]; then
+    PY_DOC_COUNT=$(find "$PROJECT_ROOT" -name "*.py" -exec grep -l '"""' {} \; | wc -l)
+    TOTAL_PY=$(find "$PROJECT_ROOT" -name "*.py" -type f | wc -l)
+    DOC_PERCENTAGE=$((PY_DOC_COUNT * 100 / TOTAL_PY))
+
+    if [[ $DOC_PERCENTAGE -lt 50 ]]; then
+        echo "- [ ] Melhorar documentação Python (${DOC_PERCENTAGE}% dos arquivos têm docstrings)" >> "$LOG_FILE"
+    fi
+fi
+
+# Verificar se há testes
+if [[ -d "$PROJECT_ROOT/tests" ]]; then
+    TEST_COUNT=$(find "$PROJECT_ROOT/tests" -name "test_*.py" | wc -l)
+    if [[ $TEST_COUNT -eq 0 ]]; then
+        echo "- [ ] Adicionar testes automatizados" >> "$LOG_FILE"
+    else
+        echo "- [ ] Executar testes: $TEST_COUNT arquivos de teste encontrados" >> "$LOG_FILE"
+    fi
+fi
+
+# Verificar integrações
+if [[ -f "$PROJECT_ROOT/requirements.txt" ]]; then
+    OUTDATED_COUNT=$(pip list --outdated 2>/dev/null | wc -l)
+    if [[ $OUTDATED_COUNT -gt 5 ]]; then
+        echo "- [ ] Atualizar dependências ($OUTDATED_COUNT pacotes desatualizados)" >> "$LOG_FILE"
+    fi
+fi
+
+# Recomendações específicas para o projeto atual
+if [[ -d "$PROJECT_ROOT/modulos-customizados-odoo" ]]; then
+    echo "- [ ] Revisar módulos customizados Odoo para boas práticas" >> "$LOG_FILE"
+    echo "  - Verificar record rules, access rights, e performance" >> "$LOG_FILE"
+fi
+
+if [[ -f "$PROJECT_ROOT/chatroom_sms_advanced" ]]; then
+    echo "- [ ] Monitorar integração SMS Kolmeya" >> "$LOG_FILE"
+    echo "  - Verificar taxas de sucesso e performance da API" >> "$LOG_FILE"
+fi
+
+# Estatísticas da sessão
+cat >> "$LOG_FILE" << EOF
+
+## Session Statistics
+
+- Session ID: $SESSION_ID
+- Timestamp: $TIMESTAMP
+- Project: $PROJECT_ROOT
+- Analysis Type: Automated
+
+## Next Actions Priority
+
+1. **High**: Security and performance issues
+2. **Medium**: Documentation and testing
+3. **Low**: Optimization and cleanup
+
+---
+*Auto-generated by Claude Code Post-Response Hook*
+EOF
+
+echo "Session analysis saved to: $LOG_FILE"
+echo "Auto-suggestions generated for improvements"
+
+exit 0

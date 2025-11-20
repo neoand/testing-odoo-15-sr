@@ -1,9 +1,63 @@
 {
   "hooks": {
+    "PreToolUse": {
+      "command": "bash",
+      "args": [".claude/hooks/pre-tool-use.sh", "{{toolName}}", "{{toolArgs}}"],
+      "description": "Validação e otimização pré-execução de ferramentas",
+      "matcher": "*"
+    },
+    "PostResponse": {
+      "command": "bash",
+      "args": [".claude/hooks/post-response.sh"],
+      "description": "Análise pós-resposta com sugestões automáticas"
+    },
     "Stop": {
       "command": "bash",
       "args": [".claude/hooks/enforce-protocol-completion.sh", "{{userMessage}}"],
       "description": "Força Claude a completar protocolo quando usuário digita 'PROTOCOLO'"
     }
+  },
+  "permissions": {
+    "deny": [
+      "Write(CLAUDE.md)",
+      "Write(MANDATORY-PROTOCOL.md)",
+      "Write(.claude/memory/**)",
+      "Write(.claude/.env)",
+      "Write(.claude/settings.json)"
+    ]
+  },
+  "mcp": {
+    "timeout": 30000,
+    "retries": 3,
+    "maxConcurrentRequests": 10
+  },
+  "autoSave": {
+    "enabled": true,
+    "interval": 300,
+    "includePatterns": ["*.md", "*.py", "*.json"],
+    "excludePatterns": [".git/*", "node_modules/*", "__pycache__/*"]
+  },
+  "aiAssistance": {
+    "suggestions": true,
+    "autoComplete": true,
+    "errorAnalysis": true
+  },
+  "logging": {
+    "level": "info",
+    "includeToolUsage": true,
+    "includePerformance": true,
+    "maxLogSize": "10MB",
+    "retentionDays": 30
+  },
+  "security": {
+    "validateCommands": true,
+    "blockSensitivePaths": true,
+    "requireConfirmationForDangerousOps": true,
+    "auditMode": false
+  },
+  "performance": {
+    "cacheResults": true,
+    "parallelToolCalls": true,
+    "lazyLoadMcpServers": true
   }
 }

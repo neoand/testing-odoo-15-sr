@@ -37,6 +37,20 @@
         "/Users/andersongoliveira/testing_odoo_15_sr/.claude/scripts/python/mcp_rag_server.py"
       ],
       "env": {}
+    },
+    "odoo": {
+      "type": "stdio",
+      "command": "python3.11",
+      "args": [
+        "/Users/andersongoliveira/testing_odoo_15_sr/.claude/scripts/python/odoo_mcp_server.py"
+      ],
+      "env": {
+        "ODOO_DB_HOST": "localhost",
+        "ODOO_DB_PORT": "5432",
+        "ODOO_DB_NAME": "testing_odoo",
+        "ODOO_DB_USER": "odoo",
+        "ODOO_DB_PASSWORD": "HI5Rdi5UikL9jjLy"
+      }
     }
   }
 }
